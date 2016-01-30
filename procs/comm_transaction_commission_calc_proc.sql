@@ -32,7 +32,7 @@ AS
 **	15 May 07	tmc		Updated logic for new 2007 FSC plan
 **  08 May 13   tmc		Add GP$ to calculation
 **	04 Feb 15	tmc		Add Parts to EQ correction
---	20 Jan 16	tmc 	Review #FIX 
+--	29 Jan 16	tmc 	Update for 2016 Plan
 **    
 *******************************************************************************/
 
@@ -91,6 +91,8 @@ if (@bDebug <> 0)
 
 if (@bDebug <> 0)
 	Print 'BatchStatus Data Verifed but not closed?'
+
+-- Consolodate in 1 or 2 main updates...
 
 If (@nBatchStatus >= 20 and @nBatchStatus < 999)
 Begin
@@ -423,120 +425,8 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 
--- #FIX
-	if (@bDebug <> 0)
-		Print 'Override FSC fixed Merch commission rate'
 
 
-	if (@bDebug <> 0)
-	BEGIN
-		Print 'Test1 - pre'
-		select * from 	comm_transaction where record_id = 8166895
-	END
-
-	If (@nErrorCode = 0) 
-	Begin
-		Update
-			comm_transaction
-		Set 
-			comm_rt = t.fsc_comm_merch_rt,
-			comm_amt = transaction_amt*(t.fsc_comm_merch_rt/100)
-
-		From 
-			comm_transaction s,
-			(
-			SELECT     
-				tt.record_id, 
-				r.fsc_comm_merch_rt
-
---				item_comm_group_cd
-
-			FROM         
-				comm_transaction tt 
-					INNER JOIN comm_salesperson_master r
-					ON tt.salesperson_key_id = r.salesperson_key_id
-
-					-- GP Plan, added 14 May 13, tmc
-					INNER JOIN comm_plan p
-					ON tt.comm_plan_id = p.comm_plan_id 
-
-			Where
---				tt.fiscal_yearmo_num = '200704' And
-				tt.fiscal_yearmo_num = @sCurrentFiscalYearmoNum And
-
-				-- GP Plan, added 14 May 13, tmc
-				p.calc_comm_using_gp_ind = 0 And
---				tt.comm_plan_id IN ('FSCDP02', 'FSCDP03') And 
-
-				tt.source_cd IN ('ACCPAC', 'JDE', 'IMPORT') And
---				tt.item_comm_group_cd IN('REBSND') And
-				tt.item_comm_group_cd IN('ITMSND', 'REBSND') And
---				tt.status_cd = 20 And 
---				tt.salesperson_key_id = 'jadamski' And
-				1=1
-			) t
-		Where 
-			s.fiscal_yearmo_num = @sCurrentFiscalYearmoNum And
-			s.record_id = t.record_id 
-
-
-		Set @nErrorCode = @@Error
-	End
-
-	if (@bDebug <> 0)
-	BEGIN
-		Print 'Test2 - post'
-		select * from 	comm_transaction where record_id = 8166895
-	END
-
-
-	if (@bDebug <> 0)
-		Print 'Override FSC fixed Teeth commission rate'
-	
-	If (@nErrorCode = 0) 
-	Begin
-		Update
-			comm_transaction
-		Set 
-			comm_rt = t.fsc_comm_teeth_rt,
-			comm_amt = transaction_amt*(t.fsc_comm_teeth_rt/100)
-
-		From 
-			comm_transaction s,
-			(
-			SELECT     
-				tt.record_id, 
-				r.fsc_comm_teeth_rt
-
-			FROM         
-				comm_transaction tt 
-					INNER JOIN comm_salesperson_master r
-					ON tt.salesperson_key_id = r.salesperson_key_id
-
-					-- GP Plan, added 14 May 13, tmc
-					INNER JOIN comm_plan p
-					ON tt.comm_plan_id = p.comm_plan_id 
-
-			Where
---				tt.fiscal_yearmo_num = '200704' And
-				tt.fiscal_yearmo_num = @sCurrentFiscalYearmoNum And
-
-				-- GP Plan, added 14 May 13, tmc
-				p.calc_comm_using_gp_ind = 0 And
---				tt.comm_plan_id IN ('FSCDP02', 'FSCDP03') And 
-
-				tt.source_cd IN ('ACCPAC', 'JDE', 'IMPORT') And
-				tt.item_comm_group_cd IN('ITMTEE', 'REBTEE') And
---				tt.status_cd = 20 And 
-				1=1
-			) t
-		Where 
-			s.fiscal_yearmo_num = @sCurrentFiscalYearmoNum And
-			s.record_id = t.record_id 
-
-
-		Set @nErrorCode = @@Error
-	End
 
 	if (@bDebug <> 0)
 		Print 'Calculate IMPORT NON PMA & Financial Spiff and Mark complete'
