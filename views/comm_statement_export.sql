@@ -32,7 +32,7 @@ GO
 **	28 Mar 11	tmc		Added Arestin Group to INST rollup
 **	01 Feb 13	tmc		Set Free Goods to use Current Month instead of in Arrears
 **  25 Apr 14	tmc		replaces CNX with MID comm code in summary
---  20 Jan 16 tmc   #FIX
+--  29 Jan 16	tmc		Update for new comm codes
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_export]
@@ -42,11 +42,11 @@ SELECT
   m.employee_num,
   RTRIM(m.salesperson_key_id) AS salesperson_key_id,
   m.salesperson_nm,
-  m.salesperson_territory_cd,
-  RTRIM(t.branch_nm) AS branch_nm,
-  RTRIM(t.zone_nm) AS zone_nm,
+  '' as salesperson_territory_cd,
+  RTRIM(m.branch_cd) AS branch_nm,
+  '' AS zone_nm,
   m.comm_plan_id,
-  m.hsi_salesperson_cd,
+  m.master_salesperson_cd as hsi_salesperson_cd,
   m.territory_start_dt,
 
   s.ITMSND_SALES_CM_AMT,
@@ -65,16 +65,16 @@ SELECT
   s.REBSND_SALES_YTD_AMT,
   s.REBSND_GP_YTD_AMT,
   s.REBSND_SALES_LYTD_AMT,
-  m.REBSND_GOAL_YTD_AMT,
+  0 AS REBSND_GOAL_YTD_AMT,
 
-  s.SPMMER_SALES_CM_AMT,
-  s.SPMMER_SALES_LYM_AMT,
-  s.SPMMER_GP_CM_AMT,
-  s.SPMMER_COMM_CM_AMT,
-  s.SPMMER_SALES_YTD_AMT,
-  s.SPMMER_GP_YTD_AMT,
-  s.SPMMER_SALES_LYTD_AMT,
-  m.CUSINS_GOAL_YTD_AMT AS SPMMER_GOAL_YTD_AMT,
+  s.SPMSND_SALES_CM_AMT,
+  s.SPMSND_SALES_LYM_AMT,
+  s.SPMSND_GP_CM_AMT,
+  s.SPMSND_COMM_CM_AMT,
+  s.SPMSND_SALES_YTD_AMT,
+  s.SPMSND_GP_YTD_AMT,
+  s.SPMSND_SALES_LYTD_AMT,
+  0 AS SPMSND_GOAL_YTD_AMT,
 
   s.ITMTEE_SALES_CM_AMT,
   s.ITMTEE_SALES_LYM_AMT,
@@ -92,7 +92,7 @@ SELECT
   s.REBTEE_SALES_YTD_AMT,
   s.REBTEE_GP_YTD_AMT,
   s.REBTEE_SALES_LYTD_AMT,
-  m.REBTEE_GOAL_YTD_AMT,
+  0 AS REBTEE_GOAL_YTD_AMT,
 
   s.ITMFO1_SALES_CM_AMT,
   s.ITMFO1_SALES_LYM_AMT,
@@ -130,32 +130,32 @@ SELECT
   s.ITMFRT_SALES_LYTD_AMT,
   m.ITMFRT_GOAL_YTD_AMT,
  
-  s.ITMMID_SALES_CM_AMT,
-  s.ITMMID_SALES_LYM_AMT,
-  s.ITMMID_GP_CM_AMT,
-  s.ITMMID_COMM_CM_AMT,
-  s.ITMMID_SALES_YTD_AMT,
-  s.ITMMID_GP_YTD_AMT,
-  s.ITMMID_SALES_LYTD_AMT,
- 
-  m.ITMCNX_GOAL_YTD_AMT AS ITMMID_GOAL_YTD_AMT,
-  s.SPMEQU_SALES_CM_AMT,
-  s.SPMEQU_SALES_LYM_AMT,
-  s.SPMEQU_GP_CM_AMT,
-  s.SPMEQU_COMM_CM_AMT,
-  s.SPMEQU_SALES_YTD_AMT,
-  s.SPMEQU_GP_YTD_AMT,
-  s.SPMEQU_SALES_LYTD_AMT,
+  s.SPMFO1_SALES_CM_AMT,
+  s.SPMFO1_SALES_LYM_AMT,
+  s.SPMFO1_GP_CM_AMT,
+  s.SPMFO1_COMM_CM_AMT,
+  s.SPMFO1_SALES_YTD_AMT,
+  s.SPMFO1_GP_YTD_AMT,
+  s.SPMFO1_SALES_LYTD_AMT,
+  0 AS SPMFO1_GOAL_YTD_AMT,
 
-  m.ITMDET_GOAL_YTD_AMT AS SPMEQU_GOAL_YTD_AMT,
-  s.ITMBTI_SALES_CM_AMT,
-  s.ITMBTI_SALES_LYM_AMT,
-  s.ITMBTI_GP_CM_AMT,
-  s.ITMBTI_COMM_CM_AMT,
-  s.ITMBTI_SALES_YTD_AMT,
-  s.ITMBTI_GP_YTD_AMT,
-  s.ITMBTI_SALES_LYTD_AMT,
-  m.ITMBTI_GOAL_YTD_AMT,
+  s.SPMFO2_SALES_CM_AMT,
+  s.SPMFO2_SALES_LYM_AMT,
+  s.SPMFO2_GP_CM_AMT,
+  s.SPMFO2_COMM_CM_AMT,
+  s.SPMFO2_SALES_YTD_AMT,
+  s.SPMFO2_GP_YTD_AMT,
+  s.SPMFO2_SALES_LYTD_AMT,
+  0 AS SPMFO2_GOAL_YTD_AMT,
+
+  s.SPMFO3_SALES_CM_AMT,
+  s.SPMFO3_SALES_LYM_AMT,
+  s.SPMFO3_GP_CM_AMT,
+  s.SPMFO3_COMM_CM_AMT,
+  s.SPMFO3_SALES_YTD_AMT,
+  s.SPMFO3_GP_YTD_AMT,
+  s.SPMFO3_SALES_LYTD_AMT,
+  0 AS SPMFO3_GOAL_YTD_AMT,
 
   s.ITMISC_SALES_CM_AMT,
   s.ITMISC_SALES_LYM_AMT,
@@ -166,14 +166,14 @@ SELECT
   s.ITMISC_SALES_LYTD_AMT,
   m.ITMISC_GOAL_YTD_AMT,
 
-  s.ITME4D_SALES_CM_AMT,
-  s.ITME4D_SALES_LYM_AMT,
-  s.ITME4D_GP_CM_AMT,
-  s.ITME4D_COMM_CM_AMT,
-  s.ITME4D_SALES_YTD_AMT,
-  s.ITME4D_GP_YTD_AMT,
-  s.ITME4D_SALES_LYTD_AMT,
-  m.ITME4D_GOAL_YTD_AMT,
+  s.DIGCCS_SALES_CM_AMT,
+  s.DIGCCS_SALES_LYM_AMT,
+  s.DIGCCS_GP_CM_AMT,
+  s.DIGCCS_COMM_CM_AMT,
+  s.DIGCCS_SALES_YTD_AMT,
+  s.DIGCCS_GP_YTD_AMT,
+  s.DIGCCS_SALES_LYTD_AMT,
+  0 as DIGCCS_GOAL_YTD_AMT,
 
   s.ITMCPU_SALES_CM_AMT,
   s.ITMCPU_SALES_LYM_AMT,
@@ -191,16 +191,16 @@ SELECT
   s.SFFFIN_SALES_YTD_AMT,
   s.SFFFIN_GP_YTD_AMT,
   s.SFFFIN_SALES_LYTD_AMT,
-  m.SFFFIN_GOAL_YTD_AMT,
+  0 AS SFFFIN_GOAL_YTD_AMT,
 
-  s.PMANEW_SALES_CM_AMT,
-  s.PMANEW_SALES_LYM_AMT,
-  s.PMANEW_GP_CM_AMT,
-  s.PMANEW_COMM_CM_AMT,
-  s.PMANEW_SALES_YTD_AMT,
-  s.PMANEW_GP_YTD_AMT,
-  s.PMANEW_SALES_LYTD_AMT,
-  m.PMANEW_GOAL_YTD_AMT,
+  s.DIGIMP_SALES_CM_AMT,
+  s.DIGIMP_SALES_LYM_AMT,
+  s.DIGIMP_GP_CM_AMT,
+  s.DIGIMP_COMM_CM_AMT,
+  s.DIGIMP_SALES_YTD_AMT,
+  s.DIGIMP_GP_YTD_AMT,
+  s.DIGIMP_SALES_LYTD_AMT,
+  0 AS DIGIMP_GOAL_YTD_AMT,
 
   s.ITMPAR_SALES_CM_AMT,
   s.ITMPAR_SALES_LYM_AMT,
@@ -229,18 +229,18 @@ SELECT
   s.ITMEQ0_SALES_LYTD_AMT,
   m.ITMEQ0_GOAL_YTD_AMT,
 
-  s.SFFVEN_COMM_CM_AMT,
-  s.ADJEBU_COMM_CM_AMT,
-  s.ADJOTH_COMM_CM_AMT,
-  s.ADJARP_COMM_CM_AMT,
-  s.ADJARB_COMM_CM_AMT,
+  s.DIGMAT_SALES_CM_AMT,
+  s.DIGMAT_SALES_LYM_AMT,
+  s.DIGMAT_GP_CM_AMT,
+  s.DIGMAT_COMM_CM_AMT,
+  s.DIGMAT_SALES_YTD_AMT,
   s.SALD30_COMM_CM_AMT,
   s.STMPBA_COMM_CM_AMT,
 
-  m.master_division_cd,
-  m.master_salesperson_cd,
-  m.fsc_comm_merch_rt,
-  m.fsc_comm_teeth_rt,
+  s.DIGMAT_GP_YTD_AMT,
+  s.DIGMAT_SALES_LYTD_AMT,
+  0 as DIGMAT_GOAL_YTD_AMT,
+  0 AS NOTUSED1,
 
   s.ITMCAM_SALES_CM_AMT,
   s.ITMCAM_SALES_LYM_AMT,
@@ -265,24 +265,8 @@ SELECT
   s.FRESND_GP_YTD_AMT,
   s.FRESEQ_GP_CM_AMT,
   s.FRESEQ_COMM_CM_AMT,
-  s.FRESEQ_GP_YTD_AMT,
+  s.FRESEQ_GP_YTD_AMT
 
-  s.FRE3RD_GP_CM_AMT,
-  s.FRE3RD_COMM_CM_AMT,
-  s.FRE3RD_GP_YTD_AMT,
-  s.FRE3RS_GP_CM_AMT,
-  s.FRE3RS_COMM_CM_AMT,
-  s.FRE3RS_GP_YTD_AMT,
-
-  s.BIOFO1_SALES_CM_AMT,
-  s.BIOFO1_GP_CM_AMT,
-  s.BIOFO1_SALES_YTD_AMT,
-  s.BIOFO1_GP_YTD_AMT,
-
-  s.REDTAG_SALES_CM_AMT,
-  s.REDTAG_GP_CM_AMT,
-  s.REDTAG_SALES_YTD_AMT,
-  s.REDTAG_GP_YTD_AMT
 
 
 FROM         
@@ -306,13 +290,13 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'REBSND' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS REBSND_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'REBSND' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS REBSND_SALES_LYTD_AMT, 
 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.sales_curr_amt ELSE 0 END) AS SPMMER_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.sales_ref_amt ELSE 0 END) AS SPMMER_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.gp_curr_amt ELSE 0 END) AS SPMMER_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.comm_curr_amt ELSE 0 END) AS SPMMER_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMMER_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMMER_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('CUSINS', 'ITMARS') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMMER_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.sales_curr_amt ELSE 0 END) AS SPMSND_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.sales_ref_amt ELSE 0 END) AS SPMSND_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.gp_curr_amt ELSE 0 END) AS SPMSND_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.comm_curr_amt ELSE 0 END) AS SPMSND_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMSND_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMSND_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMSND' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMSND_SALES_LYTD_AMT, 
 
     SUM(CASE WHEN comm_group_cd = 'ITMTEE' THEN ss.sales_curr_amt ELSE 0 END) AS ITMTEE_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMTEE' THEN ss.sales_ref_amt ELSE 0 END) AS ITMTEE_SALES_LYM_AMT, 
@@ -362,29 +346,29 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'ITMFRT' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS ITMFRT_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMFRT' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS ITMFRT_SALES_LYTD_AMT, 
     
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.sales_curr_amt ELSE 0 END) AS ITMMID_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.sales_ref_amt ELSE 0 END) AS ITMMID_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.gp_curr_amt ELSE 0 END) AS ITMMID_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.comm_curr_amt ELSE 0 END) AS ITMMID_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS ITMMID_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS ITMMID_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMMID' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS ITMMID_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.sales_curr_amt ELSE 0 END) AS SPMFO1_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.sales_ref_amt ELSE 0 END) AS SPMFO1_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.gp_curr_amt ELSE 0 END) AS SPMFO1_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.comm_curr_amt ELSE 0 END) AS SPMFO1_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMFO1_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMFO1_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO1' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMFO1_SALES_LYTD_AMT, 
     
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.sales_curr_amt ELSE 0 END) AS SPMEQU_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.sales_ref_amt ELSE 0 END) AS SPMEQU_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.gp_curr_amt ELSE 0 END) AS SPMEQU_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.comm_curr_amt ELSE 0 END) AS SPMEQU_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMEQU_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMEQU_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'SPMEQU' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMEQU_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.sales_curr_amt ELSE 0 END) AS SPMFO2_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.sales_ref_amt ELSE 0 END) AS SPMFO2_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.gp_curr_amt ELSE 0 END) AS SPMFO2_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.comm_curr_amt ELSE 0 END) AS SPMFO2_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMFO2_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMFO2_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO2' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMFO2_SALES_LYTD_AMT, 
     
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.sales_curr_amt ELSE 0 END) AS ITMBTI_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.sales_ref_amt ELSE 0 END) AS ITMBTI_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.gp_curr_amt ELSE 0 END) AS ITMBTI_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.comm_curr_amt ELSE 0 END) AS ITMBTI_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS ITMBTI_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS ITMBTI_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMBTI' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS ITMBTI_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.sales_curr_amt ELSE 0 END) AS SPMFO3_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.sales_ref_amt ELSE 0 END) AS SPMFO3_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.gp_curr_amt ELSE 0 END) AS SPMFO3_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.comm_curr_amt ELSE 0 END) AS SPMFO3_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS SPMFO3_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SPMFO3_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'SPMFO3' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SPMFO3_SALES_LYTD_AMT, 
     
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.sales_curr_amt ELSE 0 END) AS ITMISC_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.sales_ref_amt ELSE 0 END) AS ITMISC_SALES_LYM_AMT, 
@@ -394,13 +378,13 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS ITMISC_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS ITMISC_SALES_LYTD_AMT, 
     
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.sales_curr_amt ELSE 0 END) AS ITME4D_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.sales_ref_amt ELSE 0 END) AS ITME4D_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.gp_curr_amt ELSE 0 END) AS ITME4D_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.comm_curr_amt ELSE 0 END) AS ITME4D_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS ITME4D_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS ITME4D_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITME4D' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS ITME4D_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_curr_amt ELSE 0 END) AS DIGCCS_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ref_amt ELSE 0 END) AS DIGCCS_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_curr_amt ELSE 0 END) AS DIGCCS_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.comm_curr_amt ELSE 0 END) AS DIGCCS_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGCCS_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS DIGCCS_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS DIGCCS_SALES_LYTD_AMT, 
     
     SUM(CASE WHEN comm_group_cd = 'ITMCPU' THEN ss.sales_curr_amt ELSE 0 END) AS ITMCPU_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMCPU' THEN ss.sales_ref_amt ELSE 0 END) AS ITMCPU_SALES_LYM_AMT, 
@@ -418,13 +402,13 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'SFFFIN' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS SFFFIN_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'SFFFIN' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS SFFFIN_SALES_LYTD_AMT, 
     
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.sales_curr_amt ELSE 0 END) AS PMANEW_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.sales_ref_amt ELSE 0 END) AS PMANEW_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.gp_curr_amt ELSE 0 END) AS PMANEW_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.comm_curr_amt ELSE 0 END) AS PMANEW_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS PMANEW_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS PMANEW_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'PMANEW' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS PMANEW_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_curr_amt ELSE 0 END) AS DIGIMP_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ref_amt ELSE 0 END) AS DIGIMP_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_curr_amt ELSE 0 END) AS DIGIMP_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.comm_curr_amt ELSE 0 END) AS DIGIMP_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGIMP_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS DIGIMP_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS DIGIMP_SALES_LYTD_AMT, 
     
     SUM(CASE WHEN comm_group_cd = 'ITMPAR' THEN ss.sales_curr_amt ELSE 0 END) AS ITMPAR_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMPAR' THEN ss.sales_ref_amt ELSE 0 END) AS ITMPAR_SALES_LYM_AMT, 
@@ -472,32 +456,19 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_curr_amt ELSE 0 END) AS FRESEQ_GP_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.comm_curr_amt ELSE 0 END) AS FRESEQ_COMM_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS FRESEQ_GP_YTD_AMT, 
-    
-    SUM(CASE WHEN comm_group_cd = 'FRE3RD' THEN ss.gp_curr_amt ELSE 0 END) AS FRE3RD_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRE3RD' THEN ss.comm_curr_amt ELSE 0 END) AS FRE3RD_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRE3RD' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS FRE3RD_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRE3RS' THEN ss.gp_curr_amt ELSE 0 END) AS FRE3RS_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRE3RS' THEN ss.comm_curr_amt ELSE 0 END) AS FRE3RS_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRE3RS' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS FRE3RS_GP_YTD_AMT, 
-    
-    SUM(CASE WHEN comm_group_cd = 'SFFVEN' THEN ss.comm_curr_amt ELSE 0 END) AS SFFVEN_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ADJEBU' THEN ss.comm_curr_amt ELSE 0 END) AS ADJEBU_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ADJOTH' THEN ss.comm_curr_amt ELSE 0 END) AS ADJOTH_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ADJARP' THEN ss.comm_curr_amt ELSE 0 END) AS ADJARP_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ADJARB' THEN ss.comm_curr_amt ELSE 0 END) AS ADJARB_COMM_CM_AMT, 
+   
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_curr_amt ELSE 0 END) AS DIGMAT_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ref_amt ELSE 0 END) AS DIGMAT_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_curr_amt ELSE 0 END) AS DIGMAT_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.comm_curr_amt ELSE 0 END) AS DIGMAT_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ytd_amt ELSE 0 END) AS DIGMAT_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.comm_curr_amt ELSE 0 END) AS DIGMAT_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS DIGMAT_SALES_LYTD_AMT, 
+
     SUM(CASE WHEN comm_group_cd = 'SALD30' THEN ss.comm_curr_amt ELSE 0 END) AS SALD30_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'STMPBA' THEN ss.comm_curr_amt ELSE 0 END) AS STMPBA_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'STMPBA' THEN ss.comm_curr_amt ELSE 0 END) AS STMPBA_COMM_CM_AMT
     
-    SUM(CASE WHEN comm_group_cd = 'BIOFO1' THEN ss.sales_curr_amt ELSE 0 END) AS BIOFO1_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'BIOFO1' THEN ss.gp_curr_amt ELSE 0 END) AS BIOFO1_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'BIOFO1' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS BIOFO1_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'BIOFO1' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS BIOFO1_GP_YTD_AMT, 
-    
-    SUM(CASE WHEN comm_group_cd = 'REDTAG' THEN ss.sales_curr_amt ELSE 0 END) AS REDTAG_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'REDTAG' THEN ss.gp_curr_amt ELSE 0 END) AS REDTAG_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'REDTAG' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS REDTAG_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'REDTAG' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS REDTAG_GP_YTD_AMT
-                       
+                      
   FROM 
            
     dbo.comm_summary AS ss
@@ -513,9 +484,6 @@ FROM
   INNER JOIN dbo.comm_salesperson_master AS m 
   ON s.salesperson_key_id = m.salesperson_key_id 
 
-  INNER JOIN dbo.comm_salesperson_territory_map AS t 
-  ON m.salesperson_territory_cd = t.salesperson_territory_cd
-
 WHERE     
   (m.comm_plan_id LIKE 'FSC%')
 GO
@@ -524,4 +492,6 @@ SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
 GO
+
+-- SELECT * FROM comm_statement_export
 

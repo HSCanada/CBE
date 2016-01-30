@@ -22,7 +22,7 @@ GO
 **	27 Jan 10	tmc		Updated for Comm 2010
 **	02 Dec 10	tmc		Trim SalespersonID and BranchNM
 **	28 Mar 11	tmc		switch Biolase bonus with BDMs
-**    
+--  30 Jan 16	tmc		Update for new comm codes
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_export02]
@@ -31,43 +31,30 @@ SELECT
 	m.employee_num,
 	RTRIM(m.salesperson_key_id) as salesperson_key_id, 
 	m.salesperson_nm, 
-	m.hsi_salesperson_cd,
-
-	-- Group (01)= BONBIO
-	BONBDM_QTY_CM_AMT,
-	BONBDM_QTY_YTD_AMT,
-	BONBDM_GP_CM_AMT,
-	BONBDM_GP_YTD_AMT,
+	master_salesperson_cd AS hsi_salesperson_cd,
 
 	-- Group (02)= BONE4D
-	BONE4D_SALES_CM_AMT,
-	BONE4D_SALES_YTD_AMT,
-	BONE4D_GP_CM_AMT,
-	BONE4D_GP_YTD_AMT,
-	BONE4D_QTY_CM_AMT,
-	BONE4D_QTY_YTD_AMT
+	BONCCS_SALES_CM_AMT,
+	BONCCS_SALES_YTD_AMT,
+	BONCCS_GP_CM_AMT,
+	BONCCS_GP_YTD_AMT,
+	BONCCS_QTY_CM_AMT,
+	BONCCS_QTY_YTD_AMT
 
 FROM         
 	(
 	SELECT     
 		ss.salesperson_key_id, 
 
-		-- Group (01)= BONBIO
-		-- swapped BONBIO
-		Sum(Case When comm_group_cd = 'BONBDM' Then ss.sales_curr_amt Else 0 End) as					BONBDM_QTY_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONBDM' Then ss.sales_ytd_amt + ss.sales_curr_amt Else 0 End) as BONBDM_QTY_YTD_AMT,
-		Sum(Case When comm_group_cd = 'BONBDM' Then ss.gp_curr_amt Else 0 End) as						BONBDM_GP_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONBDM' Then ss.gp_ytd_amt + ss.gp_curr_amt Else 0 End) as		BONBDM_GP_YTD_AMT,
-
 		-- Group (02)= BONE4D
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.sales_curr_amt Else 0 End) as					BONE4D_SALES_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.sales_ytd_amt + ss.sales_curr_amt Else 0 End) as BONE4D_SALES_YTD_AMT,
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.gp_curr_amt Else 0 End) as						BONE4D_GP_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.gp_ytd_amt + ss.gp_curr_amt Else 0 End) as		BONE4D_GP_YTD_AMT,
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.sales_curr_amt Else 0 End) as					BONCCS_SALES_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.sales_ytd_amt + ss.sales_curr_amt Else 0 End) as BONCCS_SALES_YTD_AMT,
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.gp_curr_amt Else 0 End) as						BONCCS_GP_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.gp_ytd_amt + ss.gp_curr_amt Else 0 End) as		BONCCS_GP_YTD_AMT,
 
 		-- Use Cost for Qty field
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.costs_curr_amt Else 0 End) as					BONE4D_QTY_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONE4D' Then ss.costs_ytd_amt + ss.costs_curr_amt Else 0 End) as	BONE4D_QTY_YTD_AMT
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.costs_curr_amt Else 0 End) as					BONCCS_QTY_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONCCS' Then ss.costs_ytd_amt + ss.costs_curr_amt Else 0 End) as	BONCCS_QTY_YTD_AMT
 
 
 
@@ -92,3 +79,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
+-- SELECT * FROM [comm_statement_export02]

@@ -5,7 +5,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 ALTER PROCEDURE [dbo].[comm_summary_update_proc] 
-	@nAuditId int,
 	@bDebug as smallint = 0
 AS
 /******************************************************************************
@@ -38,6 +37,7 @@ AS
 **	27 Jan 10	tmc		Updated for Comm 2010
 **  01 Mar 11	tmc		Add Vendor Item logic to ESS
 --	20 Jan 16	tmc 	Review #FIX, note FSC status used on ESS summary logic!
+--  26 Jan 16	tmc		Removed unneeded ESS Bonus logic and status filters
 **    
 *******************************************************************************/
 
@@ -135,7 +135,7 @@ Begin
 		SELECT     
 			s.salesperson_key_id, 
 			g.comm_group_cd,
-			@nAuditId as audit_id
+			0 as audit_id
 		FROM         
 			comm_salesperson_master s 
 				CROSS JOIN comm_group g
@@ -173,7 +173,7 @@ Begin
 			comm_ref_amt = 0,
 			gp_ref_amt = 0,
 
-			audit_id = @nAuditId
+			audit_id = 0
 	
 		Set @nErrorCode = @@Error
 	End
@@ -206,7 +206,8 @@ Begin
 				comm_transaction
 			WHERE     
 				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
-				(status_cd >= 20)
+--				(status_cd >= 20) AND
+				(1=1)
 			GROUP BY 
 				salesperson_key_id, 
 				item_comm_group_cd) t
@@ -245,7 +246,8 @@ Begin
 				comm_transaction
 			WHERE     
 				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
-				(status_cd >= 20)
+--				(status_cd >= 20) AND
+				(1=1)
 			GROUP BY 
 				ess_salesperson_key_id, 
 				ess_comm_group_cd) t
@@ -280,17 +282,13 @@ Begin
 			FROM         
 				comm_transaction tr
 					INNER JOIN comm_bonus_item sr
-					on tr.IMITEM = sr.IMITEM
+					on tr.item_id = sr.IMITEM
 
 			WHERE     
 				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
---				(fiscal_yearmo_num = '200912') AND 
-				(source_cd in ('ACCPAC', 'JDE')) AND
-				-- Sundry only
---				(item_comm_group_cd Not in ('ITMPAR', 'ITMSER', 'ITMEQ0')) AND
-				-- Valid FSCs only
+				(source_cd ='JDE') AND
 				(comm_plan_id like 'FSC%') AND
-				(status_cd >= 20) AND
+--				(status_cd >= 20) AND
 				1=1
 			GROUP BY 
 				tr.salesperson_key_id,
@@ -302,106 +300,6 @@ Begin
 	
 		Set @nErrorCode = @@Error
 	End
-
--- #FIX
-	if (@bDebug <> 0)
-		Print 'Update ESS Bonus Vendor'
-	
-	If (@nErrorCode = 0) 
-	Begin
-		Update
-			comm_summary
-		Set 
-			sales_curr_amt = t.sales_curr_amt,
-			gp_curr_amt = t.gp_curr_amt
-
-		From 
-			comm_summary s,
-			(
-			SELECT     
-				tr.ess_salesperson_key_id, 
-				sr.comm_group_cd as comm_group_cd,
-				SUM(tr.transaction_amt) AS sales_curr_amt,
-				SUM(tr.gp_ext_amt) AS gp_curr_amt
-			FROM         
-				comm_transaction tr
-					INNER JOIN comm_bonus_vendor sr
-					on tr.manufact_cd = sr.IMSUPL
-
-			WHERE     
-				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
---				(fiscal_yearmo_num = '200912') AND 
-				(source_cd in ('ACCPAC', 'JDE')) AND
-				-- Sundry only
-				(not ess_comm_group_cd in ('ITMPAR', 'ITMSER', 'ITMEQ0', 'ITMSND')) AND
-				-- Valid ESSs only
-				(ess_comm_plan_id like 'ESS%') AND
-				(status_cd >= 20) AND
-				1=1
-			GROUP BY 
-				tr.ess_salesperson_key_id,
-				sr.comm_group_cd
-			) t
-		Where 
-			s.salesperson_key_id = t.ess_salesperson_key_id And
-			s.comm_group_cd = t.comm_group_cd
-	
-		Set @nErrorCode = @@Error
-	End
-
--- #FIX, note HC month...
-
-	if (@bDebug <> 0)
-		Print 'Update ESS Bonus Item'
-	
-	If (@nErrorCode = 0) 
-	Begin
-		Update
-			comm_summary
-		Set 
-			sales_curr_amt = t.sales_curr_amt,
-			gp_curr_amt = t.gp_curr_amt,
-			-- Map Qty to Cost for E4D
-			costs_curr_amt = t.shipped_qty
-		From 
-			comm_summary s,
-			(
-			SELECT     
-				tr.ess_salesperson_key_id, 
-				sr.comm_group_cd as comm_group_cd,
-				SUM(tr.transaction_amt) AS sales_curr_amt,
-				SUM(tr.gp_ext_amt) AS gp_curr_amt,
-				SUM(tr.shipped_qty) AS shipped_qty
-			FROM         
-				comm_transaction tr
-					INNER JOIN comm_bonus_item sr
-					on tr.IMITEM = sr.IMITEM
-
-			WHERE     
---				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
-				(fiscal_yearmo_num = '201101') AND 
-				(source_cd in ('ACCPAC', 'JDE')) AND
-				-- Sundry only
-				(not ess_comm_group_cd in ('ITMPAR', 'ITMSER', 'ITMEQ0', 'ITMSND')) AND
-
---				(item_comm_group_cd Not in ('ITMPAR', 'ITMSER', 'ITMEQ0')) AND
-				-- Valid FSCs only
-				(ess_comm_plan_id like 'ESS%') AND
-				(status_cd >= 20) AND
-				1=1
-			GROUP BY 
-				tr.ess_salesperson_key_id,
-				sr.comm_group_cd
-			) t
-		Where 
-			s.salesperson_key_id = t.ess_salesperson_key_id And
-			s.comm_group_cd = t.comm_group_cd
-	
-		Set @nErrorCode = @@Error
-	End
-
-
-
 
 
 --
@@ -432,7 +330,8 @@ Begin
 				comm_transaction
 			WHERE     
 				(fiscal_yearmo_num = @sRefFiscalYearmoNum) AND 
-				(status_cd >= 20)
+--				(status_cd >= 20) AND
+				(1=1)
 			GROUP BY 
 				salesperson_key_id, 
 				item_comm_group_cd) t
@@ -469,7 +368,8 @@ Begin
 				comm_transaction
 			WHERE     
 				(fiscal_yearmo_num = @sRefFiscalYearmoNum) AND 
-				(status_cd >= 20)
+--				(status_cd >= 20) AND
+				(1=1)
 			GROUP BY 
 				ess_salesperson_key_id, 
 				ess_comm_group_cd) t
@@ -505,7 +405,7 @@ if (@nErrorCode <> 0)
 Begin
 	Set @sMessage = 'comm_summary_update_proc'
 	Set @sMessage = @sMessage + ':  Return(' + Convert(varchar, @nErrorCode) + ')'
-	Set @sMessage = @sMessage +  ', ' + convert(varchar, @nAuditId)
+	Set @sMessage = @sMessage +  ', ' + convert(varchar, 0)
 	Set @sMessage = @sMessage +  ', ' + convert(varchar, @bDebug)
 
 	RAISERROR (50060, 9, 1, @sMessage )
@@ -529,3 +429,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
+-- [comm_summary_update_proc] 1

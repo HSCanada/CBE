@@ -26,7 +26,7 @@ GO
 ** 10 Feb 10	tmc Mapped commission Group to Item Commission Group for completeness
 ** 01 Mar 10	tmc	Add cost audit information to details
 ** 04 Jun 13	tmc	Optimized to use fiscal inner join rather than fiscal filter; 3m+ -> 1 sec.
-**    
+--  30 Jan 16	tmc		Update for new comm codes
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_detail]
@@ -36,25 +36,18 @@ SELECT
 
 	t.salesperson_key_id, 
 	t.source_cd,
-	r1.report_group_1_cd, 
-	r1.report_group_2_cd, 
-	r1.report_group_3_cd, 
 
 	m.salesperson_nm, 
-	t.division_cd, 
 	t.salesperson_cd, 
 	t.comm_plan_id,
 	p.comm_plan_nm, 
 
+	t.ess_salesperson_cd,
+	t.ess_salesperson_key_id,
+
 	t.fiscal_yearmo_num, 
 	c.fiscal_begin_dt, 
 	c.fiscal_end_dt, 
-
-	r2.report_group_txt as master_report_group_txt, 
-	r2.report_sort_id as master_report_sort_id, 
-
-	r1.report_group_txt, 
-	r1.report_sort_id, 
 
 	t.doc_key_id, 
 	t.line_id, 
@@ -63,39 +56,24 @@ SELECT
 
 	t.transaction_dt, 
 
-	t.customer_id, 
+	t.hsi_shipto_id, 
 	t.customer_nm, 
 	t.customer_comm_group_cd,
+	t.item_comm_group_cd,
 
 	t.item_id, 
 	t.transaction_txt, 
-	t.comm_cd, 
-	t.item_comm_group_cd as comm_group_cd, 
 	t.comm_rt, 
-	t.transaction_amt, 
 	t.comm_amt, 
-	t.cost_ext_amt,
 
-	t.hsi_shipto_id,
-	t.IMITEM as hsi_item_id,
-	t.manufact_cd as hsi_manuf_cd,
-
---	Added 9 Sept 09, tmc
-	t.item_comm_group_cd,
-	t.ess_salesperson_cd,
-	t.ess_salesperson_key_id,
+	t.transaction_amt, 
 	t.gp_ext_amt,
+	t.shipped_qty,
 
--- Added 01 Mar 10, tmc
+	t.manufact_cd,
 	t.order_source_cd,
 	t.item_label_cd,
-	t.tagable_item_ind,
-	t.IMCLMJ,
-	t.marketing_adjustment_rt,
-	t.cost_unit_amt,
-	t.shipped_qty,
-	t.avg_cost_unit_amt,
-	t.comm_cost_unit_amt
+	t.IMCLMJ
 
 FROM         
 comm_transaction t
@@ -106,9 +84,6 @@ comm_transaction t
 	INNER JOIN dbo.comm_configure f
 	ON t.fiscal_yearmo_num = f.current_fiscal_yearmo_num
 
---	Left JOIN comm_item_master i
---	ON t.item_id = i.item_id
-
 	INNER JOIN comm_plan p
 	ON m.comm_plan_id = p.comm_plan_id
 
@@ -118,28 +93,13 @@ comm_transaction t
 	INNER JOIN comm_group g
 	ON t.item_comm_group_cd = g.comm_group_cd
 
-		INNER JOIN comm_group_report r1
-		ON g.report_group_3_cd = r1.report_group_3_cd AND 
-			g.report_group_2_cd = r1.report_group_2_cd AND 
-			g.report_group_1_cd = r1.report_group_1_cd 
-
-		INNER JOIN comm_group_report AS r2 
-		ON r1.report_group_1_cd = r2.report_group_1_cd
-
 
 
 WHERE     
 	-- removed in place of joing optimize code 4 Jun 13, tmc
---	t.fiscal_yearmo_num = (Select current_fiscal_yearmo_num From comm_configure) AND 
 
-	t.source_cd in ('ACCPAC', 'JDE', 'IMPORT') And
-
-	t.status_cd = 20 And
-	r1.display_ind = 1 And
-	r2.report_group_2_cd = '' AND 
-	r2.report_group_3_cd = '' AND 
-	r2.display_ind = 1  AND 
-	r1.display_ind = 1 And
+	t.source_cd in ('JDE', 'IMPORT') And
+	g.show_ind = 1 AND
 
 --	t.salesperson_key_id = 'ptario' And
 	1=1
@@ -150,3 +110,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
+-- SELECT * FROM [comm_statement_detail]
