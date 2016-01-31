@@ -5,7 +5,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 ALTER PROCEDURE [dbo].[comm_transaction_load_proc] 
-	@nAuditId int,
 	@bDebug as smallint = 0
 AS
 /******************************************************************************
@@ -34,6 +33,7 @@ AS
 ** 	1 Dec 09	tmc		Added Commit reminder
 ** 	28 Oct 10	tmc		Added item null map to ''
 **	16 Nov 10	tmc		Fixed bug where load only worked first time
+--  30 Jan 16	tmc		Update for new comm codes
 **    
 *******************************************************************************/
 
@@ -102,26 +102,26 @@ Begin
 		INSERT INTO comm_transaction
 		(
 			transaction_dt, 
-			division_cd, 
+--			division_cd, 
 			salesperson_cd, 
 			source_cd, 
 			transaction_amt, 
-			comm_cd, 
+--			comm_cd, 
 			doc_key_id, 
 			line_id, 
 			doc_id, 
 			order_id, 
 			reference_order_txt, 
 			order_source_cd, 
-			customer_id, 
+--			customer_id, 
 			customer_nm, 
 			item_id, 
 			shipped_qty, 
-			price_unit_amt, 
+--			price_unit_amt, 
 			price_override_ind, 
 			transaction_txt, 
-			location_id, 
-			unit_price_cd, 
+--			location_id, 
+--			unit_price_cd, 
 			audit_id, 
 			fiscal_yearmo_num,
 			comm_group_cd,
@@ -142,13 +142,13 @@ Begin
 
 			-- Added for ESS adjustments, 2 May 08
 			ess_salesperson_key_id,
-			ess_comm_group_cd,
+			ess_comm_group_cd
 
 			-- Added PMTS, 2 Aug 08, tmc
-			report_group_1_cd,
+--			report_group_1_cd,
 
 			-- Added Schein JDE item#, 3 Mar 09, tmc
-			IMITEM
+--			IMITEM
 
 			-- Added new fields, 4 Aug 09 tmc
 			,[cost_unit_amt]
@@ -159,7 +159,7 @@ Begin
 			,[IMCLSJ]
 			,[IMCLMC]
 			,[IMCLSM]
-			,[item_org_id]
+--			,[item_org_id]
 			,[file_cost_ext_amt]
 			,[ess_salesperson_cd]
 			,[pmts_salesperson_cd]
@@ -183,29 +183,29 @@ Begin
 		)
 		SELECT     
 			transaction_dt, 
-			isNull(division_cd, '') as division_cd, 
+--			isNull(division_cd, '') as division_cd, 
 			IsNull(salesperson_cd, '') as salesperson_cd, 
 			source_cd, 
 			transaction_amt, 
-			case when comm_cd = 'Z' Then ' ' Else comm_cd End, 
+--			case when comm_cd = 'Z' Then ' ' Else comm_cd End, 
 			doc_key_id, 
 			line_id, 
 			doc_id, 
 			order_id, 
 			reference_order_txt, 
-			order_source_cd, 
-			customer_id, 
+			IsNull(order_source_cd, '') AS order_source_cd, 
+--			customer_id, 
 			customer_nm, 
 			IsNull(item_id,'') as item_id, 
 			shipped_qty, 
-			price_unit_amt, 
+--			price_unit_amt, 
 			price_override_ind, 
 			Left(transaction_txt,40) as transaction_txt, 
-			location_id, 
-			unit_price_cd, 
+--			location_id, 
+--			unit_price_cd, 
 			isNull(audit_id, 0) as audit_id, 
 			fiscal_yearmo_num,
-			IsNull(comm_group_cd, '') as comm_group_cd,
+			' ' as comm_group_cd,
 			IsNull(comm_amt, 0) as comm_amt,
 
 			IsNull(salesperson_key_id, '') as salesperson_key_id,
@@ -224,13 +224,13 @@ Begin
 
 			-- Added for ESS adjustments, 2 May 08 
 			IsNull(salesperson_ess_key_id, '') as salesperson_ess_key_id,
-			IsNull(ess_comm_group_cd, '') as ess_comm_group_cd,
+			IsNull(ess_comm_group_cd, '') as ess_comm_group_cd
 
 			-- Added PMTS, 2 Aug 08, tmc
-			IsNull(salesperson_pmts_key_id, '') as salesperson_pmts_key_id,
+--			IsNull(salesperson_pmts_key_id, '') as salesperson_pmts_key_id,
 
 			-- Added Schein JDE item#, 3 Mar 09, tmc
-			IsNull(IMITEM, '') as IMITEM
+--			IsNull(IMITEM, '') as IMITEM
 
 			-- Added new fields, 4 Aug 09 tmc
 			,IsNull([cost_unit_amt],0) AS cost_unit_amt
@@ -241,7 +241,7 @@ Begin
 			,IsNull([IMCLSJ], '') as IMCLSJ
 			,IsNull([IMCLMC], '') as IMCLMC
 			,IsNull([IMCLSM], '') as IMCLSM
-			,IsNull([item_org_id], '') as item_org_id
+--			,IsNull([item_org_id], '') as item_org_id
 			,IsNull([file_cost_ext_amt], 0) as file_cost_ext_amt
 			,IsNull([ess_salesperson_cd], '') as ess_salesperson_cd
 			,IsNull([pmts_salesperson_cd], '') as pmts_salesperson_cd
@@ -264,7 +264,8 @@ Begin
 		FROM         
 			comm_transaction_stage
 		WHERE     
-			(record_exists IS NULL)
+--			(record_exists IS NULL) AND
+			(1=1)
 
 		Set @nErrorCode = @@Error
 	End
@@ -306,7 +307,7 @@ if (@nErrorCode <> 0)
 Begin
 	Set @sMessage = 'comm_transaction_load_proc'
 	Set @sMessage = @sMessage + ':  Return(' + Convert(varchar, @nErrorCode) + ')'
-	Set @sMessage = @sMessage +  ', ' + convert(varchar, @nAuditId)
+	Set @sMessage = @sMessage +  ', ' + convert(varchar, 0)
 	Set @sMessage = @sMessage +  ', ' + convert(varchar, @bDebug)
 
 	RAISERROR (50060, 9, 1, @sMessage )
@@ -330,3 +331,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
+-- EXEC [comm_transaction_load_proc] 1

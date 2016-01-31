@@ -59,6 +59,8 @@ SELECT
 	t.customer_comm_group_cd,
 	t.ess_comm_group_cd AS item_comm_group_cd, 
 
+	g.comm_group_desc,
+
 	t.item_id, 
 	t.transaction_txt, 
 	t.ess_comm_rt AS comm_rt, 
