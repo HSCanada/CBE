@@ -31,7 +31,7 @@ SELECT
 	m.employee_num,
 	RTRIM(m.salesperson_key_id) as salesperson_key_id, 
 	m.salesperson_nm, 
-	master_salesperson_cd AS hsi_salesperson_cd,
+	RTRIM(master_salesperson_cd) AS hsi_salesperson_cd,
 
 	-- Group (02)= BONE4D
 	BONCCS_SALES_CM_AMT,

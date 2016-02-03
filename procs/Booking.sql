@@ -9,11 +9,11 @@ FROM
 	comm_transaction 
 	
 	INNER JOIN comm_group AS g 
-	ON comm_transaction.comm_group_cd = g.comm_group_cd
+	ON comm_transaction.item_comm_group_cd = g.comm_group_cd
 
 WHERE     
-	(g.booking_act_ind = 1) AND 
-	(comm_transaction.fiscal_yearmo_num between '201512' and '201512')
+	(g.booking_rt > 0)  AND 
+	(comm_transaction.fiscal_yearmo_num = '201601' )
 
 -- ESS
 
@@ -30,8 +30,8 @@ FROM
 	ON comm_transaction.ess_comm_group_cd = g.comm_group_cd
 
 WHERE     
-	(g.booking_act_ind = 1) AND 
-	(comm_transaction.fiscal_yearmo_num between '201512' and '201512')
+	(g.booking_rt > 0)  AND 
+	(comm_transaction.fiscal_yearmo_num = '201601' )
 
 GO
 

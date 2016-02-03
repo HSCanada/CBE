@@ -33,6 +33,7 @@ GO
 **	01 Feb 13	tmc		Set Free Goods to use Current Month instead of in Arrears
 **  25 Apr 14	tmc		replaces CNX with MID comm code in summary
 --  29 Jan 16	tmc		Update for new comm codes
+--	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_export]
@@ -42,11 +43,11 @@ SELECT
   m.employee_num,
   RTRIM(m.salesperson_key_id) AS salesperson_key_id,
   m.salesperson_nm,
-  '' as salesperson_territory_cd,
-  RTRIM(m.branch_cd) AS branch_nm,
-  '' AS zone_nm,
-  m.comm_plan_id,
-  m.master_salesperson_cd as hsi_salesperson_cd,
+  RTRIM(m.branch_cd) as branch_cd,
+  RTRIM(b.branch_nm) AS branch_nm,
+  RTRIM(b.zone_cd) AS zone_nm,
+  RTRIM(m.comm_plan_id) AS comm_plan_id,
+  RTRIM(m.master_salesperson_cd) as hsi_salesperson_cd,
   m.territory_start_dt,
 
   s.ITMSND_SALES_CM_AMT,
@@ -483,6 +484,10 @@ FROM
 
   INNER JOIN dbo.comm_salesperson_master AS m 
   ON s.salesperson_key_id = m.salesperson_key_id 
+
+  INNER JOIN dbo.comm_branch AS b
+  ON m.branch_cd = b.branch_cd 
+
 
 WHERE     
   (m.comm_plan_id LIKE 'FSC%')

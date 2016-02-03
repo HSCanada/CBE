@@ -38,6 +38,7 @@ AS
 **  01 Mar 11	tmc		Add Vendor Item logic to ESS
 --	20 Jan 16	tmc 	Review #FIX, note FSC status used on ESS summary logic!
 --  26 Jan 16	tmc		Removed unneeded ESS Bonus logic and status filters
+--	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
 **    
 *******************************************************************************/
 
@@ -239,8 +240,11 @@ Begin
 				ess_salesperson_key_id as salesperson_key_id, 
 				ess_comm_group_cd as comm_group_cd, 
 				SUM(transaction_amt) AS sales_curr_amt, 
-				SUM(cost_ext_amt) AS costs_curr_amt, 
-				SUM(comm_amt) AS comm_curr_amt,
+				SUM(cost_ext_amt) AS costs_curr_amt,
+
+--	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
+				SUM(ess_comm_amt) AS comm_curr_amt,
+--				SUM(comm_amt) AS comm_curr_amt,
 				SUM(gp_ext_amt) AS gp_curr_amt
 			FROM         
 				comm_transaction
@@ -362,7 +366,9 @@ Begin
 				ess_comm_group_cd as comm_group_cd, 
 				SUM(transaction_amt) AS sales_ref_amt, 
 				SUM(cost_ext_amt) AS costs_ref_amt, 
-				SUM(comm_amt) AS comm_ref_amt,
+--	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
+				SUM(ess_comm_amt) AS comm_curr_amt,
+--				SUM(comm_amt) AS comm_curr_amt,
 				SUM(gp_ext_amt) AS gp_ref_amt
 			FROM         
 				comm_transaction

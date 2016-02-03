@@ -18,6 +18,7 @@ GO
 *******************************************************************************
 **	Date:	Author:		Description:
 **	-------	-------		-------------------------------------------
+--	29 Jan 16	tmc 	Update for 2016 Plan
 **    
 *******************************************************************************/
 
@@ -28,12 +29,11 @@ SELECT
 	min(t.fiscal_yearmo_num) as fiscal_yearmo_num,
 	min(t.ess_salesperson_cd) as ess_salesperson_cd
 FROM 
-	comm_transaction t INNER JOIN 
-		comm_configure c
-		ON t.fiscal_yearmo_num = c.current_fiscal_yearmo_num
+	comm_transaction t
 WHERE 
-	(t.ess_salesperson_cd<>'') AND
-	(t.source_cd='JDE')
+	(ess_comm_plan_id in ('ESSGP', 'CCSGP')) AND
+	(t.source_cd='JDE') AND
+	(t.fiscal_yearmo_num = (Select current_fiscal_yearmo_num from comm_configure))
 GROUP BY 
 	t.doc_id
 GO

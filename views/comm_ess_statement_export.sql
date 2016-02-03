@@ -259,4 +259,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM [comm_ess_statement_export]
+-- SELECT * FROM [comm_ess_statement_export] order by 1
