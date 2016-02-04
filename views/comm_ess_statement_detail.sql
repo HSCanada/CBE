@@ -25,6 +25,7 @@ GO
 **  14 Jan 11	tmc		Bug fix where post adjustments are not being included in details
 **	23 Sep 13	tmc		Remove CUSINS,ITMARS,ITMTEE from Details 
 --  30 Jan 16	tmc		Update for new comm codes
+-- 03 Feb 16	tmc		Add Plan-specific group hiding
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_ess_statement_detail]
@@ -94,15 +95,20 @@ FROM
   INNER JOIN dbo.comm_group AS g 
   ON t.ess_comm_group_cd = g.comm_group_cd 
 
+-- 03 Feb 16	tmc		Add Plan-specific group hiding
+  INNER JOIN dbo.comm_plan_group_rate AS pr 
+  ON (t.ess_comm_plan_id = pr.comm_plan_id) AND 
+	(t.ess_comm_group_cd = pr.comm_group_cd)
+
 WHERE     
 
   (t.source_cd IN ('JDE', 'IMPORT')) AND 
-	g.show_ind = 1 AND
+
+-- 03 Feb 16	tmc		Add Plan-specific group hiding
+	(pr.show_ind = 1) AND
+--	g.show_ind = 1 AND
 
 --	t.ess_salesperson_key_id = 'JASON.CARWAY' And
-
--- #FIX
---  (t.ess_comm_group_cd NOT IN ('ITMEQ0', 'ITMSER', 'ITMPAR', 'ITMSND', 'ITMCAM', 'ITMARS', 'CUSINS', 'ITMTEE')) AND 
 
   (1 = 1)
 

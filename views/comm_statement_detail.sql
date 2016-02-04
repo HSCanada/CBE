@@ -26,7 +26,8 @@ GO
 ** 10 Feb 10	tmc Mapped commission Group to Item Commission Group for completeness
 ** 01 Mar 10	tmc	Add cost audit information to details
 ** 04 Jun 13	tmc	Optimized to use fiscal inner join rather than fiscal filter; 3m+ -> 1 sec.
---  30 Jan 16	tmc		Update for new comm codes
+--  30 Jan 16	tmc	Update for new comm codes
+-- 03 Feb 16	tmc	Fixed wrong comm rate field 
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_detail]
@@ -65,7 +66,9 @@ SELECT
 
 	t.item_id, 
 	t.transaction_txt, 
-	t.comm_rt, 
+-- 03 Feb 16	tmc	Fixed wrong comm rate field 
+	t.item_comm_rt, 
+--	t.comm_rt, 
 	t.comm_amt, 
 
 	t.transaction_amt, 

@@ -26,6 +26,8 @@ GO
 **  01 Apr 13	tmc		Add ESS commission plan (to filter out retired plans
 **	25 Apr 14	tmc		Replace ITMCNX with ITMMID 
 --  29 Jan 16	tmc		Update for new comm codes
+--	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
+
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_ess_statement_export]
@@ -35,8 +37,10 @@ SELECT
 	m.employee_num,
 	RTRIM(m.salesperson_key_id) AS ESS_key_id,
 	m.salesperson_nm AS ESS_nm,
-	RTRIM(m.branch_cd) AS branch_nm,
-	m.comm_plan_id AS ESS_comm_plan_id,
+
+	RTRIM(b.branch_nm) AS branch_nm,
+	RTRIM(b.zone_cd) AS zone_nm,
+
 	m.master_salesperson_cd AS ESS_code,
 	m.territory_start_dt AS start_dt,
 
@@ -131,7 +135,10 @@ SELECT
 
 	s.FRESEQ_GP_CM_AMT,
 	s.FRESEQ_COMM_CM_AMT,
-	s.FRESEQ_GP_YTD_AMT
+	s.FRESEQ_GP_YTD_AMT,
+
+	m.comm_plan_id as ESS_comm_plan_id,
+	RTRIM(m.branch_cd) AS branch_cd
 
 
 FROM 
@@ -247,6 +254,11 @@ FROM
 
   INNER JOIN dbo.comm_salesperson_master AS m 
   ON s.salesperson_key_id = m.salesperson_key_id 
+
+--	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
+  INNER JOIN dbo.comm_branch AS b
+  ON m.branch_cd = b.branch_cd 
+
 
 WHERE     
   (m.comm_plan_id LIKE 'ESS%') OR
