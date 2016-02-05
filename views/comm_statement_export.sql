@@ -34,6 +34,7 @@ GO
 **  25 Apr 14	tmc		replaces CNX with MID comm code in summary
 --  29 Jan 16	tmc		Update for new comm codes
 --	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
+-- 04 Feb 16	tmc		Fixed DIGMAT field map bug
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_export]
@@ -457,14 +458,15 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_curr_amt ELSE 0 END) AS FRESEQ_GP_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.comm_curr_amt ELSE 0 END) AS FRESEQ_COMM_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS FRESEQ_GP_YTD_AMT, 
-   
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_curr_amt ELSE 0 END) AS DIGMAT_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ref_amt ELSE 0 END) AS DIGMAT_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_curr_amt ELSE 0 END) AS DIGMAT_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.comm_curr_amt ELSE 0 END) AS DIGMAT_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ytd_amt ELSE 0 END) AS DIGMAT_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.comm_curr_amt ELSE 0 END) AS DIGMAT_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS DIGMAT_SALES_LYTD_AMT, 
+
+-- 04 Feb 16	tmc		Fixed DIGMAT field map bug
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_curr_amt ELSE 0 END) AS					DIGMAT_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ref_amt ELSE 0 END) AS						DIGMAT_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_curr_amt ELSE 0 END) AS						DIGMAT_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.comm_curr_amt ELSE 0 END) AS						DIGMAT_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGMAT_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		DIGMAT_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'DIGMAT' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	DIGMAT_SALES_LYTD_AMT, 
 
     SUM(CASE WHEN comm_group_cd = 'SALD30' THEN ss.comm_curr_amt ELSE 0 END) AS SALD30_COMM_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'STMPBA' THEN ss.comm_curr_amt ELSE 0 END) AS STMPBA_COMM_CM_AMT
