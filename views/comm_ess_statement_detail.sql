@@ -26,6 +26,7 @@ GO
 **	23 Sep 13	tmc		Remove CUSINS,ITMARS,ITMTEE from Details 
 --  30 Jan 16	tmc		Update for new comm codes
 -- 03 Feb 16	tmc		Add Plan-specific group hiding
+-- 10 Feb 16	tmc	Removed legacy customer_comm_group_cd
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_ess_statement_detail]
@@ -57,7 +58,8 @@ SELECT
 
 	t.hsi_shipto_id, 
 	t.customer_nm, 
-	t.customer_comm_group_cd,
+-- 10 Feb 16	tmc	Removed legacy customer_comm_group_cd
+--	t.customer_comm_group_cd,
 	t.ess_comm_group_cd AS item_comm_group_cd, 
 
 	g.comm_group_desc,

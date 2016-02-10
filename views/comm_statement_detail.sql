@@ -28,6 +28,7 @@ GO
 ** 04 Jun 13	tmc	Optimized to use fiscal inner join rather than fiscal filter; 3m+ -> 1 sec.
 --  30 Jan 16	tmc	Update for new comm codes
 -- 03 Feb 16	tmc	Fixed wrong comm rate field 
+-- 10 Feb 16	tmc	Removed legacy customer_comm_group_cd
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_detail]
@@ -59,7 +60,8 @@ SELECT
 
 	t.hsi_shipto_id, 
 	t.customer_nm, 
-	t.customer_comm_group_cd,
+-- 10 Feb 16	tmc	Removed legacy customer_comm_group_cd
+--	t.customer_comm_group_cd,
 	t.item_comm_group_cd,
 
 	g.comm_group_desc,
