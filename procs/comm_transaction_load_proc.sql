@@ -5,10 +5,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 ALTER PROCEDURE [dbo].[comm_transaction_load_proc] 
-	@bDebug as smallint = 0
+	@bDebug as smallint = 1
 AS
 /******************************************************************************
-**	File: 
+**	File:	
 **	Name: comm_transaction_load_proc
 **	Desc: copy commission tranaction from stage to prod
 **
@@ -34,6 +34,7 @@ AS
 ** 	28 Oct 10	tmc		Added item null map to ''
 **	16 Nov 10	tmc		Fixed bug where load only worked first time
 --  30 Jan 16	tmc		Update for new comm codes
+--	24 Feb 16	tmc		Finalize Automation, remove legacy, and set Debug to default
 **    
 *******************************************************************************/
 
@@ -45,6 +46,23 @@ Set @nTranCount = @@Trancount
 
 Declare @sCurrentFiscalYearmoNum char(6)
 Declare @nBatchStatus int
+
+SET NOCOUNT ON;
+if (@bDebug <> 0)
+	SET NOCOUNT OFF;
+
+if (@bDebug <> 0) 
+Begin
+	Print '---------------------------------------------------------'
+	Print 'Proc: comm_transaction_load_proc'
+	Print 'Desc: copy commission tranaction from stage to prod'
+	Print 'Mode: DEBUG'
+	Print '---------------------------------------------------------'
+End
+
+------------------------------------------------------------------------------------------------------------
+-- Init routines.  
+------------------------------------------------------------------------------------------------------------
 
 Set @sCurrentFiscalYearmoNum = ''
 Set @nBatchStatus = -1
@@ -60,7 +78,7 @@ Else
 If (@nErrorCode = 0) 
 Begin
 	if (@bDebug <> 0)
-		Print 'Lookup Current Fiscal Period (CFP)'
+		Print 'Get Current Fiscal Month'
 
 	Select 	
 		@sCurrentFiscalYearmoNum = current_fiscal_yearmo_num
@@ -70,14 +88,11 @@ Begin
 	Set @nErrorCode = @@Error
 End
 
-if (@bDebug <> 0)
-	Print 'Fiscal =' + @sCurrentFiscalYearmoNum
-
 	
 If (@nErrorCode = 0) 
 Begin
 	if (@bDebug <> 0)
-		Print 'Get BatchStatus for CFP'
+		Print 'Get BatchStatus'
 
 	Select 	
 		@nBatchStatus = status_cd
@@ -88,8 +103,18 @@ Begin
 	
 	Set @nErrorCode = @@Error
 End
+
+------------------------------------------------------------------------------------------------------------
+-- Update routines.  
+------------------------------------------------------------------------------------------------------------
+
 if (@bDebug <> 0)
-	Print 'Batch Status =' + Convert(varchar, @nBatchStatus)
+Begin
+	Print 'Confirm BatchStatus NOT locked'
+	Print @sCurrentFiscalYearmoNum
+	Print Convert(varchar, @nBatchStatus)
+End
+
 
 If (@nBatchStatus <>999)
 Begin
@@ -97,34 +122,27 @@ Begin
 	If (@nErrorCode = 0) 
 	Begin
 		if (@bDebug <> 0)
-			Print 'Load transaction data = YES'
+			Print 'Copy STAGE to PROD'
 
 		INSERT INTO comm_transaction
 		(
 			transaction_dt, 
---			division_cd, 
 			salesperson_cd, 
 			source_cd, 
 			transaction_amt, 
---			comm_cd, 
 			doc_key_id, 
 			line_id, 
 			doc_id, 
 			order_id, 
 			reference_order_txt, 
 			order_source_cd, 
---			customer_id, 
 			customer_nm, 
 			item_id, 
 			shipped_qty, 
---			price_unit_amt, 
 			price_override_ind, 
 			transaction_txt, 
---			location_id, 
---			unit_price_cd, 
 			audit_id, 
 			fiscal_yearmo_num,
-			comm_group_cd,
 			comm_amt,
 			salesperson_key_id,
 			item_comm_group_cd,
@@ -134,8 +152,6 @@ Begin
 			gp_ext_amt,
 			tax_gst_amt,
 			tax_pst_amt,
-			contact_nm,
-			ship_via_txt,
 			doc_type_cd,
 
 			hsi_shipto_id,
@@ -144,22 +160,14 @@ Begin
 			ess_salesperson_key_id,
 			ess_comm_group_cd
 
-			-- Added PMTS, 2 Aug 08, tmc
---			report_group_1_cd,
-
-			-- Added Schein JDE item#, 3 Mar 09, tmc
---			IMITEM
-
 			-- Added new fields, 4 Aug 09 tmc
 			,[cost_unit_amt]
 			,[item_label_cd]
 			,[cost_ext_amt]
-			,[IMSUPL]
 			,[IMCLMJ]
 			,[IMCLSJ]
 			,[IMCLMC]
 			,[IMCLSM]
---			,[item_org_id]
 			,[file_cost_ext_amt]
 			,[ess_salesperson_cd]
 			,[pmts_salesperson_cd]
@@ -183,29 +191,22 @@ Begin
 		)
 		SELECT     
 			transaction_dt, 
---			isNull(division_cd, '') as division_cd, 
 			IsNull(salesperson_cd, '') as salesperson_cd, 
 			source_cd, 
 			transaction_amt, 
---			case when comm_cd = 'Z' Then ' ' Else comm_cd End, 
 			doc_key_id, 
 			line_id, 
 			doc_id, 
 			order_id, 
 			reference_order_txt, 
 			IsNull(order_source_cd, '') AS order_source_cd, 
---			customer_id, 
 			customer_nm, 
 			IsNull(item_id,'') as item_id, 
 			shipped_qty, 
---			price_unit_amt, 
 			price_override_ind, 
 			Left(transaction_txt,40) as transaction_txt, 
---			location_id, 
---			unit_price_cd, 
 			isNull(audit_id, 0) as audit_id, 
 			fiscal_yearmo_num,
-			' ' as comm_group_cd,
 			IsNull(comm_amt, 0) as comm_amt,
 
 			IsNull(salesperson_key_id, '') as salesperson_key_id,
@@ -216,8 +217,6 @@ Begin
 			IsNull(gp_ext_amt, 0) as gp_ext_amt,
 			IsNull(tax_gst_amt, 0) as tax_gst_amt,
 			IsNull(tax_pst_amt, 0) as tax_pst_amt,
-			IsNull(contact_nm, '') as contact_nm,
-			IsNull(ship_via_txt, '') as ship_via_txt,
 			IsNull(doc_type_cd, '')as doc_type_cd,
 
 			IsNull(hsi_shipto_id, 0) as hsi_shipto_id,
@@ -226,22 +225,14 @@ Begin
 			IsNull(salesperson_ess_key_id, '') as salesperson_ess_key_id,
 			IsNull(ess_comm_group_cd, '') as ess_comm_group_cd
 
-			-- Added PMTS, 2 Aug 08, tmc
---			IsNull(salesperson_pmts_key_id, '') as salesperson_pmts_key_id,
-
-			-- Added Schein JDE item#, 3 Mar 09, tmc
---			IsNull(IMITEM, '') as IMITEM
-
 			-- Added new fields, 4 Aug 09 tmc
 			,IsNull([cost_unit_amt],0) AS cost_unit_amt
 			,IsNull([item_label_cd], '') as item_label_cd
 			,IsNull([cost_ext_amt], 0) as cost_ext_amt
-			,IsNull([IMSUPL], '') as IMSUPL
 			,IsNull([IMCLMJ], '') as IMCLMJ
 			,IsNull([IMCLSJ], '') as IMCLSJ
 			,IsNull([IMCLMC], '') as IMCLMC
 			,IsNull([IMCLSM], '') as IMCLSM
---			,IsNull([item_org_id], '') as item_org_id
 			,IsNull([file_cost_ext_amt], 0) as file_cost_ext_amt
 			,IsNull([ess_salesperson_cd], '') as ess_salesperson_cd
 			,IsNull([pmts_salesperson_cd], '') as pmts_salesperson_cd
@@ -264,7 +255,6 @@ Begin
 		FROM         
 			comm_transaction_stage
 		WHERE     
---			(record_exists IS NULL) AND
 			(1=1)
 
 		Set @nErrorCode = @@Error
@@ -274,12 +264,16 @@ Begin
 	If (@nErrorCode = 0) 
 	Begin
 		if (@bDebug <> 0)
-			Print 'Clear Stage trans'	
+			Print 'Clear STAGE'
 		
 		Delete FROM comm_transaction_stage
 
 		Set @nErrorCode = @@Error
 	End
+
+------------------------------------------------------------------------------------------------------------
+-- Wrap-up routines.  
+------------------------------------------------------------------------------------------------------------
 
 	If (@nErrorCode = 0) 
 	Begin
@@ -289,7 +283,7 @@ Begin
 		Update
 			comm_batch_control
 		Set 
-			status_cd = 20
+			status_cd = 10
 		Where 
 			fiscal_yearmo_num = @sCurrentFiscalYearmoNum
 	
@@ -307,7 +301,6 @@ if (@nErrorCode <> 0)
 Begin
 	Set @sMessage = 'comm_transaction_load_proc'
 	Set @sMessage = @sMessage + ':  Return(' + Convert(varchar, @nErrorCode) + ')'
-	Set @sMessage = @sMessage +  ', ' + convert(varchar, 0)
 	Set @sMessage = @sMessage +  ', ' + convert(varchar, @bDebug)
 
 	RAISERROR (50060, 9, 1, @sMessage )
@@ -331,4 +324,5 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- EXEC [comm_transaction_load_proc] 1
+-- Debug
+-- EXEC comm_transaction_load_proc

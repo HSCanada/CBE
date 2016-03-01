@@ -5,7 +5,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 ALTER PROCEDURE [dbo].[comm_summary_update_proc] 
-	@bDebug as smallint = 0
+	@bDebug as smallint = 1
 AS
 /******************************************************************************
 **	File: 
@@ -39,6 +39,8 @@ AS
 --	20 Jan 16	tmc 	Review #FIX, note FSC status used on ESS summary logic!
 --  26 Jan 16	tmc		Removed unneeded ESS Bonus logic and status filters
 --	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
+--	24 Feb 16	tmc		Finalize Automation, remove legacy, and set Debug to default
+
 **    
 *******************************************************************************/
 
@@ -53,6 +55,23 @@ Declare @nCurrentFiscalYearmoNumQty int
 Declare @sRefFiscalYearmoNum char(6)
 Declare @nBatchStatus int
 
+SET NOCOUNT ON;
+if (@bDebug <> 0)
+	SET NOCOUNT OFF;
+
+if (@bDebug <> 0) 
+Begin
+	Print '---------------------------------------------------------'
+	Print 'Proc: comm_summary_update_proc'
+	Print 'Desc: Update summary table based on transaction details'
+	Print 'Mode: DEBUG'
+	Print '---------------------------------------------------------'
+End
+
+------------------------------------------------------------------------------------------------------------
+-- Init routines.  
+------------------------------------------------------------------------------------------------------------
+
 Set @sCurrentFiscalYearmoNum = ''
 Set @nCurrentFiscalYearmoNumQty = 0
 Set @nBatchStatus = -1
@@ -63,11 +82,12 @@ if (@nTranCount = 0)
 Else
 	Save Tran mytran
 
-if (@bDebug <> 0)
-	Print 'Lookup Current Fiscal Period (CFP)'
 
 If (@nErrorCode = 0) 
 Begin
+	if (@bDebug <> 0)
+			Print 'Get Current Fiscal Month'
+
 	Select 	
 		@sCurrentFiscalYearmoNum = current_fiscal_yearmo_num
 	From 
@@ -76,14 +96,13 @@ Begin
 	Set @nErrorCode = @@Error
 End
 
-if (@bDebug <> 0)
-	Print 'CurrentFiscalYearmoNum = ' + @sCurrentFiscalYearmoNum 
 
-if (@bDebug <> 0)
-	Print 'Get BatchStatus for CFP'
-	
 If (@nErrorCode = 0) 
 Begin
+
+	if (@bDebug <> 0)
+		Print 'Get BatchStatus'
+
 	Select 	
 		@nBatchStatus = status_cd,
 		@nCurrentFiscalYearmoNumQty = fiscal_yearmo_qty
@@ -95,13 +114,12 @@ Begin
 	Set @nErrorCode = @@Error
 End
 
-if (@bDebug <> 0)
-	Print Convert(varchar, @nBatchStatus)
-if (@bDebug <> 0)
-	Print 'Lookup Ref Fiscal Period (CFP)'
 
 If (@nErrorCode = 0) 
 Begin
+	if (@bDebug <> 0)
+		Print 'Get PY Fiscal Month'
+
 	Select 	
 		@sRefFiscalYearmoNum = fiscal_yearmo_num
 	From 
@@ -112,21 +130,28 @@ Begin
 	Set @nErrorCode = @@Error
 End
 
-if (@bDebug <> 0)
-	Print 'RefFiscalYearmoNum = ' + @sRefFiscalYearmoNum
+------------------------------------------------------------------------------------------------------------
+-- Update routines.  
+------------------------------------------------------------------------------------------------------------
 
 if (@bDebug <> 0)
-	Print 'BatchStatus Data Verifed but not closed?'
-
-If (@nBatchStatus >= 20 and @nBatchStatus < 999)
 Begin
+	Print 'Confirm BatchStatus NOT locked'
+	Print @sCurrentFiscalYearmoNum
+	Print @sRefFiscalYearmoNum
+	Print @nBatchStatus
+End
 
-	if (@bDebug <> 0)
-		Print 'Append any missing Summary Records'
-	
+
+If (@nBatchStatus >= 10 and @nBatchStatus < 999)
+Begin
 	
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Append Missing Records'
+
 		Insert Into comm_summary 
 		(
 			salesperson_key_id,
@@ -155,12 +180,13 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 
-	if (@bDebug <> 0)
-		Print 'Set Current values to 0 & update audit number '
-	
 	
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Init values to 0'
+
 		Update
 			comm_summary
 		Set 
@@ -179,13 +205,12 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 	
-
-	if (@bDebug <> 0)
-		Print 'Update Summary Curr to match FSC Detail transactions'
-	
-	
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Build FSC'
+
 		Update
 			comm_summary
 		Set 
@@ -220,12 +245,12 @@ Begin
 	End
 
 
-	if (@bDebug <> 0)
-		Print 'Update Summary Curr to match ESS Detail transactions'
-	
-	
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Build ESS'
+
 		Update
 			comm_summary
 		Set 
@@ -262,11 +287,13 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 
-	if (@bDebug <> 0)
-		Print 'Update FSC Bonus Item'
-	
+
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Build FSC Bonus'
+
 		Update
 			comm_summary
 		Set 
@@ -292,7 +319,6 @@ Begin
 				(fiscal_yearmo_num = @sCurrentFiscalYearmoNum) AND 
 				(source_cd ='JDE') AND
 				(comm_plan_id like 'FSC%') AND
---				(status_cd >= 20) AND
 				1=1
 			GROUP BY 
 				tr.salesperson_key_id,
@@ -306,13 +332,13 @@ Begin
 	End
 
 
---
-
-	if (@bDebug <> 0)
-		Print 'Update FSC Summary Ref to match Detail transactions LY'
-		
+	
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Build FSC PY'
+
 		Update
 			comm_summary
 		Set 
@@ -346,11 +372,17 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 
-	if (@bDebug <> 0)
-		Print 'Update ESS Summary Ref to match Detail transactions LY'
+
+--
+--
 		
 	If (@nErrorCode = 0) 
 	Begin
+
+		if (@bDebug <> 0)
+			Print 'Update Summary - Build ESS PY'
+
+
 		Update
 			comm_summary
 		Set 
@@ -362,23 +394,21 @@ Begin
 		From 
 			comm_summary s,
 			(SELECT     
-				ess_salesperson_key_id as salesperson_key_id, 
-				ess_comm_group_cd as comm_group_cd, 
+				salesperson_key_id, 
+				item_comm_group_cd as comm_group_cd, 
 				SUM(transaction_amt) AS sales_ref_amt, 
 				SUM(cost_ext_amt) AS costs_ref_amt, 
---	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
-				SUM(ess_comm_amt) AS comm_curr_amt,
---				SUM(comm_amt) AS comm_curr_amt,
+				SUM(comm_amt) AS comm_ref_amt,
 				SUM(gp_ext_amt) AS gp_ref_amt
 			FROM         
 				comm_transaction
 			WHERE     
 				(fiscal_yearmo_num = @sRefFiscalYearmoNum) AND 
---				(status_cd >= 20) AND
 				(1=1)
 			GROUP BY 
-				ess_salesperson_key_id, 
-				ess_comm_group_cd) t
+				salesperson_key_id, 
+				item_comm_group_cd
+			) t
 		Where 
 			s.salesperson_key_id = t.salesperson_key_id And
 			s.comm_group_cd = t.comm_group_cd
@@ -386,8 +416,15 @@ Begin
 		Set @nErrorCode = @@Error
 	End
 
+--
+--
+
+------------------------------------------------------------------------------------------------------------
+-- Wrap-up routines.  
+------------------------------------------------------------------------------------------------------------
+
 	if (@bDebug <> 0)
-		Print 'Set BatchStatus to Processed'	
+			Print 'Set BatchStatus to Processed'	
 	
 	If (@nErrorCode = 0) 
 	Begin
@@ -411,7 +448,6 @@ if (@nErrorCode <> 0)
 Begin
 	Set @sMessage = 'comm_summary_update_proc'
 	Set @sMessage = @sMessage + ':  Return(' + Convert(varchar, @nErrorCode) + ')'
-	Set @sMessage = @sMessage +  ', ' + convert(varchar, 0)
 	Set @sMessage = @sMessage +  ', ' + convert(varchar, @bDebug)
 
 	RAISERROR (50060, 9, 1, @sMessage )
@@ -435,4 +471,8 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- [comm_summary_update_proc] 1
+-- Debug
+-- Exec comm_summary_update_proc
+
+-- Prod
+-- Exec comm_summary_update_proc 0
