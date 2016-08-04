@@ -40,6 +40,7 @@ AS
 --  26 Jan 16	tmc		Removed unneeded ESS Bonus logic and status filters
 --	02 Feb 16	tmc		Fixed ESS Comm rollup bug (FSC amt used instead of ESS)
 --	24 Feb 16	tmc		Finalize Automation, remove legacy, and set Debug to default
+--  27 May 16	tmc		Fix ESS PY summary bug 
 
 **    
 *******************************************************************************/
@@ -394,11 +395,19 @@ Begin
 		From 
 			comm_summary s,
 			(SELECT     
-				salesperson_key_id, 
-				item_comm_group_cd as comm_group_cd, 
+--  27 May 16	tmc		Fix ESS PY summary bug 
+				ess_salesperson_key_id as salesperson_key_id, 
+				ess_comm_group_cd as comm_group_cd, 
+--				salesperson_key_id, 
+--				item_comm_group_cd as comm_group_cd, 
+
 				SUM(transaction_amt) AS sales_ref_amt, 
 				SUM(cost_ext_amt) AS costs_ref_amt, 
-				SUM(comm_amt) AS comm_ref_amt,
+
+--  27 May 16	tmc		Fix ESS PY summary bug 
+				SUM(ess_comm_amt) AS comm_ref_amt,
+--				SUM(comm_amt) AS comm_ref_amt,
+
 				SUM(gp_ext_amt) AS gp_ref_amt
 			FROM         
 				comm_transaction
@@ -406,8 +415,11 @@ Begin
 				(fiscal_yearmo_num = @sRefFiscalYearmoNum) AND 
 				(1=1)
 			GROUP BY 
-				salesperson_key_id, 
-				item_comm_group_cd
+--  27 May 16	tmc		Fix ESS PY summary bug 
+				ess_salesperson_key_id, 
+				ess_comm_group_cd
+--				salesperson_key_id, 
+--				item_comm_group_cd
 			) t
 		Where 
 			s.salesperson_key_id = t.salesperson_key_id And
