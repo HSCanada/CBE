@@ -29,6 +29,7 @@ GO
 --  30 Jan 16	tmc	Update for new comm codes
 -- 03 Feb 16	tmc	Fixed wrong comm rate field 
 -- 10 Feb 16	tmc	Removed legacy customer_comm_group_cd
+-- 29 Sep 16	tmc	Add PO number to help ID conventions
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_detail]
@@ -80,7 +81,10 @@ SELECT
 	t.manufact_cd,
 	t.order_source_cd,
 	t.item_label_cd,
-	t.IMCLMJ
+	t.IMCLMJ,
+
+-- 29 Sep 16	tmc	Add PO number to help ID conventions
+	customer_po_num
 
 FROM         
 comm_transaction t
