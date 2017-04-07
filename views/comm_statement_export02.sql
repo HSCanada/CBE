@@ -23,6 +23,7 @@ GO
 **	02 Dec 10	tmc		Trim SalespersonID and BranchNM
 **	28 Mar 11	tmc		switch Biolase bonus with BDMs
 --  30 Jan 16	tmc		Update for new comm codes
+--  04 Apr 17	tmc		Update for 2017 bonus -- scanners and mills
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_statement_export02]
@@ -34,12 +35,12 @@ SELECT
 	RTRIM(master_salesperson_cd) AS hsi_salesperson_cd,
 
 	-- Group (02)= BONE4D
-	BONCCS_SALES_CM_AMT,
-	BONCCS_SALES_YTD_AMT,
-	BONCCS_GP_CM_AMT,
-	BONCCS_GP_YTD_AMT,
-	BONCCS_QTY_CM_AMT,
-	BONCCS_QTY_YTD_AMT
+	BONSCNMIL_SALES_CM_AMT,
+	BONSCNMIL_SALES_YTD_AMT,
+	BONSCNMIL_GP_CM_AMT,
+	BONSCNMIL_GP_YTD_AMT,
+	BONSCNMIL_QTY_CM_AMT,
+	BONSCNMIL_QTY_YTD_AMT
 
 FROM         
 	(
@@ -47,14 +48,14 @@ FROM
 		ss.salesperson_key_id, 
 
 		-- Group (02)= BONE4D
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.sales_curr_amt Else 0 End) as					BONCCS_SALES_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.sales_ytd_amt + ss.sales_curr_amt Else 0 End) as BONCCS_SALES_YTD_AMT,
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.gp_curr_amt Else 0 End) as						BONCCS_GP_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.gp_ytd_amt + ss.gp_curr_amt Else 0 End) as		BONCCS_GP_YTD_AMT,
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.sales_curr_amt Else 0 End) as					BONSCNMIL_SALES_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.sales_ytd_amt + ss.sales_curr_amt Else 0 End) as BONSCNMIL_SALES_YTD_AMT,
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.gp_curr_amt Else 0 End) as						BONSCNMIL_GP_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.gp_ytd_amt + ss.gp_curr_amt Else 0 End) as		BONSCNMIL_GP_YTD_AMT,
 
 		-- Use Cost for Qty field
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.costs_curr_amt Else 0 End) as					BONCCS_QTY_CM_AMT,
-		Sum(Case When comm_group_cd = 'BONCCS' Then ss.costs_ytd_amt + ss.costs_curr_amt Else 0 End) as	BONCCS_QTY_YTD_AMT
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.costs_curr_amt Else 0 End) as					BONSCNMIL_QTY_CM_AMT,
+		Sum(Case When comm_group_cd = 'BONIMP' Then ss.costs_ytd_amt + ss.costs_curr_amt Else 0 End) as	BONSCNMIL_QTY_YTD_AMT
 
 
 
@@ -79,4 +80,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM [comm_statement_export02]
+-- SELECT  * FROM [comm_statement_export02]
