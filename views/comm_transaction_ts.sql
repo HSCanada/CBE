@@ -18,58 +18,61 @@ GO
 *******************************************************************************
 **	Date:	Author:		Description:
 **	-------	-------		-------------------------------------------
+--	12 Apr 17	tmc		Added ess_comm group for DSS role, removed fiscal filter
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_transaction_ts]
 AS
 SELECT     
-	record_id, 
+	record_id 
 
-	fiscal_yearmo_num, 
-	CAST (fiscal_yearmo_num AS int) as FiscalMonth,
+	,fiscal_yearmo_num
+	,CAST (fiscal_yearmo_num AS int) as FiscalMonth
 
-	salesperson_key_id, 
-	ess_salesperson_key_id, 
-	order_source_cd, 
-	reference_order_txt, 
-	doc_id, 
-	CAST (doc_id AS int) as SalesOrderNumber,
+	,salesperson_key_id
+	,ess_salesperson_cd
+	,ess_salesperson_key_id
+	,order_source_cd
+	,reference_order_txt
+	,doc_id
+	,CAST (doc_id AS int) as SalesOrderNumber
 
-	item_id, 
-	transaction_txt, 
+	,item_id
+	,transaction_txt
 
-	item_comm_group_cd, 
-	shipped_qty, 
-	transaction_amt, 
-	gp_ext_amt, 
+	,item_comm_group_cd
+	,ess_comm_group_cd
+	,shipped_qty
+	,transaction_amt
+	,gp_ext_amt
 
-	transaction_dt, 
+	,transaction_dt
 
-	source_cd, 
-	doc_key_id, 
-	line_id, 
+	,source_cd 
+	,doc_key_id
+	,line_id
 
-	salesperson_cd, 
-	customer_nm, 
-	comm_plan_id, 
+	,salesperson_cd
+	,customer_nm
+	,comm_plan_id
 
-	doc_type_cd, 
-	hsi_shipto_id, 
-	ess_salesperson_cd, 
-	hsi_shipto_div_cd,  
-	manufact_cd, 
-	sales_category_cd, 
-	customer_po_num,
-	IMCLMJ
+	,doc_type_cd
+	,hsi_shipto_id
+	,hsi_shipto_div_cd
+	,manufact_cd
+	,sales_category_cd
+	,customer_po_num
+	,IMCLMJ
 
 FROM         
 	comm_transaction AS t
 
 WHERE     
 	t.source_cd = 'JDE' AND
-	t.fiscal_yearmo_num = (SELECT current_fiscal_yearmo_num FROM comm_configure) AND
+--	t.fiscal_yearmo_num = (SELECT current_fiscal_yearmo_num FROM comm_configure) AND
 
 --	t.salesperson_key_id = 'ptario' And
+	fiscal_yearmo_num >= 201701 AND
 	1=1
 GO
 
