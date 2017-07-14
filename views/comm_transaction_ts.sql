@@ -19,6 +19,7 @@ GO
 **	Date:	Author:		Description:
 **	-------	-------		-------------------------------------------
 --	12 Apr 17	tmc		Added ess_comm group for DSS role, removed fiscal filter
+-- 
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_transaction_ts]
@@ -35,8 +36,7 @@ SELECT
 	,order_source_cd
 	,reference_order_txt
 	,doc_id
-	,CAST (doc_id AS int) as SalesOrderNumber
-
+	,CASE WHEN ISNUMERIC(doc_id)=1 THEN CAST(doc_id AS int) ELSE 0 END as SalesOrderNumber
 	,item_id
 	,transaction_txt
 
@@ -68,9 +68,10 @@ FROM
 	comm_transaction AS t
 
 WHERE     
-	t.source_cd = 'JDE' AND
---	t.fiscal_yearmo_num = (SELECT current_fiscal_yearmo_num FROM comm_configure) AND
+	t.source_cd IN('JDE', 'IMPORT') AND
+--	t.source_cd = 'JDE' AND
 
+--	t.fiscal_yearmo_num = (SELECT current_fiscal_yearmo_num FROM comm_configure) AND
 --	t.salesperson_key_id = 'ptario' And
 	fiscal_yearmo_num >= 201701 AND
 	1=1
@@ -81,4 +82,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM [comm_transaction_ts]
+-- SELECT top 100 * FROM [comm_transaction_ts]

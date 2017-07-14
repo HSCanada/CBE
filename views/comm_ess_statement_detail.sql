@@ -107,10 +107,7 @@ WHERE
   (t.source_cd IN ('JDE', 'IMPORT')) AND 
 
 -- 03 Feb 16	tmc		Add Plan-specific group hiding
-	(pr.show_ind = 1) AND
---	g.show_ind = 1 AND
-
---	t.ess_salesperson_key_id = 'JASON.CARWAY' And
+--	(pr.show_ind = 1) AND
 
   (1 = 1)
 
@@ -121,4 +118,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM comm_ess_statement_detail
+-- SELECT * FROM comm_ess_statement_detail WHERE doc_id = '10290539'
