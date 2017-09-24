@@ -35,7 +35,7 @@ Option Explicit
 'Development
 'Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLD3092\SQL2005;DATABASE=comm_dev"
 'Production
-Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLSQ03;DATABASE=comm_prod"
+Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLSQ03;DATABASE=DEV_commBE"
 
 Const msApplicationName As String = "CommissionAdmin"
 Const msApplicationVersionNum As String = "1.00"
@@ -231,7 +231,7 @@ On Error GoTo eh:
     If Not (rs.EOF And rs.BOF) Then
         rs.MoveLast
         rs.MoveFirst
-        nBatchSize = rs.RecordCount
+        nBatchSize = CInt(rs.RecordCount)
         ReDim recBatch(nBatchSize)
     
         For i = 1 To nBatchSize
@@ -292,7 +292,7 @@ On Error GoTo eh:
     If Not (rs.EOF And rs.BOF) Then
         rs.MoveLast
         rs.MoveFirst
-        nBatchSize = rs.RecordCount
+        nBatchSize = CInt(rs.RecordCount)
         ReDim recBatch(nBatchSize)
     
         For i = 1 To nBatchSize

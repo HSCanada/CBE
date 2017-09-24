@@ -1,4 +1,4 @@
 ﻿STAGE_TransferDoc
-ODBC;DSN=COMM_PROD;Description=COMM_PROD;Trusted_Connection=Yes;APP=Microsoft Office 2013;DATABASE=CommBE
+ODBC;DSN=DEV_CommBE;Description=DEV_CommBE;Trusted_Connection=Yes;APP=Microsoft Office 2016;DATABASE=DEV_CommBE
 dbo.STAGE_TransferDoc
 transfer_doc_id_

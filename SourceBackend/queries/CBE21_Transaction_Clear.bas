@@ -1,6 +1,6 @@
 ﻿dbMemo "SQL" ="truncate table comm_transaction_stage"
-dbMemo "Connect" ="ODBC;DSN=COMM_PROD;Description=COMM_PROD;UID=tcrowley;Trusted_Connection=Yes;DAT"
-    "ABASE=CommBE"
+dbMemo "Connect" ="ODBC;DSN=DEV_CommBE;Description=DEV_CommBE;Trusted_Connection=Yes;DATABASE=DEV_C"
+    "ommBE"
 dbBoolean "ReturnsRecords" ="0"
 dbInteger "ODBCTimeout" ="0"
 dbBoolean "LogMessages" ="0"

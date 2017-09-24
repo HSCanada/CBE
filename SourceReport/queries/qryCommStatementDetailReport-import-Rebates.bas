@@ -1,8 +1,8 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_statement_detail.salesperson_key_id)=GetCurrentFSC()) AND ((comm_stateme"
-    "nt_detail.source_cd)=\"IMPORT\") AND (([comm_statement_detail].[comm_group_cd]) "
-    "In (\"REBSND\",\"REBTEE\")))"
+Where ="(((comm_statement_detail.salesperson_key_id)=GetCurrentFSC()) And ((comm_stateme"
+    "nt_detail.source_cd)=\"IMPORT\") And ((comm_statement_detail.comm_group_cd) In ("
+    "\"REBSND\",\"REBTEE\")))"
 Begin InputTables
     Name ="comm_statement_detail"
 End
@@ -214,6 +214,48 @@ Begin
     Begin
         dbText "Name" ="comm_statement_detail.hsi_item_id"
         dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="Expr1"
+    End
+    Begin
+        dbText "Name" ="Expr2"
+    End
+    Begin
+        dbText "Name" ="Expr3"
+    End
+    Begin
+        dbText "Name" ="Expr4"
+    End
+    Begin
+        dbText "Name" ="Expr5"
+    End
+    Begin
+        dbText "Name" ="Expr6"
+    End
+    Begin
+        dbText "Name" ="Expr7"
+    End
+    Begin
+        dbText "Name" ="Expr8"
+    End
+    Begin
+        dbText "Name" ="Expr9"
+    End
+    Begin
+        dbText "Name" ="Expr10"
+    End
+    Begin
+        dbText "Name" ="Expr11"
+    End
+    Begin
+        dbText "Name" ="Expr12"
+    End
+    Begin
+        dbText "Name" ="Expr13"
+    End
+    Begin
+        dbText "Name" ="comm_rt"
     End
 End
 Begin
