@@ -36,6 +36,7 @@ GO
 --	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
 -- 04 Feb 16	tmc		Fixed DIGMAT field map bug
 -- 03 May 16	tmc		Added new Special Market Free Goods fields and GP YTD LYTD
+-- 05 Nov 17	tmc		Merge DIGCCC -> DIGCCS, DIGCIM -> DIGIMP for Cerec
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_export]
@@ -485,17 +486,16 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.gp_ref_amt ELSE 0 END) AS						ITMISC_GP_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMISC' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			ITMISC_GP_LYTD_AMT, 
 
-    
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_curr_amt ELSE 0 END) AS					DIGCCS_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ref_amt ELSE 0 END) AS						DIGCCS_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_curr_amt ELSE 0 END) AS						DIGCCS_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.comm_curr_amt ELSE 0 END) AS						DIGCCS_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGCCS_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		DIGCCS_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	DIGCCS_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.sales_curr_amt ELSE 0 END) AS					DIGCCS_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.sales_ref_amt ELSE 0 END) AS						DIGCCS_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.gp_curr_amt ELSE 0 END) AS						DIGCCS_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.comm_curr_amt ELSE 0 END) AS						DIGCCS_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGCCS_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		DIGCCS_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	DIGCCS_SALES_LYTD_AMT, 
 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_ref_amt ELSE 0 END) AS						DIGCCS_GP_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGCCS' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			DIGCCS_GP_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.gp_ref_amt ELSE 0 END) AS						DIGCCS_GP_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd in('DIGCCS', 'DIGCCC') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			DIGCCS_GP_LYTD_AMT, 
 
     
     SUM(CASE WHEN comm_group_cd = 'ITMCPU' THEN ss.sales_curr_amt ELSE 0 END) AS					ITMCPU_SALES_CM_AMT, 
@@ -521,17 +521,16 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'SFFFIN' THEN ss.gp_ref_amt ELSE 0 END) AS						SFFFIN_GP_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'SFFFIN' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			SFFFIN_GP_LYTD_AMT, 
 
-    
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_curr_amt ELSE 0 END) AS					DIGIMP_SALES_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ref_amt ELSE 0 END) AS						DIGIMP_SALES_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_curr_amt ELSE 0 END) AS						DIGIMP_GP_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.comm_curr_amt ELSE 0 END) AS						DIGIMP_COMM_CM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGIMP_SALES_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		DIGIMP_GP_YTD_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	DIGIMP_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.sales_curr_amt ELSE 0 END) AS					DIGIMP_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.sales_ref_amt ELSE 0 END) AS					DIGIMP_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.gp_curr_amt ELSE 0 END) AS						DIGIMP_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.comm_curr_amt ELSE 0 END) AS					DIGIMP_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS DIGIMP_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		DIGIMP_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	DIGIMP_SALES_LYTD_AMT, 
 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_ref_amt ELSE 0 END) AS						DIGIMP_GP_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'DIGIMP' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			DIGIMP_GP_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.gp_ref_amt ELSE 0 END) AS						DIGIMP_GP_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGIMP', 'DIGCIM') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS		DIGIMP_GP_LYTD_AMT, 
 
     
     SUM(CASE WHEN comm_group_cd = 'ITMPAR' THEN ss.sales_curr_amt ELSE 0 END) AS					ITMPAR_SALES_CM_AMT, 
@@ -646,7 +645,11 @@ FROM
 
   WHERE      
     (comm_group_cd <> '') AND 
-    (salesperson_key_id <> '')
+    (salesperson_key_id <> '') AND
+--	testing
+--	(comm_group_cd IN ('DIGCCC', 'DIGCIM')) AND
+
+	(1=1)
 
   GROUP BY 
     salesperson_key_id
@@ -667,6 +670,8 @@ SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
 GO
+
+-- [dbo].[comm_summary_update_proc] 0
 
 -- SELECT * FROM comm_statement_export
 

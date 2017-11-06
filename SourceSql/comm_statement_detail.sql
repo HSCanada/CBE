@@ -121,4 +121,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM [comm_statement_detail]
+-- SELECT top 10 * FROM [comm_statement_detail] where item_comm_group_cd IN ('DIGCIM', 'DIGCCC')

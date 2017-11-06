@@ -28,6 +28,7 @@ GO
 --  29 Jan 16	tmc		Update for new comm codes
 --	02 Feb 16	tmc		Added Zone, Branch fields back, ensure key codes trimmed
 --	02 Aug 16	tmc		Added GP YTD LYTD
+-- 05 Nov 17	tmc		Breakout DIGCCC+DIGCIM -> DIGCCC for Cerec
 
 **    
 *******************************************************************************/
@@ -176,8 +177,17 @@ SELECT
     SFFFIN_GP_LYTD_AMT, 
 
     FRESEQ_GP_LYM_AMT, 
-    FRESEQ_GP_LYTD_AMT
+    FRESEQ_GP_LYTD_AMT,
 --
+    DIGCCC_SALES_CM_AMT, 
+    DIGCCC_SALES_LYM_AMT, 
+    DIGCCC_GP_CM_AMT, 
+    DIGCCC_COMM_CM_AMT, 
+    DIGCCC_SALES_YTD_AMT, 
+    DIGCCC_GP_YTD_AMT, 
+    DIGCCC_SALES_LYTD_AMT,
+    DIGCCC_GP_LYM_AMT, 
+    DIGCCC_GP_LYTD_AMT
 
 
 FROM 
@@ -314,14 +324,29 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		FRESEQ_GP_YTD_AMT,
 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ref_amt ELSE 0 END) AS						FRESEQ_GP_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			FRESEQ_GP_LYTD_AMT
+    SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			FRESEQ_GP_LYTD_AMT,
+
+	---
+	--	(comm_group_cd IN ('DIGCCC', 'DIGCIM')) AND
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_curr_amt ELSE 0 END)						AS DIGCCC_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_ref_amt ELSE 0 END)						AS DIGCCC_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_curr_amt ELSE 0 END)							AS DIGCCC_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.comm_curr_amt ELSE 0 END)						AS DIGCCC_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END)	AS DIGCCC_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END)			AS DIGCCC_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END)		AS DIGCCC_SALES_LYTD_AMT,
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ref_amt ELSE 0 END)							AS DIGCCC_GP_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END)			AS DIGCCC_GP_LYTD_AMT
 
   FROM          
 
     dbo.comm_summary AS ss
   WHERE      
     (comm_group_cd <> '') AND 
-    (salesperson_key_id <> '')
+    (salesperson_key_id <> '') AND
+-- Testing
+--	(comm_group_cd IN ('DIGCCC', 'DIGCIM')) AND
+	(1=1)
 
   GROUP BY 
     salesperson_key_id
@@ -337,8 +362,9 @@ FROM
 
 
 WHERE     
-  (m.comm_plan_id LIKE 'ESS%') OR
-  (m.comm_plan_id LIKE 'CCS%')
+	((m.comm_plan_id LIKE 'ESS%') OR (m.comm_plan_id LIKE 'CCS%')) AND
+	(1=1)
+
 
 GO
 
@@ -347,4 +373,4 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
--- SELECT * FROM [comm_ess_statement_export] order by 1
+-- SELECT top 10 * FROM [comm_ess_statement_export] order by 1
