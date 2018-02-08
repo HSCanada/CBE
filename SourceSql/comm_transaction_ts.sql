@@ -19,7 +19,7 @@ GO
 **	Date:	Author:		Description:
 **	-------	-------		-------------------------------------------
 --	12 Apr 17	tmc		Added ess_comm group for DSS role, removed fiscal filter
--- 
+--  07 Feb 18	tmc		Updated to 2018 -- terrible hack TBfixed
 *******************************************************************************/
 
 ALTER VIEW [dbo].[comm_transaction_ts]
@@ -73,7 +73,7 @@ WHERE
 
 --	t.fiscal_yearmo_num = (SELECT current_fiscal_yearmo_num FROM comm_configure) AND
 --	t.salesperson_key_id = 'ptario' And
-	fiscal_yearmo_num >= 201701 AND
+	fiscal_yearmo_num >= 201801 AND
 	1=1
 GO
 
