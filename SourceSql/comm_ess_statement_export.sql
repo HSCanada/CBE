@@ -167,7 +167,14 @@ SELECT
     DIGCCC_GP_YTD_AMT, 
     DIGCCC_SALES_LYTD_AMT,
     DIGCCC_GP_LYM_AMT, 
-    DIGCCC_GP_LYTD_AMT
+    DIGCCC_GP_LYTD_AMT,
+
+	s.DIGIMP_SALES_CM_AMT,
+	s.DIGIMP_SALES_LYM_AMT,
+	s.DIGIMP_GP_CM_AMT,
+	s.DIGIMP_SALES_YTD_AMT,
+	s.DIGIMP_GP_YTD_AMT,
+	s.DIGIMP_SALES_LYTD_AMT
 
 
 FROM 
@@ -295,7 +302,19 @@ FROM
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END)			AS DIGCCC_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END)		AS DIGCCC_SALES_LYTD_AMT,
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ref_amt ELSE 0 END)							AS DIGCCC_GP_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END)			AS DIGCCC_GP_LYTD_AMT
+    SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END)			AS DIGCCC_GP_LYTD_AMT,
+
+	-- adding breakout to help ID ESS with CCS billings
+	SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.sales_curr_amt ELSE 0 END)						AS DIGIMP_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.sales_ref_amt ELSE 0 END)						AS DIGIMP_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.gp_curr_amt ELSE 0 END)						AS DIGIMP_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.comm_curr_amt ELSE 0 END)						AS DIGIMP_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END)	AS DIGIMP_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END)		AS DIGIMP_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END)	AS DIGIMP_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.gp_ref_amt ELSE 0 END)							AS DIGIMP_GP_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd IN('DIGIMP') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END)			AS DIGIMP_GP_LYTD_AMT 
+
 
   FROM          
 
