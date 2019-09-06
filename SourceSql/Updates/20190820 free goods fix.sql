@@ -284,19 +284,19 @@ order by 1
 -- Map actual (calendar)
 
 UPDATE       comm_free_goods_redeem
-SET                FiscalMonth_actual =m.fiscal_yearmo_num
+SET                FiscalMonth_actual =m.fiscal_yearmo_num, process_status_cd = 1
 FROM            comm_free_goods_redeem INNER JOIN
                          comm_salesorder_ESS_map AS m ON comm_free_goods_redeem.CalMonth = m.CalMonth AND 
                          comm_free_goods_redeem.SalesOrderNumber = m.SalesOrderNumber
-WHERE        (comm_free_goods_redeem.CalMonth between 201801 and 201912) AND (comm_free_goods_redeem.DocType = 'AA') AND (comm_free_goods_redeem.SourceCode like 'A%')
+WHERE        (comm_free_goods_redeem.CalMonth between 201701 and 201912) AND (comm_free_goods_redeem.DocType = 'AA') AND (comm_free_goods_redeem.SourceCode like 'A%')
 
 
 -- Map est (fiscal)
 
 UPDATE       comm_free_goods_redeem
-SET                FiscalMonth_actual =m.fiscal_yearmo_num
+SET                FiscalMonth_actual =m.fiscal_yearmo_num, process_status_cd = 1
 FROM            comm_free_goods_redeem INNER JOIN
                          comm_salesorder_ESS_map AS m ON comm_free_goods_redeem.CalMonth = m.fiscal_yearmo_num AND 
                          comm_free_goods_redeem.SalesOrderNumber = m.SalesOrderNumber
-WHERE        (comm_free_goods_redeem.CalMonth between 201801 and 201912) AND (comm_free_goods_redeem.DocType = 'AA') AND (comm_free_goods_redeem.SourceCode like 'E%')
+WHERE        (comm_free_goods_redeem.CalMonth between 201701 and 201912) AND (comm_free_goods_redeem.DocType = 'AA') AND (comm_free_goods_redeem.SourceCode like 'E%')
 
