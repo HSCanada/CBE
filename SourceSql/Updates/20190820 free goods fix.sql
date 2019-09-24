@@ -342,3 +342,26 @@ WHERE
 	(comm_free_goods_redeem.CalMonth between 201901 and 201912) AND 
 	(process_status_cd = 0) AND
 	(1=1)
+
+-- add index for validation performance, 23 Sep 19
+
+BEGIN TRANSACTION
+GO
+CREATE NONCLUSTERED INDEX itegration_comm_free_goods_redeem_idx_01 ON dbo.itegration_comm_free_goods_redeem
+	(
+	Item
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX itegration_comm_free_goods_redeem_idx_02 ON dbo.itegration_comm_free_goods_redeem
+	(
+	SalesOrderNumber
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX itegration_comm_free_goods_redeem_idx_03 ON dbo.itegration_comm_free_goods_redeem
+	(
+	ShipTo
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE dbo.itegration_comm_free_goods_redeem SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
