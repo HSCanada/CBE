@@ -45,7 +45,8 @@ FROM
 
 WHERE 
 	(t.source_cd='JDE') AND
---	(t.fiscal_yearmo_num = (Select current_fiscal_yearmo_num from comm_configure))  AND
+	(t.fiscal_yearmo_num >= 201908) AND
+--	(t.fiscal_yearmo_num >= (Select current_fiscal_yearmo_num)  from comm_configure)) -1 AND
 --	(ess_comm_plan_id in ('ESSGP', 'CCSGP')) AND
 --	(t.doc_id='12239760') AND
 	(1=1)
@@ -61,4 +62,6 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 -- Select top 10 * from [comm_salesorder_ESS_map] where doc_id = '12239760'
+
+-- Select count (*) from [comm_salesorder_ESS_map] where doc_id = '12239760'
 
