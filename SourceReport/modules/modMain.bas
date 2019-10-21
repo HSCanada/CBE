@@ -23,6 +23,7 @@ Option Explicit
 ' ***************************************************************************
 ' **  Date:   Author:     Description:
 ' **  -----   ----------  --------------------------------------------
+' **  21 Oct 19 tmc         update ODBC to point to new SQL1
 ' **
 ' ***************************************************************************
 
@@ -35,10 +36,10 @@ Option Explicit
 'Development
 'Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLD3092\SQL2005;DATABASE=comm_dev"
 'Production
-Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLSQL2;DATABASE=CommBE"
+Const gCONNECTIONSTRING As String = "ODBC;DRIVER=SQL Server;SERVER=CAHSIONNLSQL1;DATABASE=DEV_BRSales"
 
 Const msApplicationName As String = "CommissionAdmin"
-Const msApplicationVersionNum As String = "1.00"
+Const msApplicationVersionNum As String = "1.01"
 Const mnODBCTimeout As Integer = 120
 
 
@@ -119,7 +120,8 @@ On Error GoTo eh:
     qd.ReturnsRecords = True
     qd.ODBCTimeout = mnODBCTimeout
     
-    qd.sql = "SELECT current_fiscal_yearmo_num, output_path_txt, log_filepath_txt FROM comm_configure"
+    qd.sql = "SELECT PriorFiscalMonth AS current_fiscal_yearmo_num, comm_output_path_txt AS output_path_txt, comm_log_filepath_txt AS log_filepath_txt FROM dbo.BRS_Config"
+'    qd.sql = "SELECT current_fiscal_yearmo_num, output_path_txt, log_filepath_txt FROM comm_configure"
     Debug.Print qd.sql
     Set rs = qd.OpenRecordset(dbOpenForwardOnly, dbSQLPassThrough)
     
@@ -543,8 +545,8 @@ Private Function ExportDocuments(sSalespersonKeyId As String, sReportId As Strin
     
     bSuccess = False
 ' work on pdf later
-        If (ExportReport(sSalespersonKeyId, "", sReportId, "rptCommStatementDetailReport", "CommissionDetail")) Then
-            If (ExportExcel(sSalespersonKeyId, sReportId, "qryCommStatementDetailExport", "CommissionDetail")) Then
+        If (ExportReport(sSalespersonKeyId, "", sReportId, "rptCommStatementDetailReport", "CommissionDetail_NEW")) Then
+            If (ExportExcel(sSalespersonKeyId, sReportId, "qryCommStatementDetailExport", "CommissionDetail_NEW")) Then
                 bSuccess = True
             End If
         End If
@@ -560,8 +562,8 @@ Private Function ExportDocumentsESS(sSalespersonKeyId As String, sReportId As St
     bSuccess = False
         
 ' work on pdf later
-    If (ExportReport(sSalespersonKeyId, "", sReportId, "rptCommESSStatementDetailReport", "CommissionDetail")) Then
-        If (ExportExcel(sSalespersonKeyId, sReportId, "qryCommESSStatementDetailExport", "CommissionDetail")) Then
+    If (ExportReport(sSalespersonKeyId, "", sReportId, "rptCommESSStatementDetailReport", "CommissionDetail_NEW")) Then
+        If (ExportExcel(sSalespersonKeyId, sReportId, "qryCommESSStatementDetailExport", "CommissionDetail_NEW")) Then
             bSuccess = True
         End If
     End If
@@ -791,33 +793,36 @@ End Sub
 
 Sub ExportBatchESS_Summary()
 
-    ExportReportPDF "", "CALGY", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "CALGY"
-    ExportReportPDF "", "EDMON", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "EDMON"
-    ExportReportPDF "", "HALFX", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "HALFX"
-    ExportReportPDF "", "LONDN", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "LONDN"
-    ExportReportPDF "", "MNTRL", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "MNTRL"
-    ExportReportPDF "", "OTTWA", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "OTTWA"
-    ExportReportPDF "", "QUEBC", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "QUEBC"
-    ExportReportPDF "", "REGIN", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "REGIN"
-    ExportReportPDF "", "SJOHN", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "SJOHN"
-    ExportReportPDF "", "TORNT", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "TORNT"
-    ExportReportPDF "", "VACVR", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "VACVR"
-    ExportReportPDF "", "VICTR", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "VICTR"
-    ExportReportPDF "", "WINPG", "BranchESS-Signoff", "rptCommESSStatementSummaryReport", "WINPG"
+    ExportReportPDF "", "CALGY", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "CALGY"
+    ExportReportPDF "", "EDMON", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "EDMON"
+    ExportReportPDF "", "HALFX", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "HALFX"
+    ExportReportPDF "", "LONDN", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "LONDN"
+    ExportReportPDF "", "MNTRL", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "MNTRL"
+    ExportReportPDF "", "OTTWA", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "OTTWA"
+    ExportReportPDF "", "QUEBC", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "QUEBC"
+    ExportReportPDF "", "REGIN", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "REGIN"
+    ExportReportPDF "", "SJOHN", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "SJOHN"
+    ExportReportPDF "", "TORNT", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "TORNT"
+    ExportReportPDF "", "VACVR", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "VACVR"
+    ExportReportPDF "", "VICTR", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "VICTR"
+    ExportReportPDF "", "WINPG", "BranchESS-Signoff_NEW", "rptCommESSStatementSummaryReport", "WINPG"
 
 End Sub
 
 
-'   Export FSC reports
+'   Export Detail reports (called by Macro)
 Public Function ExportFSCCommBatch()
     InitParams
-    UpdateSummary
+    ' fix this?
+'    UpdateSummary
     
+    '' ESS Detail
     ExportBatchESS
-    ExportBatchESS_Summary
-
+    ' ESS sign-off
+'    ExportBatchESS_Summary
 ''    MsgBox "ESS Details exported!"
-    
+
+    ' FSC Detail
     ExportBatch
     MsgBox "FSC Details exported!"
     
@@ -826,7 +831,7 @@ End Function
 Sub Test()
     InitParams
     
-    ExportBatch
-    
+
+   
     MsgBox "Done!"
 End Sub
