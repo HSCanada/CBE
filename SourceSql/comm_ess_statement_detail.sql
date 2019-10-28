@@ -107,7 +107,7 @@ WHERE
   (t.source_cd IN ('JDE', 'IMPORT')) AND 
 
 -- 03 Feb 16	tmc		Add Plan-specific group hiding
---	(pr.show_ind = 1) AND
+	(pr.show_ind = 1) AND
 
   (1 = 1)
 
