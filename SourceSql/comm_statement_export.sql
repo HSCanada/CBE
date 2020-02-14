@@ -40,6 +40,7 @@ GO
 -- 05 Feb 18	tmc		Updated FSC for 2018 (legacy)
 --	16 Apr 18	tmc		Moved DIGLAB -> DIGCIM for FSC
 -- 04 Feb 19	tmc		Moved DIGCIM -> DIGIMP for 2019 plan
+-- 02 Feb 20	tmc		added EPS breakout
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_export]
@@ -321,7 +322,19 @@ SELECT
   s.SPMREB_SALES_LYM_AMT,
   s.SPMREB_COMM_CM_AMT,
   s.SPMREB_SALES_YTD_AMT,
-  s.SPMREB_SALES_LYTD_AMT
+  s.SPMREB_SALES_LYTD_AMT,
+
+	-- added EPS breakout, tmc, 2 Feb 20
+    s.ITMEPS_SALES_CM_AMT, 
+    s.ITMEPS_SALES_LYM_AMT, 
+    s.ITMEPS_GP_CM_AMT, 
+    s.ITMEPS_COMM_CM_AMT, 
+    s.ITMEPS_SALES_YTD_AMT, 
+    s.ITMEPS_GP_YTD_AMT, 
+    s.ITMEPS_SALES_LYTD_AMT, 
+    s.ITMEPS_GP_LYM_AMT, 
+    s.ITMEPS_GP_LYTD_AMT
+
 
 FROM         
 (
@@ -336,7 +349,18 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'ITMSND' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		ITMSND_GP_YTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMSND' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	ITMSND_SALES_LYTD_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMSND' THEN ss.gp_ref_amt ELSE 0 END) AS						ITMSND_GP_LYM_AMT, 
-    SUM(CASE WHEN comm_group_cd = 'ITMSND' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			ITMSND_GP_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMSND' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			ITMSND_GP_LYTD_AMT,
+	
+	-- added EPS breakout, tmc, 2 Feb 20
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.sales_curr_amt ELSE 0 END) AS					ITMEPS_SALES_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.sales_ref_amt ELSE 0 END) AS						ITMEPS_SALES_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.gp_curr_amt ELSE 0 END) AS						ITMEPS_GP_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.comm_curr_amt ELSE 0 END) AS						ITMEPS_COMM_CM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.sales_ytd_amt + ss.sales_curr_amt ELSE 0 END) AS ITMEPS_SALES_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.gp_ytd_amt + ss.gp_curr_amt ELSE 0 END) AS		ITMEPS_GP_YTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.sales_ly_amt + ss.sales_ref_amt ELSE 0 END) AS	ITMEPS_SALES_LYTD_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.gp_ref_amt ELSE 0 END) AS						ITMEPS_GP_LYM_AMT, 
+    SUM(CASE WHEN comm_group_cd = 'ITMEPS' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			ITMEPS_GP_LYTD_AMT, 
 
     SUM(CASE WHEN comm_group_cd = 'REBSND' THEN ss.sales_curr_amt ELSE 0 END) AS					REBSND_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'REBSND' THEN ss.sales_ref_amt ELSE 0 END) AS						REBSND_SALES_LYM_AMT, 
