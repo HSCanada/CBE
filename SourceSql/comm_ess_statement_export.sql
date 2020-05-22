@@ -228,7 +228,7 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'ITMFRT' THEN ss.gp_ref_amt ELSE 0 END) AS						ITMFRT_GP_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'ITMFRT' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			ITMFRT_GP_LYTD_AMT, 
 
---- DIGOTH - tbd
+--- CCS - DIGOTH
 
 	SUM(CASE WHEN comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGLAB', 'DIGOTH', 'ITMCPU', 'ITMSOF') THEN ss.sales_curr_amt ELSE 0 END)						AS DIGOTH_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGLAB', 'DIGOTH', 'ITMCPU', 'ITMSOF') THEN ss.sales_ref_amt ELSE 0 END)						AS DIGOTH_SALES_LYM_AMT, 
@@ -296,8 +296,7 @@ FROM
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ref_amt ELSE 0 END) AS						FRESEQ_GP_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd = 'FRESEQ' THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END) AS			FRESEQ_GP_LYTD_AMT,
 
-	---
-	-- DIGCCC - good
+	-- CCS - DIGCCC
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_curr_amt ELSE 0 END)						AS DIGCCC_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.sales_ref_amt ELSE 0 END)						AS DIGCCC_SALES_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_curr_amt ELSE 0 END)							AS DIGCCC_GP_CM_AMT, 
@@ -308,7 +307,7 @@ FROM
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ref_amt ELSE 0 END)							AS DIGCCC_GP_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd IN ('DIGCCC', 'DIGCIM') THEN ss.gp_ly_amt + ss.gp_ref_amt ELSE 0 END)			AS DIGCCC_GP_LYTD_AMT,
 
-	-- adding breakout to help ID ESS with CCS billings, make DIGIMP consistent with FSC def, tmc, 7 Jul 19
+	-- ESS - Dummy, adding breakout to help ID ESS with CCS billings, make DIGIMP consistent with FSC def, tmc, 7 Jul 19
 	SUM(CASE WHEN comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGOTH', 'DIGCIM', 'DIGCCC', 'DIGLAB') THEN ss.sales_curr_amt ELSE 0 END)						AS DIGIMP_SALES_CM_AMT, 
     SUM(CASE WHEN comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGOTH', 'DIGCIM', 'DIGCCC', 'DIGLAB') THEN ss.sales_ref_amt ELSE 0 END)						AS DIGIMP_SALES_LYM_AMT, 
     SUM(CASE WHEN comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGOTH', 'DIGCIM', 'DIGCCC', 'DIGLAB') THEN ss.gp_curr_amt ELSE 0 END)						AS DIGIMP_GP_CM_AMT, 
