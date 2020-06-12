@@ -47,5 +47,28 @@ WHERE
 	comm_group_cd IN('DIGIMP', 'DIGCCS', 'DIGOTH', 'DIGCIM', 'DIGCCC', 'DIGLAB')
 GO
 
+-- unmap special market transform so that production item group can be used by new system
+-- Legacy:  CommA -> SMCommA 
+-- New:  SMCommA ->CommA -> History -> New rollup
 
-    
+-- add new reversal group
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.comm_group ADD
+	SPM_comm_group_reverse_cd char(6) NOT NULL CONSTRAINT DF_comm_group_SPM_comm_group_reverse_cd DEFAULT ''
+GO
+ALTER TABLE dbo.comm_group ADD CONSTRAINT
+	FK_comm_group_comm_group3 FOREIGN KEY
+	(
+	SPM_comm_group_reverse_cd
+	) REFERENCES dbo.comm_group
+	(
+	comm_group_cd
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.comm_group SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+
