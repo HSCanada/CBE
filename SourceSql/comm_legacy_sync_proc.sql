@@ -28,6 +28,8 @@ AS
 *******************************************************************************
 **	Date:	Author:		Description:
 **	-----	----------	--------------------------------------------
+**	04 Aug 20	tmc		fix bug where synch failed -- had AND instead of OR.  
+**						missed during testing, month 1
 **    
 *******************************************************************************/
 
@@ -292,13 +294,23 @@ Begin
 		,[note_txt] = ISNULL(s.[note_txt],'')
 		,[esend_setup_ind] = ISNULL(s.[flag_ind],0)
 
+	-- test
+--	select s.*, [comm_salesperson_master].FiscalMonth
+	--
 	FROM  
 		[BRSales].[comm].[salesperson_master] s
+
+	-- test
+--	,[comm_salesperson_master]
+	--
 	WHERE
 		(s.salesperson_key_id = [dbo].[comm_salesperson_master].salesperson_key_id) AND
+		-- test
+--		s.salesperson_key_id = 'afolk' AND
+		--
 		(
 			(s.[employee_num] <> s.[employee_num]) OR
-			(s.[master_salesperson_cd] <> s.[master_salesperson_cd]) AND
+			(s.[master_salesperson_cd] <> s.[master_salesperson_cd]) OR
 			(s.FiscalMonth <> [dbo].[comm_salesperson_master].[FiscalMonth]) OR
 			(s.[salesperson_nm] <> [dbo].[comm_salesperson_master].[salesperson_nm]) OR
 			(s.[comm_plan_id] <> [dbo].[comm_salesperson_master].[comm_plan_id]) OR
@@ -307,7 +319,8 @@ Begin
 			(s.[salary_draw_amt] <> [dbo].[comm_salesperson_master].[salary_draw_amt]) OR
 			(s.[deficit_amt] <> [dbo].[comm_salesperson_master].[deficit_amt]) OR
 			(ISNULL(s.[note_txt],'') <>LEFT(ISNULL([dbo].[comm_salesperson_master].[note_txt],''),50)) OR
-			(ISNULL(s.[flag_ind],0) <> [esend_setup_ind])
+			(ISNULL(s.[flag_ind],0) <> [esend_setup_ind]) 
+--			(1=1)
 		) AND
 		(1=1)
 
