@@ -18,15 +18,15 @@ GO
 *******************************************************************************
 **	Date:	Author:		Description:
 **	-------	-------		-------------------------------------------
+**	3 Sept 20	tmc		Fix Hybrid Consolidation bug with Comm Plan add
 **    
 *******************************************************************************/
 ALTER VIEW [dbo].[comm_statement_test]
 AS
 SELECT 
 	m.employee_num							AS EmployeeNumber
+	,m.comm_plan_id							AS CommPlanCode
 	,comm_group_map.disp_comm_group_cd		AS CommGroupCode
---	,min(s.comm_group_cd) as mr
-	,MIN(m.comm_plan_id)					AS CommPlanCode
 
 	,SUM(s.sales_curr_amt)					AS MTD_Sales
 	,SUM(s.sales_ref_amt)					AS PY_MTD_Sales
@@ -59,8 +59,9 @@ WHERE
 	(1=1)
 GROUP BY 
     m.employee_num
+	,m.comm_plan_id
 	,comm_group_map.disp_comm_group_cd
 
 GO
 
--- SELECT * FROM comm_statement_test
+-- SELECT * FROM comm_statement_test where EmployeeNumber = 6135
