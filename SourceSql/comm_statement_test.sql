@@ -31,14 +31,14 @@ SELECT
 	,SUM(s.sales_curr_amt)					AS MTD_Sales
 	,SUM(s.sales_ref_amt)					AS PY_MTD_Sales
 
-	,SUM(s.gp_curr_amt)						AS MTD_Comm
-	,SUM(s.gp_ly_amt + s.gp_ref_amt)		AS PY_MTD_GP
+	,SUM(s.gp_curr_amt)						AS MTD_GP
+	,SUM(s.gp_ref_amt)						AS PY_MTD_GP
 
 	,SUM(s.sales_ytd_amt + s.sales_curr_amt)AS YTD_Sales
 	,SUM(s.sales_ly_amt + s.sales_ref_amt)	AS PY_YTD_Sales
 
 	,SUM(s.gp_ytd_amt + s.gp_curr_amt)		AS YTD_GP
-	,SUM(s.gp_ref_amt)						AS PY_YTD_GP
+	,SUM(s.gp_ly_amt + s.gp_ref_amt)		AS PY_YTD_GP
 
 	,SUM(s.comm_curr_amt)					AS COMM_CM_AMT
 FROM         
