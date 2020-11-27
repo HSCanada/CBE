@@ -344,57 +344,71 @@ GO
 -- Exec comm_transaction_commission_calc_proc 0
 
 /*
--- SM Opt-out full fcode
-		SELECT     
-			t.fiscal_yearmo_num, 
-			t.source_cd,         
-			t.salesperson_cd,
-			t.salesperson_key_id, 
-			t.comm_plan_id,
-			t.hsi_shipto_id,
+-- SM Opt-out i test
+SELECT     
+	t.fiscal_yearmo_num, 
+	t.source_cd,         
+	t.salesperson_cd,
+	t.salesperson_key_id, 
+	t.comm_plan_id,
+	t.hsi_shipto_id,
+	[doc_id],
+	[gp_ext_amt],
 
-			c.SPM_StatusCd AS CustSMStatus,
-			c.SPM_EQOptOut AS CustEQOpt,
+	c.SPM_StatusCd AS CustSMStatus,
+	c.SPM_EQOptOut AS CustEQOpt,
 
-			g.SPM_EQOptOut AS GroupSPM_EQOptOut,
-			g.comm_group_cd,
-			g.SPM_comm_group_cd AS GroupSPM_comm_group_cd,
-			t.item_comm_group_cd AS item_comm_group_cd_CURR,
+	g.SPM_EQOptOut AS GroupSPM_EQOptOut,
+	g.comm_group_cd,
+	g.SPM_comm_group_cd AS GroupSPM_comm_group_cd,
+	t.item_comm_group_cd AS item_comm_group_cd_CURR,
 
-			CASE 
-				WHEN 
-					( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
-				THEN 
-					-- Use Special Market code
-					g.SPM_comm_group_cd 
-				ELSE 
-					-- Use Regular code
-					g.comm_group_cd 
-			END AS item_comm_group_cd_NEW
+	CASE
+		WHEN
+			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
+		THEN 
+			'SM'
+		ELSE
+			'REG'
+	END as sm_flag,
+	c.
 
-		FROM         
-			comm_transaction t
+	CASE 
+		WHEN 
+			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
+		THEN 
+			-- Use Special Market code
+			g.SPM_comm_group_cd 
+		ELSE 
+			-- Use Regular code
+			g.comm_group_cd 
+	END AS item_comm_group_cd_NEW
 
-			INNER JOIN comm_plan p
-			ON t.comm_plan_id = p.comm_plan_id
+FROM         
+	comm_transaction t
 
-			INNER JOIN comm_customer_master c
-			ON t.hsi_shipto_id = c.hsi_shipto_id
+	INNER JOIN comm_plan p
+	ON t.comm_plan_id = p.comm_plan_id
 
-			INNER JOIN comm_item_master i
-			ON t.item_id = i.item_id
+	INNER JOIN comm_customer_master c
+	ON t.hsi_shipto_id = c.hsi_shipto_id
 
-				INNER JOIN comm_group g
-				ON i.comm_group_cd = g.comm_group_cd
+	INNER JOIN comm_item_master i
+	ON t.item_id = i.item_id
 
-		WHERE     
-			(t.fiscal_yearmo_num = '201601') AND 
-			(t.source_cd = 'JDE') AND
-			(t.comm_plan_id LIKE 'FSC%') AND 
+	INNER JOIN comm_group g
+	ON i.comm_group_cd = g.comm_group_cd
+WHERE     
+	(t.fiscal_yearmo_num = '202010') AND 
+	(t.source_cd = 'JDE') AND
+	(t.comm_plan_id LIKE 'FSC%') AND 
+	-- bug
+	([doc_id] = '13647728') AND
 
-		--	(c.SPM_StatusCd = 'Y' ) AND
-		--	(c.SPM_EQOptOut = 'Y' ) AND
-		--	(g.SPM_EQOptOut <> 'Y' ) AND
+--	(c.SPM_StatusCd = 'N' ) AND
+--	(c.SPM_EQOptOut = 'Y' ) AND
+--	(g.SPM_EQOptOut <> 'Y' ) AND
+	(1=1)
+ORDER BY t.item_comm_group_cd
 
-			(1=1)
 */
