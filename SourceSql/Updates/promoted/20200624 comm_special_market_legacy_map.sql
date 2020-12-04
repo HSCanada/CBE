@@ -43,6 +43,8 @@ ALTER TABLE dbo.comm_special_market_legacy_map SET (LOCK_ESCALATION = TABLE)
 GO
 COMMIT
 
+-- add to prod, 29 Nov 20
+
 --delete from  [dbo].[comm_special_market_legacy_map] where [cust_comm_group_cd] = 'SPMEQU'
 
 INSERT INTO [dbo].[comm_group] (
@@ -75,6 +77,7 @@ SELECT
       ,[FRG_comm_group_cd]
       ,[SPM_comm_group_reverse_cd]
   FROM [dbo].[comm_group] where [comm_group_cd] like 'SPMALL'
+GO
 
 -- added 26 Nov 20
 INSERT INTO [dbo].[comm_special_market_legacy_map]
@@ -82,7 +85,7 @@ INSERT INTO [dbo].[comm_special_market_legacy_map]
            ,[SPM_StatusCd]
            ,[SPM_EQOptOut])
      VALUES
-           ('SPMEQU','N','Y')
+           ('SPMEQU','N','X')
 GO
 
 -- apply to prod, after SPMEQU logic fixed and tested

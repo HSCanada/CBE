@@ -34,6 +34,7 @@ AS
 --	29 Jan 16	tmc 	Update for 2016 Plan
 --	24 Feb 16	tmc		Finalize Automation (SM EQ optout, Booking), remove legacy, and set Debug to default
 --	29 Feb 16	tmc		fix small but so that batch 10 is valid
+--	29 Nov 20	tmc		add edge case:  Special Market, Equipment only. opt=X
 **    
 *******************************************************************************/
 
@@ -155,7 +156,9 @@ Begin
 		SET              
 			item_comm_group_cd =	CASE 
 										WHEN 
-											( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
+											( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) OR
+											-- Special Market EQ only special case
+											(( c.SPM_StatusCd = 'N') AND (c.SPM_EQOptOut = 'X') AND (g.SPM_EQOptOut = 'Y'))
 										THEN 
 											-- Use Special Market code
 											g.SPM_comm_group_cd 
@@ -365,17 +368,20 @@ SELECT
 
 	CASE
 		WHEN
-			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
+			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) OR
+			-- Special Market EQ only special case
+			(( c.SPM_StatusCd = 'N') AND (c.SPM_EQOptOut = 'X') AND (g.SPM_EQOptOut = 'Y'))
 		THEN 
 			'SM'
 		ELSE
 			'REG'
 	END as sm_flag,
-	c.
 
 	CASE 
 		WHEN 
-			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) 
+			( (c.SPM_StatusCd = 'Y') And ( (c.SPM_EQOptOut <> 'Y') OR  ( (c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut<>'Y') ))) OR
+			-- Special Market EQ only special case
+			(( c.SPM_StatusCd = 'N') AND (c.SPM_EQOptOut = 'X') AND (g.SPM_EQOptOut = 'Y'))
 		THEN 
 			-- Use Special Market code
 			g.SPM_comm_group_cd 
@@ -411,4 +417,35 @@ WHERE
 	(1=1)
 ORDER BY t.item_comm_group_cd
 
+*/
+
+/*
+--	TEST: 29 Nov 20	tmc		add edge case:  Special Market, Equipment only. opt=X
+
+SELECT
+	t.fiscal_yearmo_num, 
+	SUM(t.gp_ext_amt) AS gp,
+	c.comm_status_cd, 
+	c.SPM_StatusCd AS CustSMStatus, 
+	c.SPM_EQOptOut AS CustEQOpt,
+	g.SPM_EQOptOut AS GroupSPM_EQOptOut, 
+	CASE 
+		WHEN 
+			((c.SPM_StatusCd = 'Y') AND ((c.SPM_EQOptOut <> 'Y') OR ((c.SPM_EQOptOut = 'Y') AND (g.SPM_EQOptOut <> 'Y')))) OR
+			-- Special Market EQ only special case
+			(( c.SPM_StatusCd = 'N') AND (c.SPM_EQOptOut = 'X') AND (g.SPM_EQOptOut = 'Y'))
+		THEN 'SM' 
+		ELSE 'REG' 
+	END AS sm_flag
+FROM            comm_transaction AS t INNER JOIN
+                         comm_plan AS p ON t.comm_plan_id = p.comm_plan_id INNER JOIN
+                         comm_customer_master AS c ON t.hsi_shipto_id = c.hsi_shipto_id INNER JOIN
+                         comm_item_master AS i ON t.item_id = i.item_id INNER JOIN
+                         comm_group AS g ON i.comm_group_cd = g.comm_group_cd
+WHERE
+	(t.comm_plan_id LIKE 'FSC%') AND 
+	(t.fiscal_yearmo_num = '202010') AND 
+	(t.source_cd = 'JDE') AND
+	(1 = 1)
+GROUP BY t.fiscal_yearmo_num, t.source_cd, c.comm_status_cd, c.SPM_StatusCd, c.SPM_EQOptOut, g.SPM_EQOptOut
 */
