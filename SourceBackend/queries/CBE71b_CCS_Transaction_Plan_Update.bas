@@ -11,7 +11,7 @@ Begin OutputColumns
     Name ="comm_transaction.ess_salesperson_key_id"
     Expression ="[comm_salesperson_code_map]![salesperson_key_id]"
     Name ="comm_transaction.ess_comm_plan_id"
-    Expression ="\"CCSGP\""
+    Expression ="[comm_salesperson_code_map]![comm_plan_id]"
 End
 Begin Joins
     LeftTable ="comm_configure"
@@ -83,15 +83,15 @@ Begin
     End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1397
-    Bottom =999
+    State =0
+    Left =0
+    Top =40
+    Right =1390
+    Bottom =920
     Left =-1
     Top =-1
-    Right =1373
-    Bottom =322
+    Right =1366
+    Bottom =288
     Left =0
     Top =0
     ColumnsShown =579

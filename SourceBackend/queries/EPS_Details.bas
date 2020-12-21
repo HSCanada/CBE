@@ -1,198 +1,175 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_transaction.fiscal_yearmo_num) Between \"201701\" And \"201703\") AND (("
-    "comm_transaction.salesperson_key_id)<>\"Internal\") AND ((comm_transaction.manuf"
-    "act_cd) In (\"MILSCI\",\"WAND\",\"GENSCI\",\"SPADNT\",\"INENDO\",\"ORTHOT\")) AN"
-    "D ((comm_transaction.item_id) Not In (\"1074153\",\"1070511\",\"1076903\",\"1084"
-    "419\",\"1089279\")) AND ((comm_transaction.source_cd)=\"JDE\")) OR (((comm_trans"
-    "action.fiscal_yearmo_num) Between \"201701\" And \"201703\") AND ((comm_transact"
-    "ion.salesperson_key_id)<>\"Internal\") AND ((comm_transaction.item_id) In (\"808"
-    "0261\",\"8080264\",\"8080279\",\"8080282\") Or (comm_transaction.item_id) In (\""
-    "5950000\",\"5950014\",\"5950027\",\"5950028\",\"5950029\",\"5950031\",\"5950032\""
-    ",\"5950033\",\"5950034\",\"5950035\",\"5959558\")) AND ((comm_transaction.source"
-    "_cd)=\"JDE\"))"
 Begin InputTables
-    Name ="comm_transaction"
-    Name ="comm_eps_region_map"
-    Name ="comm_eps_productline"
-    Name ="comm_eps_specialist_map"
+    Name ="qsub_EPS_Details"
+    Name ="comm_group"
 End
 Begin OutputColumns
-    Expression ="comm_transaction.fiscal_yearmo_num"
-    Expression ="comm_eps_specialist_map.EPS_Specialist"
-    Expression ="comm_eps_productline.EPS_ProductLine"
-    Expression ="comm_eps_region_map.EPS_Region"
-    Expression ="comm_transaction.salesperson_key_id"
-    Expression ="comm_transaction.manufact_cd"
-    Expression ="comm_transaction.item_id"
-    Expression ="comm_transaction.transaction_txt"
-    Expression ="comm_transaction.IMCLMJ"
-    Expression ="comm_transaction.item_comm_group_cd"
-    Expression ="comm_transaction.shipped_qty"
-    Expression ="comm_transaction.transaction_amt"
-    Expression ="comm_transaction.gp_ext_amt"
-    Expression ="comm_transaction.transaction_dt"
-    Expression ="comm_transaction.hsi_shipto_id"
-    Expression ="comm_transaction.hsi_shipto_nm"
-    Expression ="comm_transaction.doc_key_id"
-    Expression ="comm_transaction.line_id"
+    Expression ="qsub_EPS_Details.fiscal_yearmo_num"
+    Alias ="Eps_Code"
+    Expression ="qsub_EPS_Details.SegCd"
+    Expression ="qsub_EPS_Details.hsi_shipto_div_cd"
+    Expression ="qsub_EPS_Details.MarketClass"
+    Expression ="qsub_EPS_Details.SegCd"
+    Expression ="qsub_EPS_Details.Specialty"
+    Expression ="qsub_EPS_Details.branch_cd"
+    Expression ="qsub_EPS_Details.Supplier"
+    Alias ="Supplier_Description"
+    Expression ="comm_group.comm_group_desc"
+    Expression ="qsub_EPS_Details.salesperson_cd"
+    Expression ="qsub_EPS_Details.item_id"
+    Expression ="qsub_EPS_Details.transaction_txt"
+    Expression ="qsub_EPS_Details.item_comm_group_cd"
+    Expression ="qsub_EPS_Details.shipped_qty"
+    Expression ="qsub_EPS_Details.transaction_amt"
+    Expression ="qsub_EPS_Details.gp_ext_amt"
+    Expression ="qsub_EPS_Details.transaction_dt"
+    Expression ="qsub_EPS_Details.hsi_shipto_id"
+    Expression ="qsub_EPS_Details.hsi_shipto_nm"
+    Expression ="qsub_EPS_Details.doc_key_id"
+    Expression ="qsub_EPS_Details.line_id"
+    Expression ="qsub_EPS_Details.source_cd"
+    Expression ="qsub_EPS_Details.reference_order_txt"
 End
 Begin Joins
-    LeftTable ="comm_transaction"
-    RightTable ="comm_eps_region_map"
-    Expression ="comm_transaction.hsi_shipto_id = comm_eps_region_map.hsi_shipto_id"
-    Flag =1
-    LeftTable ="comm_transaction"
-    RightTable ="comm_eps_productline"
-    Expression ="comm_transaction.manufact_cd = comm_eps_productline.manufact_cd"
-    Flag =1
-    LeftTable ="comm_eps_productline"
-    RightTable ="comm_eps_specialist_map"
-    Expression ="comm_eps_productline.EPS_ProductLine = comm_eps_specialist_map.EPS_ProductLine"
-    Flag =1
-    LeftTable ="comm_eps_region_map"
-    RightTable ="comm_eps_specialist_map"
-    Expression ="comm_eps_region_map.EPS_Region = comm_eps_specialist_map.EPS_Region"
+    LeftTable ="qsub_EPS_Details"
+    RightTable ="comm_group"
+    Expression ="qsub_EPS_Details.Supplier = comm_group.comm_group_cd"
     Flag =1
 End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="0"
 dbByte "RecordsetType" ="2"
-dbBoolean "OrderByOn" ="0"
+dbBoolean "OrderByOn" ="-1"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
+dbMemo "OrderBy" ="[EPS_Details].[Supplier_Description]"
 Begin
     Begin
-        dbText "Name" ="comm_transaction.fiscal_yearmo_num"
+        dbText "Name" ="qsub_EPS_Details.Supplier"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.salesperson_key_id"
+        dbText "Name" ="qsub_EPS_Details.branch_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.transaction_dt"
+        dbText "Name" ="qsub_EPS_Details.Specialty"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.transaction_amt"
+        dbText "Name" ="qsub_EPS_Details.reference_order_txt"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.item_comm_group_cd"
+        dbText "Name" ="qsub_EPS_Details.source_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.doc_key_id"
+        dbText "Name" ="qsub_EPS_Details.hsi_shipto_div_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.hsi_shipto_id"
+        dbText "Name" ="qsub_EPS_Details.fiscal_yearmo_num"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.transaction_txt"
-        dbLong "AggregateType" ="-1"
-        dbInteger "ColumnWidth" ="3675"
-        dbBoolean "ColumnHidden" ="0"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.gp_ext_amt"
+        dbText "Name" ="qsub_EPS_Details.SegCd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.manufact_cd"
+        dbText "Name" ="qsub_EPS_Details.MarketClass"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.IMCLMJ"
+        dbText "Name" ="qsub_EPS_Details.salesperson_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.hsi_shipto_nm"
-        dbLong "AggregateType" ="-1"
-        dbInteger "ColumnWidth" ="2925"
-        dbBoolean "ColumnHidden" ="0"
-    End
-    Begin
-        dbText "Name" ="comm_eps_region_map.EPS_Region"
+        dbText "Name" ="qsub_EPS_Details.item_id"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.shipped_qty"
+        dbText "Name" ="qsub_EPS_Details.transaction_txt"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.line_id"
+        dbText "Name" ="qsub_EPS_Details.item_comm_group_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.item_id"
+        dbText "Name" ="qsub_EPS_Details.shipped_qty"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.[item_id]"
+        dbText "Name" ="qsub_EPS_Details.transaction_amt"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_eps_productline.EPS_ProductLine"
+        dbText "Name" ="qsub_EPS_Details.gp_ext_amt"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_eps_specialist_map.EPS_Specialist"
+        dbText "Name" ="qsub_EPS_Details.transaction_dt"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="qsub_EPS_Details.hsi_shipto_id"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="qsub_EPS_Details.hsi_shipto_nm"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="qsub_EPS_Details.doc_key_id"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="qsub_EPS_Details.line_id"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="Eps_Code"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="Supplier_Description"
         dbLong "AggregateType" ="-1"
     End
 End
 Begin
     State =2
     Left =-8
-    Top =-30
-    Right =1589
-    Bottom =999
+    Top =-31
+    Right =1550
+    Bottom =945
     Left =-1
     Top =-1
-    Right =1565
-    Bottom =377
+    Right =1481
+    Bottom =463
     Left =0
     Top =0
     ColumnsShown =539
     Begin
-        Left =38
-        Top =6
-        Right =336
-        Bottom =360
-        Top =0
-        Name ="comm_transaction"
-        Name =""
-    End
-    Begin
-        Left =510
-        Top =201
-        Right =713
-        Bottom =370
-        Top =0
-        Name ="comm_eps_region_map"
-        Name =""
-    End
-    Begin
-        Left =418
-        Top =38
-        Right =562
-        Bottom =182
-        Top =0
-        Name ="comm_eps_productline"
-        Name =""
-    End
-    Begin
-        Left =808
+        Left =60
         Top =71
-        Right =952
-        Bottom =215
+        Right =240
+        Bottom =415
         Top =0
-        Name ="comm_eps_specialist_map"
+        Name ="qsub_EPS_Details"
+        Name =""
+    End
+    Begin
+        Left =409
+        Top =56
+        Right =553
+        Bottom =200
+        Top =0
+        Name ="comm_group"
         Name =""
     End
 End

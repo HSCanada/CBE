@@ -128,10 +128,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_statement_detail.comm_rt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_statement_detail.transaction_amt"
         dbLong "AggregateType" ="-1"
     End
@@ -172,15 +168,7 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_rt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_statement_detail.item_comm_rt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
         dbLong "AggregateType" ="-1"
     End
 End

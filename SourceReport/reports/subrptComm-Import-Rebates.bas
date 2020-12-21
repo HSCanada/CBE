@@ -1,4 +1,4 @@
-﻿Version =20
+﻿Version =21
 VersionRequired =20
 Begin Report
     LayoutForPrint = NotDefault
@@ -15,10 +15,11 @@ Begin Report
     DatasheetFontHeight =11
     ItemSuffix =129
     Top =600
+    DatasheetGridlinesColor =15062992
     RecSrcDt = Begin
-        0xd892de56f8a0e340
+        0x72479cdc3a93e540
     End
-    RecordSource ="qryCommStatementDetailReport-import-Rebates"
+    RecordSource ="zqryCommStatementDetailReport-import-Rebates"
     Caption ="subrptComm-Import-Rebates"
     DatasheetFontName ="Calibri"
     PrtMip = Begin
@@ -26,7 +27,6 @@ Begin Report
         0x010000006801000000000000a10700000100000001000000
     End
     FilterOnLoad =0
-    DatasheetBackColor12 =16777215
     FitToPage =1
     DisplayOnSharePointSite =1
     DatasheetAlternateBackColor =16053492
@@ -41,72 +41,27 @@ Begin Report
             BorderColor =5066944
             ForeColor =11830108
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin Rectangle
+            BorderLineStyle =0
             BackColor =5054976
             BorderColor =-2147483617
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin Line
             OldBorderStyle =0
+            BorderLineStyle =0
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin Image
+            BorderLineStyle =0
             SizeMode =3
             PictureAlignment =2
             BackColor =5054976
             BorderColor =-2147483617
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin CommandButton
             TextFontCharSet =161
@@ -114,213 +69,90 @@ Begin Report
             FontWeight =400
             ForeColor =14919545
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
+            BorderLineStyle =0
         End
         Begin OptionButton
             OldBorderStyle =0
+            BorderLineStyle =0
             LabelX =230
             LabelY =-30
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin CheckBox
+            BorderLineStyle =0
             LabelX =230
             LabelY =-30
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin OptionGroup
             OldBorderStyle =0
+            BorderLineStyle =0
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin BoundObjectFrame
             SizeMode =3
             OldBorderStyle =0
+            BorderLineStyle =0
             BackStyle =0
             LabelX =-1800
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin TextBox
             FELineBreak = NotDefault
             OldBorderStyle =0
             TextFontCharSet =161
+            BorderLineStyle =0
             BackStyle =0
             LabelX =-1800
             FontSize =9
             BorderColor =5066944
             FontName ="Calibri"
             AsianLineBreak =1
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
             ShowDatePicker =0
         End
         Begin ListBox
             TextFontCharSet =161
             OldBorderStyle =0
+            BorderLineStyle =0
             LabelX =-1800
             FontSize =9
             BorderColor =5066944
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
             AllowValueListEdits =1
             InheritValueList =1
         End
         Begin ComboBox
             OldBorderStyle =0
             TextFontCharSet =161
+            BorderLineStyle =0
             BackStyle =0
             LabelX =-1800
             FontSize =9
             BorderColor =5066944
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
             AllowValueListEdits =1
             InheritValueList =1
         End
         Begin Subform
+            BorderLineStyle =0
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin UnboundObjectFrame
             BackStyle =0
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin CustomControl
             OldBorderStyle =1
             BorderColor =5066944
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
         End
         Begin ToggleButton
             TextFontCharSet =161
@@ -328,37 +160,15 @@ Begin Report
             FontWeight =400
             ForeColor =14919545
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
             GridlineColor =-2147483609
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
+            BorderLineStyle =0
         End
         Begin Tab
             TextFontCharSet =161
             BackStyle =0
             FontSize =9
             FontName ="Calibri"
-            LeftPadding =30
-            TopPadding =30
-            RightPadding =30
-            BottomPadding =30
-            GridlineStyleLeft =0
-            GridlineStyleTop =0
-            GridlineStyleRight =0
-            GridlineStyleBottom =0
-            GridlineWidthLeft =1
-            GridlineWidthTop =1
-            GridlineWidthRight =1
-            GridlineWidthBottom =1
+            BorderLineStyle =0
         End
         Begin BreakLevel
             GroupHeader = NotDefault

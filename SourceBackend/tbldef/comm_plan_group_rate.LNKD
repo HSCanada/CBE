@@ -1,4 +1,4 @@
 ﻿comm_plan_group_rate
-ODBC;DSN=DEV_CommBE;Description=DEV_CommBE;Trusted_Connection=Yes;APP=Microsoft Office 2016;DATABASE=DEV_CommBE
+ODBC;DSN=DEV_COMMBE;Description=COMM_PROD;Trusted_Connection=Yes;APP=Microsoft Office 2013;DATABASE=DEV_CommBE;Network=DBMSSOCN
 dbo.comm_plan_group_rate
 comm_plan_id;+comm_group_cd

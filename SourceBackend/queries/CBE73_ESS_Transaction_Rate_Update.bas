@@ -13,6 +13,8 @@ Begin OutputColumns
     Expression ="comm_plan_group_rate!comm_base_rt"
     Name ="comm_transaction.ess_comm_amt"
     Expression ="[gp_ext_amt]*([comm_plan_group_rate]![comm_base_rt]/100)"
+    Name ="comm_transaction.ess_status_cd"
+    Expression ="20"
 End
 Begin Joins
     LeftTable ="comm_transaction"
@@ -90,15 +92,15 @@ Begin
     End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1365
-    Bottom =999
+    State =0
+    Left =0
+    Top =40
+    Right =1437
+    Bottom =976
     Left =-1
     Top =-1
-    Right =1341
-    Bottom =594
+    Right =1419
+    Bottom =577
     Left =0
     Top =0
     ColumnsShown =579

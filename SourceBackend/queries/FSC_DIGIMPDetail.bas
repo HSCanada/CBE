@@ -126,25 +126,9 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_item_master.note_txt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_transaction.ess_salesperson_key_id"
         dbInteger "ColumnWidth" ="2655"
         dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.IMITEM"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_salesperson_territory_split_TORNT.TransferFrom_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin

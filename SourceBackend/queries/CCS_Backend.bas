@@ -21,39 +21,47 @@ Begin OutputColumns
     Expression ="comm_ess_statement_export.ITMFRT_SALES_YTD_AMT"
     Expression ="comm_ess_statement_export.ITMFRT_GP_YTD_AMT"
     Expression ="comm_ess_statement_export.ITMFRT_SALES_LYTD_AMT"
-    Expression ="comm_ess_statement_export.ITMFRT_GOAL_YTD_AMT"
+    Alias ="ITMFRT_GOAL_YTD_AMT"
+    Expression ="0"
     Expression ="comm_ess_statement_export.ITMFRT_GP_LYM_AMT"
     Expression ="comm_ess_statement_export.ITMFRT_GP_LYTD_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_SALES_CM_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_SALES_LYM_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_GP_CM_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_SALES_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_GP_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_SALES_LYTD_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_GOAL_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_GP_LYM_AMT"
-    Expression ="comm_ess_statement_export.DIGIMP_GP_LYTD_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_SALES_CM_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_SALES_LYM_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_GP_CM_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_SALES_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_GP_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_SALES_LYTD_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_GOAL_YTD_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_GP_LYM_AMT"
-    Expression ="comm_ess_statement_export.DIGCCS_GP_LYTD_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_SALES_CM_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_SALES_LYM_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_GP_CM_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_SALES_YTD_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_GP_YTD_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_SALES_LYTD_AMT"
+    Alias ="DIGOTH_GOAL_YTD_AMT"
+    Expression ="0"
+    Expression ="comm_ess_statement_export.DIGOTH_GP_LYM_AMT"
+    Expression ="comm_ess_statement_export.DIGOTH_GP_LYTD_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_SALES_CM_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_SALES_LYM_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_GP_CM_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_SALES_YTD_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_GP_YTD_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_SALES_LYTD_AMT"
+    Alias ="DIGCCC_GOAL_YTD_AMT"
+    Expression ="0"
+    Expression ="comm_ess_statement_export.DIGCCC_GP_LYM_AMT"
+    Expression ="comm_ess_statement_export.DIGCCC_GP_LYTD_AMT"
+    Expression ="comm_ess_statement_export.SFFFIN_SALES_CM_AMT"
+    Expression ="comm_ess_statement_export.SFFFIN_SALES_YTD_AMT"
+    Expression ="comm_ess_statement_export.SFFFIN_GP_CM_AMT"
+    Expression ="comm_ess_statement_export.SFFFIN_GP_YTD_AMT"
     Expression ="comm_ess_statement_export.ESS_comm_plan_id"
 End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="60"
 dbByte "RecordsetType" ="0"
-dbBoolean "OrderByOn" ="0"
+dbBoolean "OrderByOn" ="-1"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbText "Description" ="test"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
+dbMemo "OrderBy" ="[CCS_Backend].[CCS_code]"
 Begin
     Begin
         dbText "Name" ="comm_ess_statement_export.employee_num"
@@ -88,87 +96,11 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_ess_statement_export.ITMFRT_GOAL_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_GOAL_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_GP_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_SALES_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_GP_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_GOAL_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_GP_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_SALES_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_SALES_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_GP_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_SALES_LYM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_SALES_LYTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_SALES_LYM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_SALES_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_SALES_LYTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_ess_statement_export.ESS_comm_plan_id"
         dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_ess_statement_export.ITMFRT_GP_LYTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_GP_LYM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGIMP_GP_LYTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_GP_LYM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_ess_statement_export.DIGCCS_GP_LYTD_AMT"
         dbLong "AggregateType" ="-1"
     End
     Begin
@@ -205,17 +137,121 @@ Begin
         dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.SFFFIN_SALES_YTD_AMT"
+        dbInteger "ColumnWidth" ="2670"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.SFFFIN_SALES_CM_AMT"
+        dbInteger "ColumnWidth" ="2625"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.SFFFIN_GP_CM_AMT"
+        dbInteger "ColumnWidth" ="2340"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.SFFFIN_GP_YTD_AMT"
+        dbInteger "ColumnWidth" ="2385"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_GP_LYM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_GP_LYTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="DIGCCC_GOAL_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_SALES_CM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_SALES_LYM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_GP_CM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_SALES_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_GP_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGCCC_SALES_LYTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="ITMFRT_GOAL_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="DIGOTH_GOAL_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_SALES_CM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_SALES_LYM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_SALES_LYTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.[DIGOTH_GP_CM_AMT]"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_GP_CM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_SALES_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_GP_YTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_GP_LYM_AMT"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_export.DIGOTH_GP_LYTD_AMT"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
     State =0
     Left =0
-    Top =-112
-    Right =1514
-    Bottom =839
+    Top =40
+    Right =1432
+    Bottom =977
     Left =-1
     Top =-1
-    Right =1482
-    Bottom =363
+    Right =1414
+    Bottom =292
     Left =0
     Top =0
     ColumnsShown =539

@@ -1,9 +1,10 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_transaction.fiscal_yearmo_num)>=\"201605\") AND ((comm_transaction.doc_i"
-    "d)=\"9467068\"))"
+Where ="(((comm_transaction.fiscal_yearmo_num)=\"201809\") AND ((comm_transaction.source"
+    "_cd)=\"IMPORT\"))"
 Begin InputTables
     Name ="comm_transaction"
+    Name ="comm_item_master"
 End
 Begin OutputColumns
     Expression ="comm_transaction.fiscal_yearmo_num"
@@ -14,6 +15,7 @@ Begin OutputColumns
     Expression ="comm_transaction.transaction_dt"
     Expression ="comm_transaction.source_cd"
     Expression ="comm_transaction.ess_comm_group_cd"
+    Expression ="comm_item_master.comm_group_cd"
     Expression ="comm_transaction.item_comm_group_cd"
     Expression ="comm_transaction.transaction_amt"
     Expression ="comm_transaction.gp_ext_amt"
@@ -29,15 +31,22 @@ Begin OutputColumns
     Expression ="comm_transaction.status_cd"
     Expression ="comm_transaction.ess_status_cd"
 End
+Begin Joins
+    LeftTable ="comm_transaction"
+    RightTable ="comm_item_master"
+    Expression ="comm_transaction.item_id = comm_item_master.item_id"
+    Flag =1
+End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="0"
-dbByte "RecordsetType" ="2"
+dbByte "RecordsetType" ="0"
 dbBoolean "OrderByOn" ="0"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
+dbMemo "Filter" ="([qryCommDetailLookup].[ess_salesperson_cd]=\"CCS03     \")"
 Begin
     Begin
         dbText "Name" ="comm_transaction.ess_salesperson_key_id"
@@ -110,10 +119,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.IMSUPL"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_transaction.ess_comm_group_cd"
         dbLong "AggregateType" ="-1"
     End
@@ -124,6 +129,8 @@ Begin
     Begin
         dbText "Name" ="comm_transaction.item_comm_group_cd"
         dbLong "AggregateType" ="-1"
+        dbInteger "ColumnWidth" ="2490"
+        dbBoolean "ColumnHidden" ="0"
     End
     Begin
         dbText "Name" ="comm_transaction.status_cd"
@@ -146,7 +153,7 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="Expr1"
+        dbText "Name" ="comm_item_master.comm_group_cd"
         dbLong "AggregateType" ="-1"
     End
 End
@@ -154,12 +161,12 @@ Begin
     State =0
     Left =0
     Top =40
-    Right =1567
-    Bottom =991
+    Right =1432
+    Bottom =977
     Left =-1
     Top =-1
-    Right =1535
-    Bottom =529
+    Right =1414
+    Bottom =495
     Left =0
     Top =0
     ColumnsShown =539
@@ -170,6 +177,15 @@ Begin
         Bottom =405
         Top =0
         Name ="comm_transaction"
+        Name =""
+    End
+    Begin
+        Left =899
+        Top =80
+        Right =1196
+        Bottom =371
+        Top =0
+        Name ="comm_item_master"
         Name =""
     End
 End

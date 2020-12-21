@@ -1,0 +1,4 @@
+﻿zcomm_salesperson_master_stage
+ODBC;DSN=DEV_COMMBE;Description=COMM_PROD;Trusted_Connection=Yes;APP=Microsoft Office 2013;DATABASE=DEV_CommBE;Network=DBMSSOCN
+dbo.comm_salesperson_master_stage
+master_salesperson_cd

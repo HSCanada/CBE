@@ -6,7 +6,7 @@ Begin
     Argument ="1"
     Argument ="10"
     Argument ="FSC_Backend"
-    Argument ="S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx"
+    Argument ="S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx"
     Argument ="-1"
 End
 Begin
@@ -15,7 +15,7 @@ Begin
     Argument ="1"
     Argument ="10"
     Argument ="FSC_Backend_FreeGoods"
-    Argument ="S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx"
+    Argument ="S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx"
     Argument ="-1"
 End
 Begin
@@ -24,7 +24,7 @@ Begin
     Argument ="1"
     Argument ="10"
     Argument ="FSC_Backend_Bonus"
-    Argument ="S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx"
+    Argument ="S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx"
     Argument ="-1"
 End
 Begin
@@ -32,7 +32,7 @@ Begin
     Argument ="1"
     Argument ="10"
     Argument ="FSC_Backend_CustReturns"
-    Argument ="S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx"
+    Argument ="S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx"
     Argument ="-1"
 End
 Begin
@@ -41,7 +41,7 @@ End
 Begin
     Action ="MsgBox"
     Comment ="FSC_Backend_CustReturns"
-    Argument ="FSC backend exported to \"FSC_Backend YYYYMM.xlsx\""
+    Argument ="FSC backend exported to \"S:\\BR\\CommBE\\Publish \\FSC_Backend YYYYMM.xlsx\""
     Argument ="-1"
     Argument ="0"
 End
@@ -54,36 +54,35 @@ End
 Begin
     Comment ="_AXL:n Name=\"ImportExportSpreadsheet\"><Argument Name=\"TransferType\">Export</"
         "Argument><Argument Name=\"TableName\">FSC_Backend</Argument><Argument Name=\"Fil"
-        "eName\">S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx</Argumen"
-        "t><Argument Name=\"HasFiel"
+        "eName\">S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx</Argument><Argument Nam"
+        "e=\"HasFieldNames\">Yes</Ar"
 End
 Begin
-    Comment ="_AXL:dNames\">Yes</Argument></Action><Comment>FSC_Backend_FreeGoods</Comment><Ac"
-        "tion Name=\"ImportExportSpreadsheet\"><Argument Name=\"TransferType\">Export</Ar"
-        "gument><Argument Name=\"TableName\">FSC_Backend_FreeGoods</Argument><Argument Na"
-        "me=\"FileName\">S:\\Bus"
+    Comment ="_AXL:gument></Action><Comment>FSC_Backend_FreeGoods</Comment><Action Name=\"Impo"
+        "rtExportSpreadsheet\"><Argument Name=\"TransferType\">Export</Argument><Argument"
+        " Name=\"TableName\">FSC_Backend_FreeGoods</Argument><Argument Name=\"FileName\">"
+        "S:\\BR\\CommBE\\Publish\\"
 End
 Begin
-    Comment ="_AXL:iness Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx</Argument><Argumen"
-        "t Name=\"HasFieldNames\">Yes</Argument></Action><Comment>FSC_Backend_Bonus</Comm"
-        "ent><Action Name=\"ImportExportSpreadsheet\"><Argument Name=\"TransferType\">Exp"
-        "ort</Argument><Argumen"
+    Comment ="_AXL:FSC_Backend YYYYMM.xlsx</Argument><Argument Name=\"HasFieldNames\">Yes</Arg"
+        "ument></Action><Comment>FSC_Backend_Bonus</Comment><Action Name=\"ImportExportSp"
+        "readsheet\"><Argument Name=\"TransferType\">Export</Argument><Argument Name=\"Ta"
+        "bleName\">FSC_Backend"
 End
 Begin
-    Comment ="_AXL:t Name=\"TableName\">FSC_Backend_Bonus</Argument><Argument Name=\"FileName\""
-        ">S:\\Business Reporting\\CommBE\\Export\\FSC_Backend YYYYMM.xlsx</Argument><Argu"
-        "ment Name=\"HasFieldNames\">Yes</Argument></Action><Action Name=\"ImportExportSp"
-        "readsheet\"><Argument Na"
+    Comment ="_AXL:_Bonus</Argument><Argument Name=\"FileName\">S:\\BR\\CommBE\\Publish\\FSC_B"
+        "ackend YYYYMM.xlsx</Argument><Argument Name=\"HasFieldNames\">Yes</Argument></Ac"
+        "tion><Action Name=\"ImportExportSpreadsheet\"><Argument Name=\"TransferType\">Ex"
+        "port</Argument><Argument "
 End
 Begin
-    Comment ="_AXL:me=\"TransferType\">Export</Argument><Argument Name=\"TableName\">FSC_Backe"
-        "nd_CustReturns</Argument><Argument Name=\"FileName\">S:\\Business Reporting\\Com"
-        "mBE\\Export\\FSC_Backend YYYYMM.xlsx</Argument><Argument Name=\"HasFieldNames\">"
-        "Yes</Argument></Action><C"
+    Comment ="_AXL:Name=\"TableName\">FSC_Backend_CustReturns</Argument><Argument Name=\"FileN"
+        "ame\">S:\\BR\\CommBE\\Publish\\FSC_Backend YYYYMM.xlsx</Argument><Argument Name="
+        "\"HasFieldNames\">Yes</Argument></Action><Comment>FSC_Backend_Monthly</Comment><"
+        "Comment>FSC_Backend_Cus"
 End
 Begin
-    Comment ="_AXL:omment>FSC_Backend_Monthly</Comment><Comment>FSC_Backend_CustReturns</Comme"
-        "nt><Action Name=\"MessageBox\"><Argument Name=\"Message\">FSC backend exported t"
-        "o \"FSC_Backend YYYYMM.xlsx\"</Argument></Action></Statements></UserInterfaceMac"
-        "ro>"
+    Comment ="_AXL:tReturns</Comment><Action Name=\"MessageBox\"><Argument Name=\"Message\">FS"
+        "C backend exported to \"S:\\BR\\CommBE\\Publish \\FSC_Backend YYYYMM.xlsx\"</Arg"
+        "ument></Action></Statements></UserInterfaceMacro>"
 End

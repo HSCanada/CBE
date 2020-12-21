@@ -86,12 +86,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.ess_comm_group_cd"
-        dbLong "AggregateType" ="-1"
-        dbInteger "ColumnWidth" ="2355"
-        dbBoolean "ColumnHidden" ="0"
-    End
-    Begin
         dbText "Name" ="comm_transaction.item_id"
         dbLong "AggregateType" ="-1"
     End
@@ -149,12 +143,6 @@ Begin
     End
     Begin
         dbText "Name" ="comm_transaction.record_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
-        dbInteger "ColumnWidth" ="2355"
-        dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
     Begin

@@ -1,19 +1,18 @@
 ﻿Operation =2
 Name ="OUTPUT_TS_Transactions"
 Option =0
-Where ="(((BRS_Customer.TsTerritoryCd) Not In (\"ZZSPL\",\"DZZ\",\"     \",\"**\",\"DINB"
-    "\")) AND ((comm_transaction_ts.item_comm_group_cd) Not In (\"ITMSER\",\"ITMPAR\""
-    ",\"ITMEQ0\")) AND ((comm_transaction_ts.salesperson_key_id)<>\"Internal\")) OR ("
-    "((comm_transaction_ts.ess_salesperson_cd)=\"DSS01\")) OR (((comm_transaction_ts."
-    "item_comm_group_cd)=\"DIGMAT\") AND ((comm_transaction_ts.IMCLMJ) In (\"372\",\""
-    "318\")) AND ((comm_transaction_ts.salesperson_key_id)<>\"Internal\"))"
+Where ="(((comm_transaction_ts.FiscalMonth)=[Enter Fiscal]) AND ((BRS_Customer.TsTerrito"
+    "ryCd) Not In (\"ZZSPL\",\"DZZ\",\"     \",\"**\",\"DINB\")) AND ((comm_transacti"
+    "on_ts.item_comm_group_cd) Not In (\"ITMSER\",\"ITMPAR\",\"ITMEQ0\")) AND ((comm_"
+    "transaction_ts.salesperson_key_id)<>\"Internal\"))"
 Begin InputTables
     Name ="comm_transaction_ts"
-    Name ="BRS_TS_Rollup"
     Name ="BRS_TransactionDW_Ext"
     Name ="BRS_FSC_Rollup"
     Name ="BRS_Customer"
     Name ="comm_configure"
+    Name ="BRS_FSC_Rollup"
+    Alias ="BRS_FSC_Rollup_1"
 End
 Begin OutputColumns
     Expression ="comm_transaction_ts.record_id"
@@ -22,7 +21,8 @@ Begin OutputColumns
     Expression ="BRS_FSC_Rollup.FSCName"
     Expression ="BRS_FSC_Rollup.TS_CategoryCd"
     Expression ="BRS_Customer.TsTerritoryCd"
-    Expression ="BRS_TS_Rollup.TsName"
+    Alias ="ISRName"
+    Expression ="BRS_FSC_Rollup_1.FSCName"
     Expression ="comm_transaction_ts.ess_salesperson_cd"
     Expression ="comm_transaction_ts.SalesOrderNumber"
     Alias ="TS_Tag"
@@ -62,13 +62,17 @@ Begin Joins
     RightTable ="BRS_FSC_Rollup"
     Expression ="BRS_Customer.TerritoryCd = BRS_FSC_Rollup.TerritoryCd"
     Flag =1
-    LeftTable ="BRS_Customer"
-    RightTable ="BRS_TS_Rollup"
-    Expression ="BRS_Customer.TsTerritoryCd = BRS_TS_Rollup.TsTerritoryCd"
-    Flag =1
     LeftTable ="comm_transaction_ts"
     RightTable ="comm_configure"
     Expression ="comm_transaction_ts.fiscal_yearmo_num = comm_configure.current_fiscal_yearmo_num"
+    Flag =1
+    LeftTable ="BRS_Customer"
+    RightTable ="BRS_FSC_Rollup_1"
+    Expression ="BRS_Customer.TsTerritoryCd = BRS_FSC_Rollup_1.TerritoryCd"
+    Flag =1
+    LeftTable ="comm_transaction_ts"
+    RightTable ="BRS_TransactionDW_Ext"
+    Expression ="comm_transaction_ts.doc_type_cd = BRS_TransactionDW_Ext.DocType"
     Flag =1
 End
 dbBoolean "ReturnsRecords" ="-1"
@@ -80,7 +84,7 @@ dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
-dbBoolean "UseTransaction" ="-1"
+dbBoolean "UseTransaction" ="0"
 Begin
     Begin
         dbText "Name" ="gp_free_goods_amt"
@@ -370,17 +374,25 @@ Begin
         dbText "Name" ="comm_transaction.shipped_qty"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="BRS_FSC_Rollup_1.FSCName"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="ISRName"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
-    State =0
-    Left =0
-    Top =40
-    Right =1563
-    Bottom =991
+    State =2
+    Left =-8
+    Top =-31
+    Right =1136
+    Bottom =945
     Left =-1
     Top =-1
-    Right =1531
-    Bottom =502
+    Right =1112
+    Bottom =557
     Left =0
     Top =0
     ColumnsShown =539
@@ -394,19 +406,10 @@ Begin
         Name =""
     End
     Begin
-        Left =980
-        Top =390
-        Right =1293
-        Bottom =637
-        Top =0
-        Name ="BRS_TS_Rollup"
-        Name =""
-    End
-    Begin
-        Left =356
-        Top =281
-        Right =579
-        Bottom =467
+        Left =383
+        Top =195
+        Right =606
+        Bottom =381
         Top =0
         Name ="BRS_TransactionDW_Ext"
         Name =""
@@ -436,6 +439,15 @@ Begin
         Bottom =169
         Top =0
         Name ="comm_configure"
+        Name =""
+    End
+    Begin
+        Left =952
+        Top =436
+        Right =1096
+        Bottom =580
+        Top =0
+        Name ="BRS_FSC_Rollup_1"
         Name =""
     End
 End

@@ -139,44 +139,6 @@ Begin
         dbText "Name" ="comm_transaction.item_id"
         dbLong "AggregateType" ="-1"
     End
-    Begin
-        dbText "Name" ="SM_ADJ"
-        dbInteger "ColumnWidth" ="3045"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_customer_master.SPM_ReasonTxt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.IMITEM"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_customer_master_1.note_txt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_customer_master.hsi_billto_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_customer_master.note_txt"
-        dbInteger "ColumnWidth" ="3045"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="hsi_billto_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
-        dbInteger "ColumnWidth" ="3045"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
 End
 Begin
     State =2

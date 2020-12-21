@@ -68,10 +68,6 @@ Begin
         dbInteger "ColumnWidth" ="2355"
         dbBoolean "ColumnHidden" ="0"
     End
-    Begin
-        dbText "Name" ="comm_transaction.ess_comm_plan_id"
-        dbLong "AggregateType" ="-1"
-    End
 End
 Begin
     State =2

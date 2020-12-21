@@ -50,14 +50,14 @@ Begin
 End
 Begin
     State =0
-    Left =-208
-    Top =35
-    Right =1327
-    Bottom =1004
+    Left =0
+    Top =40
+    Right =1524
+    Bottom =937
     Left =-1
     Top =-1
-    Right =1503
-    Bottom =349
+    Right =1500
+    Bottom =298
     Left =0
     Top =0
     ColumnsShown =543

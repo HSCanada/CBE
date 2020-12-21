@@ -21,6 +21,7 @@ Begin OutputColumns
     Expression ="comm_transaction.transaction_txt"
     Expression ="comm_transaction.ess_comm_group_cd"
     Expression ="comm_transaction.transaction_amt"
+    Expression ="comm_transaction.gp_ext_amt"
     Expression ="comm_salesperson_master.salesperson_category_cd"
     Expression ="comm_salesperson_master.ess_accpac_cd"
     Expression ="comm_salesperson_master.branch_cd"
@@ -38,7 +39,7 @@ End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="60"
 dbByte "RecordsetType" ="0"
-dbBoolean "OrderByOn" ="-1"
+dbBoolean "OrderByOn" ="0"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
@@ -125,17 +126,21 @@ Begin
         dbText "Name" ="comm_transaction.doc_id"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_transaction.gp_ext_amt"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
-    State =0
-    Left =7
-    Top =36
-    Right =1617
-    Bottom =993
+    State =2
+    Left =-8
+    Top =-30
+    Right =1458
+    Bottom =985
     Left =-1
     Top =-1
-    Right =1578
-    Bottom =382
+    Right =1434
+    Bottom =365
     Left =0
     Top =0
     ColumnsShown =539

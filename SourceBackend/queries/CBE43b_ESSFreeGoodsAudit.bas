@@ -1,9 +1,9 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_transaction.fiscal_yearmo_num)>=\"201605\") AND ((comm_transaction.ess_s"
+Where ="(((comm_transaction.fiscal_yearmo_num)>=\"202001\") AND ((comm_transaction.ess_s"
     "alesperson_cd) Like \"ESS*\" Or (comm_transaction.ess_salesperson_cd) Like \"CCS"
     "*\") AND ((comm_transaction.status_cd)<>20)) OR (((comm_transaction.fiscal_yearm"
-    "o_num)>=\"201605\") AND ((comm_transaction.ess_salesperson_cd) Like \"ESS*\" Or "
+    "o_num)>=\"202001\") AND ((comm_transaction.ess_salesperson_cd) Like \"ESS*\" Or "
     "(comm_transaction.ess_salesperson_cd) Like \"CCS*\") AND ((comm_transaction.ess_"
     "status_cd)<>20))"
 Begin InputTables
@@ -35,7 +35,7 @@ End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="0"
 dbByte "RecordsetType" ="0"
-dbBoolean "OrderByOn" ="0"
+dbBoolean "OrderByOn" ="-1"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
@@ -151,12 +151,12 @@ Begin
     State =0
     Left =0
     Top =40
-    Right =1495
-    Bottom =991
+    Right =1390
+    Bottom =937
     Left =-1
     Top =-1
-    Right =1463
-    Bottom =130
+    Right =1366
+    Bottom =62
     Left =0
     Top =0
     ColumnsShown =539

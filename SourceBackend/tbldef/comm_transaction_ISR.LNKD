@@ -1,4 +1,0 @@
-﻿comm_transaction_ISR
-ODBC;DSN=DEV_CommBE;Description=DEV_CommBE;Trusted_Connection=Yes;APP=Microsoft Office 2016;DATABASE=DEV_CommBE
-dbo.comm_transaction_ISR
-fiscal_yearmo_num;+doc_id

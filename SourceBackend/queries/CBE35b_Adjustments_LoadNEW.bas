@@ -31,8 +31,8 @@ dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
-dbMemo "OrderBy" ="[CBE35b_Adjustments_LoadNEW].[line_num] DESC, [CBE35b_Adjustments_LoadNEW].[refe"
-    "rence_order_txt]"
+dbMemo "OrderBy" ="[CBE35b_Adjustments_LoadNEW].[line_num], [CBE35b_Adjustments_LoadNEW].[reference"
+    "_order_txt]"
 Begin
     Begin
         dbText "Name" ="comm_transaction_external_stage.customer_nm"
@@ -57,6 +57,8 @@ Begin
     Begin
         dbText "Name" ="comm_transaction_external_stage.salesperson_cd"
         dbLong "AggregateType" ="-1"
+        dbInteger "ColumnWidth" ="1845"
+        dbBoolean "ColumnHidden" ="0"
     End
     Begin
         dbText "Name" ="comm_transaction_external_stage.invoice_id"
@@ -118,15 +120,15 @@ Begin
     End
 End
 Begin
-    State =0
-    Left =0
-    Top =40
-    Right =1563
-    Bottom =991
+    State =2
+    Left =-8
+    Top =-31
+    Right =1293
+    Bottom =719
     Left =-1
     Top =-1
-    Right =1531
-    Bottom =76
+    Right =1269
+    Bottom =-1
     Left =0
     Top =0
     ColumnsShown =539

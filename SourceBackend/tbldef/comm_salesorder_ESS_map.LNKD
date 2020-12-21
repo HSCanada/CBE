@@ -1,4 +1,0 @@
-﻿comm_salesorder_ESS_map
-ODBC;DSN=DEV_CommBE;Description=DEV_CommBE;Trusted_Connection=Yes;APP=Microsoft Office 2016;DATABASE=DEV_CommBE
-dbo.comm_salesorder_ESS_map
-doc_id

@@ -27,8 +27,8 @@ dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
-dbMemo "OrderBy" ="[CBE35_Adjustments_Load].[line_num] DESC, [CBE35_Adjustments_Load].[fiscal_yearm"
-    "o_num]"
+dbMemo "OrderBy" ="[CBE35_Adjustments_Load].[line_num], [CBE35_Adjustments_Load].[fiscal_yearmo_num"
+    "]"
 Begin
     Begin
         dbText "Name" ="comm_transaction_external_stage.customer_nm"
@@ -95,14 +95,14 @@ Begin
 End
 Begin
     State =0
-    Left =-159
-    Top =37
-    Right =1408
-    Bottom =988
+    Left =0
+    Top =40
+    Right =1390
+    Bottom =937
     Left =-1
     Top =-1
-    Right =1535
-    Bottom =43
+    Right =1366
+    Bottom =9
     Left =0
     Top =0
     ColumnsShown =539

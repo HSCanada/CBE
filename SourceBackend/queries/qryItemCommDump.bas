@@ -58,18 +58,6 @@ Begin
         dbInteger "ColumnWidth" ="3615"
         dbBoolean "ColumnHidden" ="0"
     End
-    Begin
-        dbText "Name" ="comm_item_master.item_master_desc"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_item_master.hsi_manuf_cd"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_item_master.MinorCd"
-        dbLong "AggregateType" ="-1"
-    End
 End
 Begin
     State =0

@@ -128,10 +128,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_salesperson_territory_split_TORNT.TransferFrom_cd"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_item_master.note_txt"
         dbLong "AggregateType" ="-1"
     End

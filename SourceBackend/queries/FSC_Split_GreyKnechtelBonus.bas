@@ -71,10 +71,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.IMITEM"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_transaction.doc_key_id"
         dbLong "AggregateType" ="-1"
     End
@@ -116,10 +112,6 @@ Begin
     End
     Begin
         dbText "Name" ="comm_transaction.item_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
         dbLong "AggregateType" ="-1"
     End
 End

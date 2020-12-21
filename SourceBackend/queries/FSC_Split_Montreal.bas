@@ -1,25 +1,29 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_transaction.salesperson_key_id)<>\"Internal\"))"
+Where ="(((comm_transaction.fiscal_yearmo_num) Between \"201901\" And \"201904\" Or (com"
+    "m_transaction.fiscal_yearmo_num) Between \"202001\" And \"202004\") AND ((comm_t"
+    "ransaction.salesperson_key_id)<>\"Internal\"))"
 Begin InputTables
     Name ="comm_transaction"
     Name ="comm_salesperson_master"
-    Name ="comm_configure"
     Name ="comm_salesperson_territory_split_MNTRL"
+    Name ="BRS_Customer"
+    Name ="BRS_FSC_Rollup"
+    Name ="BRS_Item"
 End
 Begin OutputColumns
     Expression ="comm_transaction.fiscal_yearmo_num"
     Expression ="comm_transaction.salesperson_key_id"
-    Expression ="comm_salesperson_territory_split_MNTRL.TransferFrom_cd"
+    Expression ="BRS_FSC_Rollup.FSCName"
     Alias ="SalespersonInvoiced"
     Expression ="comm_transaction.salesperson_cd"
     Expression ="comm_transaction.transaction_dt"
     Expression ="comm_transaction.shipped_qty"
     Expression ="comm_transaction.transaction_amt"
     Expression ="comm_transaction.gp_ext_amt"
-    Expression ="comm_transaction.comm_amt"
+    Expression ="BRS_Item.SalesCategory"
     Expression ="comm_transaction.item_comm_group_cd"
-    Expression ="comm_transaction.IMITEM"
+    Expression ="comm_transaction.item_id"
     Expression ="comm_transaction.doc_key_id"
     Expression ="comm_transaction.hsi_shipto_id"
     Expression ="comm_transaction.hsi_shipto_nm"
@@ -31,18 +35,24 @@ Begin Joins
     RightTable ="comm_salesperson_master"
     Expression ="comm_transaction.salesperson_key_id = comm_salesperson_master.salesperson_key_id"
     Flag =1
-    LeftTable ="comm_configure"
-    RightTable ="comm_transaction"
-    Expression ="comm_configure.current_fiscal_yearmo_num = comm_transaction.fiscal_yearmo_num"
-    Flag =1
     LeftTable ="comm_transaction"
     RightTable ="comm_salesperson_territory_split_MNTRL"
     Expression ="comm_transaction.hsi_shipto_id = comm_salesperson_territory_split_MNTRL.Shipto"
     Flag =1
+    LeftTable ="comm_transaction"
+    RightTable ="BRS_Customer"
+    Expression ="comm_transaction.hsi_shipto_id = BRS_Customer.ShipTo"
+    Flag =1
+    LeftTable ="BRS_Customer"
+    RightTable ="BRS_FSC_Rollup"
+    Expression ="BRS_Customer.TerritoryCd = BRS_FSC_Rollup.TerritoryCd"
+    Flag =1
+    LeftTable ="comm_transaction"
+    RightTable ="BRS_Item"
+    Expression ="comm_transaction.item_id = BRS_Item.Item"
+    Flag =2
 End
 Begin OrderBy
-    Expression ="comm_salesperson_territory_split_MNTRL.TransferFrom_cd"
-    Flag =0
     Expression ="comm_transaction.salesperson_cd"
     Flag =0
 End
@@ -81,10 +91,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.IMITEM"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_transaction.doc_key_id"
         dbLong "AggregateType" ="-1"
     End
@@ -117,21 +123,23 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.comm_amt"
-        dbInteger "ColumnWidth" ="1545"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="SalespersonInvoiced"
         dbInteger "ColumnWidth" ="2445"
         dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_salesperson_territory_split_MNTRL.TransferFrom_cd"
-        dbInteger "ColumnWidth" ="2130"
+        dbText "Name" ="comm_transaction.item_id"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="BRS_FSC_Rollup.FSCName"
+        dbInteger "ColumnWidth" ="2475"
         dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="BRS_Item.SalesCategory"
         dbLong "AggregateType" ="-1"
     End
 End
@@ -139,12 +147,12 @@ Begin
     State =0
     Left =0
     Top =40
-    Right =1548
-    Bottom =1009
+    Right =1505
+    Bottom =817
     Left =-1
     Top =-1
-    Right =1525
-    Bottom =711
+    Right =1481
+    Bottom =465
     Left =0
     Top =0
     ColumnsShown =539
@@ -158,30 +166,48 @@ Begin
         Name =""
     End
     Begin
-        Left =473
-        Top =148
-        Right =735
-        Bottom =292
+        Left =493
+        Top =180
+        Right =755
+        Bottom =324
         Top =0
         Name ="comm_salesperson_master"
         Name =""
     End
     Begin
-        Left =467
-        Top =14
-        Right =611
-        Bottom =158
+        Left =797
+        Top =182
+        Right =1124
+        Bottom =367
         Top =0
-        Name ="comm_configure"
+        Name ="comm_salesperson_territory_split_MNTRL"
         Name =""
     End
     Begin
-        Left =873
-        Top =354
-        Right =1200
-        Bottom =539
+        Left =529
+        Top =1
+        Right =673
+        Bottom =145
         Top =0
-        Name ="comm_salesperson_territory_split_MNTRL"
+        Name ="BRS_Customer"
+        Name =""
+    End
+    Begin
+        Left =760
+        Top =41
+        Right =904
+        Bottom =185
+        Top =0
+        Name ="BRS_FSC_Rollup"
+        Name =""
+    End
+    Begin
+        Left =402
+        Top =31
+        Right =546
+        Bottom =175
+        Top =0
+        Name ="BRS_Item"
         Name =""
     End
 End

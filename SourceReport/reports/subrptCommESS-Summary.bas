@@ -1,4 +1,4 @@
-﻿Version =20
+﻿Version =21
 VersionRequired =20
 Begin Report
     LayoutForPrint = NotDefault
@@ -16,9 +16,9 @@ Begin Report
     ItemSuffix =166
     DatasheetGridlinesColor =15062992
     RecSrcDt = Begin
-        0xb1976c2f75a3e340
+        0x9c71a497973fe540
     End
-    RecordSource ="qryCommESSStatementDetailReport-Summary-Final"
+    RecordSource ="zzqryCommESSStatementDetailReport-Summary-Final"
     Caption ="subrptCommESS-Summary"
     DatasheetFontName ="Calibri"
     PrtMip = Begin

@@ -1,5 +1,6 @@
 ﻿Operation =1
 Option =0
+Where ="(((comm_transaction.source_cd)=\"JDE\"))"
 Begin InputTables
     Name ="comm_transaction"
     Name ="STAGE_TransferDoc"
@@ -146,13 +147,13 @@ End
 Begin
     State =2
     Left =-8
-    Top =-30
-    Right =1540
-    Bottom =999
+    Top =-31
+    Right =1416
+    Bottom =945
     Left =-1
     Top =-1
-    Right =1516
-    Bottom =370
+    Right =1392
+    Bottom =234
     Left =0
     Top =0
     ColumnsShown =539

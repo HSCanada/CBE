@@ -59,26 +59,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="[qryCommStatementDetailReport-Summary].salesperson_key_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="qsubCommStatementDetailReportSummary_1.comm_group_cd"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="qsubCommStatementDetailReportSummary_1.comm_group_desc"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="qsubCommStatementDetailReportSummary_1.sort_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="qsubCommStatementDetailReportSummary.report_sort_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="qsubCommStatementDetailReportSummary.sort_id"
         dbLong "AggregateType" ="-1"
     End

@@ -6,12 +6,12 @@ Begin InputTables
 End
 Begin OutputColumns
     Expression ="comm_statement_detail.fiscal_yearmo_num"
-    Expression ="comm_statement_detail.salesperson_key_id"
     Expression ="comm_statement_detail.salesperson_nm"
     Expression ="comm_statement_detail.hsi_shipto_id"
     Expression ="comm_statement_detail.customer_nm"
     Expression ="comm_statement_detail.transaction_dt"
     Expression ="comm_statement_detail.doc_key_id"
+    Expression ="comm_statement_detail.doc_id"
     Expression ="comm_statement_detail.item_id"
     Expression ="comm_statement_detail.transaction_txt"
     Expression ="comm_statement_detail.item_comm_group_cd"
@@ -40,10 +40,6 @@ dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
 dbText "Description" ="x"
 Begin
-    Begin
-        dbText "Name" ="comm_statement_detail.salesperson_key_id"
-        dbLong "AggregateType" ="-1"
-    End
     Begin
         dbText "Name" ="comm_statement_detail.doc_key_id"
         dbLong "AggregateType" ="-1"
@@ -127,33 +123,7 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_statement_detail.report_group_txt"
-        dbInteger "ColumnWidth" ="2685"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_detail.comm_cost_unit_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_detail.hsi_item_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="comm_statement_detail.item_comm_rt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr3"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_detail.comm_rt"
         dbLong "AggregateType" ="-1"
     End
     Begin
@@ -164,17 +134,25 @@ Begin
         dbText "Name" ="comm_statement_detail.customer_po_num"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_statement_detail.salesperson_nm"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_statement_detail.doc_id"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
     State =0
     Left =0
     Top =0
-    Right =1560
-    Bottom =971
+    Right =1520
+    Bottom =797
     Left =-1
     Top =-1
-    Right =1544
-    Bottom =552
+    Right =1504
+    Bottom =501
     Left =0
     Top =0
     ColumnsShown =539

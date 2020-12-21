@@ -1,7 +1,7 @@
 ﻿Operation =1
 Option =0
-Where ="(((comm_transaction.source_cd)=\"JDE\") AND ((comm_transaction.salesperson_key_i"
-    "d)<>\"Internal\"))"
+Where ="(((comm_item_master.comm_group_cps_cd)<>\"\") AND ((comm_transaction.source_cd)="
+    "\"JDE\") AND ((comm_transaction.salesperson_key_id)<>\"Internal\"))"
 Begin InputTables
     Name ="comm_configure"
     Name ="comm_transaction"
@@ -10,14 +10,13 @@ Begin InputTables
     Name ="comm_item_master"
     Name ="comm_customer_master"
     Name ="BRS_Item"
-    Name ="comm_item_hsps"
 End
 Begin OutputColumns
     Expression ="comm_transaction.fiscal_yearmo_num"
     Alias ="TERdnu"
-    Expression ="\"\""
+    Expression ="comm_customer_master.cps_code"
     Alias ="Grpdnu"
-    Expression ="\"\""
+    Expression ="comm_item_master.comm_group_cps_cd"
     Expression ="comm_transaction.hsi_shipto_id"
     Expression ="comm_transaction.customer_nm"
     Expression ="comm_transaction.item_id"
@@ -64,13 +63,9 @@ Begin Joins
     RightTable ="BRS_Item"
     Expression ="comm_item_master.item_id = BRS_Item.Item"
     Flag =1
-    LeftTable ="comm_item_hsps"
-    RightTable ="BRS_Item"
-    Expression ="comm_item_hsps.item = BRS_Item.Item"
-    Flag =1
 End
 dbBoolean "ReturnsRecords" ="-1"
-dbInteger "ODBCTimeout" ="180"
+dbInteger "ODBCTimeout" ="0"
 dbByte "RecordsetType" ="2"
 dbBoolean "OrderByOn" ="0"
 dbByte "Orientation" ="0"
@@ -170,32 +165,32 @@ Begin
     End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1589
-    Bottom =999
+    State =0
+    Left =0
+    Top =40
+    Right =1388
+    Bottom =937
     Left =-1
     Top =-1
-    Right =1565
-    Bottom =484
+    Right =1364
+    Bottom =450
     Left =0
     Top =0
     ColumnsShown =539
     Begin
-        Left =92
-        Top =25
-        Right =236
-        Bottom =169
+        Left =62
+        Top =31
+        Right =206
+        Bottom =175
         Top =0
         Name ="comm_configure"
         Name =""
     End
     Begin
-        Left =282
-        Top =-2
-        Right =497
-        Bottom =519
+        Left =239
+        Top =9
+        Right =454
+        Bottom =530
         Top =0
         Name ="comm_transaction"
         Name =""
@@ -219,39 +214,30 @@ Begin
         Name =""
     End
     Begin
-        Left =587
-        Top =251
-        Right =808
-        Bottom =578
+        Left =621
+        Top =181
+        Right =842
+        Bottom =508
         Top =0
         Name ="comm_item_master"
         Name =""
     End
     Begin
-        Left =1253
-        Top =43
-        Right =1496
-        Bottom =326
+        Left =1092
+        Top =15
+        Right =1335
+        Bottom =298
         Top =0
         Name ="comm_customer_master"
         Name =""
     End
     Begin
-        Left =727
-        Top =105
-        Right =979
-        Bottom =331
+        Left =851
+        Top =24
+        Right =1103
+        Bottom =250
         Top =0
         Name ="BRS_Item"
-        Name =""
-    End
-    Begin
-        Left =538
-        Top =174
-        Right =682
-        Bottom =318
-        Top =0
-        Name ="comm_item_hsps"
         Name =""
     End
 End

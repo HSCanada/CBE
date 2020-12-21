@@ -1,7 +1,8 @@
 ﻿Operation =4
 Option =0
 Where ="(((comm_salesperson_master.comm_plan_id) Like \"fsc*\" Or (comm_salesperson_mast"
-    "er.comm_plan_id) Like \"ess*\"))"
+    "er.comm_plan_id) Like \"ess*\" Or (comm_salesperson_master.comm_plan_id) Like \""
+    "CCS*\"))"
 Begin InputTables
     Name ="comm_salesperson_master"
 End
@@ -29,15 +30,15 @@ Begin
     End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1166
-    Bottom =710
+    State =0
+    Left =0
+    Top =40
+    Right =1563
+    Bottom =976
     Left =-1
     Top =-1
-    Right =1142
-    Bottom =366
+    Right =1545
+    Bottom =349
     Left =0
     Top =0
     ColumnsShown =579

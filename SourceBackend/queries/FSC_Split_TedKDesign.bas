@@ -2,7 +2,8 @@
 Option =0
 Where ="(((comm_transaction.salesperson_key_id)<>\"Internal\") AND ((comm_transaction.it"
     "em_id) In (\"5837912\",\"5831069\",\"5831451\",\"5834943\",\"5837545\",\"5833107"
-    "\",\"5834937\",\"5844099\")))"
+    "\",\"5834937\",\"5844099\",\"9398060\",\"9399459\",\"9393267\",\"9392430\",\"939"
+    "6203\")))"
 Begin InputTables
     Name ="comm_transaction"
     Name ="comm_salesperson_master"
@@ -47,6 +48,7 @@ dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
+dbMemo "Filter" ="([FSC_Split_TedKDesign].[item_id]=\"9396203\")"
 Begin
     Begin
         dbText "Name" ="comm_transaction.fiscal_yearmo_num"
@@ -122,15 +124,15 @@ Begin
     End
 End
 Begin
-    State =0
-    Left =0
-    Top =40
-    Right =1501
-    Bottom =1009
+    State =2
+    Left =-8
+    Top =-31
+    Right =1510
+    Bottom =825
     Left =-1
     Top =-1
-    Right =1469
-    Bottom =256
+    Right =1486
+    Bottom =222
     Left =0
     Top =0
     ColumnsShown =539

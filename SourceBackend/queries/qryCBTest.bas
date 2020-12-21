@@ -75,14 +75,6 @@ Begin
         dbText "Name" ="comm_transaction.shipped_qty"
         dbLong "AggregateType" ="-1"
     End
-    Begin
-        dbText "Name" ="comm_transaction.cost_unit_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.cost_ext_amt"
-        dbLong "AggregateType" ="-1"
-    End
 End
 Begin
     State =0

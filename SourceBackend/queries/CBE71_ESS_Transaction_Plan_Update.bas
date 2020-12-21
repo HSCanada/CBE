@@ -1,7 +1,8 @@
 ﻿Operation =4
 Option =0
-Where ="(((comm_transaction.ess_salesperson_cd) Like \"ESS*\") AND ((comm_transaction.so"
-    "urce_cd) In (\"JDE\",\"IMPORT\")))"
+Where ="(((comm_transaction.ess_salesperson_cd) Like \"ESS*\" Or (comm_transaction.ess_s"
+    "alesperson_cd) Like \"DTS*\") AND ((comm_transaction.source_cd) In (\"JDE\",\"IM"
+    "PORT\")))"
 Begin InputTables
     Name ="comm_configure"
     Name ="comm_transaction"
@@ -11,7 +12,7 @@ Begin OutputColumns
     Name ="comm_transaction.ess_salesperson_key_id"
     Expression ="[comm_salesperson_code_map]![salesperson_key_id]"
     Name ="comm_transaction.ess_comm_plan_id"
-    Expression ="\"ESSGP\""
+    Expression ="[comm_salesperson_code_map]![comm_plan_id]"
 End
 Begin Joins
     LeftTable ="comm_configure"
@@ -83,15 +84,15 @@ Begin
     End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1397
-    Bottom =999
+    State =0
+    Left =-193
+    Top =18
+    Right =1370
+    Bottom =954
     Left =-1
     Top =-1
-    Right =1373
-    Bottom =356
+    Right =1539
+    Bottom =322
     Left =0
     Top =0
     ColumnsShown =579

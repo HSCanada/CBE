@@ -1,4 +1,4 @@
-﻿Version =20
+﻿Version =21
 VersionRequired =20
 Begin Report
     LayoutForPrint = NotDefault
@@ -17,9 +17,9 @@ Begin Report
     Top =9480
     DatasheetGridlinesColor =15062992
     RecSrcDt = Begin
-        0x342bc794f8a0e340
+        0xa6fabbdc3a93e540
     End
-    RecordSource ="qryCommStatementDetailReport-import-Revisions"
+    RecordSource ="zqryCommStatementDetailReport-import-Revisions"
     Caption ="subrptComm-Import-Revisions"
     DatasheetFontName ="Calibri"
     PrtMip = Begin

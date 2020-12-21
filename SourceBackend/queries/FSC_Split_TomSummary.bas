@@ -56,96 +56,6 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_transaction.hsi_billto_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.fiscal_yearmo_num"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.salesperson_key_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.transaction_dt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.transaction_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.source_cd"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.IMITEM"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.doc_key_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.transaction_txt"
-        dbInteger "ColumnWidth" ="3675"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.gp_ext_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.manufact_cd"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.IMCLMJ"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.hsi_shipto_nm"
-        dbInteger "ColumnWidth" ="4575"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="SumOftransaction_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="SumOfgp_ext_amt"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Sales"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="GP"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="GP$"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.customer_nm"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="FirstOfcustomer_nm"
-        dbInteger "ColumnWidth" ="2460"
-        dbBoolean "ColumnHidden" ="0"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="FirstOfhsi_billto_id"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="Name"
         dbInteger "ColumnWidth" ="2460"
         dbBoolean "ColumnHidden" ="0"
@@ -153,10 +63,6 @@ Begin
     End
     Begin
         dbText "Name" ="BT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_transaction.salesperson_cd"
         dbLong "AggregateType" ="-1"
     End
     Begin

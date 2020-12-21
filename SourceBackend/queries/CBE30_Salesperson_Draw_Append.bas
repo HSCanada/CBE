@@ -1,19 +1,20 @@
 ﻿Operation =3
 Name ="comm_transaction_stage"
 Option =0
+Where ="(((comm_batch_control.fiscal_yearmo_num)>\"0\"))"
 Begin InputTables
-    Name ="comm_salesperson_master_stage"
     Name ="comm_batch_control"
+    Name ="comm_salesperson_master"
 End
 Begin OutputColumns
     Name ="fiscal_yearmo_num"
-    Expression ="comm_salesperson_master_stage.fiscal_yearmo_num"
+    Expression ="comm_batch_control.fiscal_yearmo_num"
     Alias ="division_cd"
     Name ="division_cd"
     Expression ="\"\""
     Alias ="salesperson_cd"
     Name ="salesperson_cd"
-    Expression ="comm_salesperson_master_stage.master_salesperson_cd"
+    Expression ="comm_salesperson_master.master_salesperson_cd"
     Alias ="source_cd"
     Name ="source_cd"
     Expression ="\"PAYROLL\""
@@ -28,7 +29,7 @@ Begin OutputColumns
     Expression ="\"Z\""
     Alias ="doc_key_id"
     Name ="doc_key_id"
-    Expression ="comm_salesperson_master_stage.fiscal_yearmo_num"
+    Expression ="comm_batch_control.fiscal_yearmo_num"
     Alias ="line_id"
     Name ="line_id"
     Expression ="1"
@@ -47,20 +48,18 @@ Begin OutputColumns
     Alias ="comm_group_cd"
     Name ="comm_group_cd"
     Expression ="\"SALD30\""
-    Alias ="comm_amt"
     Name ="comm_amt"
-    Expression ="comm_salesperson_master_stage.SALD30_amt"
+    Expression ="comm_salesperson_master.salary_draw_amt"
     Name ="salesperson_key_id"
-    Expression ="comm_salesperson_master_stage.salesperson_key_id"
+    Expression ="comm_salesperson_master.salesperson_key_id"
     Alias ="status_cd"
     Name ="status_cd"
     Expression ="20"
 End
 Begin Joins
-    LeftTable ="comm_salesperson_master_stage"
+    LeftTable ="comm_salesperson_master"
     RightTable ="comm_batch_control"
-    Expression ="comm_salesperson_master_stage.fiscal_yearmo_num=comm_batch_control.fiscal_yearmo"
-        "_num"
+    Expression ="comm_salesperson_master.FiscalMonth = comm_batch_control.FiscalMonth"
     Flag =1
 End
 dbBoolean "ReturnsRecords" ="-1"
@@ -76,11 +75,13 @@ Begin
         dbText "Name" ="comm_salesperson_master_stage.salesperson_key_id"
         dbInteger "ColumnWidth" ="2505"
         dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_salesperson_master_stage.salesperson_nm"
         dbInteger "ColumnWidth" ="3000"
         dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="division_cd"
@@ -88,80 +89,108 @@ Begin
     End
     Begin
         dbText "Name" ="salesperson_cd"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="source_cd"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="transaction_dt"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="transaction_amt"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_cd"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="doc_key_id"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="line_id"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="customer_nm"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="shipped_qty"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="transaction_txt"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="cost_ext_amt"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_group_cd"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_amt"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="status_cd"
+        dbLong "AggregateType" ="-1"
     End
     Begin
         dbText "Name" ="comm_salesperson_master_stage.fiscal_yearmo_num"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_batch_control.fiscal_yearmo_num"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_salesperson_master.salary_draw_amt"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_salesperson_master.salesperson_key_id"
+        dbInteger "ColumnWidth" ="2505"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
-    State =0
-    Left =62
-    Top =84
-    Right =1258
-    Bottom =604
+    State =2
+    Left =-8
+    Top =-31
+    Right =1414
+    Bottom =945
     Left =-1
     Top =-1
-    Right =1173
-    Bottom =336
+    Right =1390
+    Bottom =319
     Left =0
     Top =0
     ColumnsShown =651
     Begin
-        Left =38
-        Top =6
-        Right =300
-        Bottom =278
+        Left =664
+        Top =29
+        Right =925
+        Bottom =196
         Top =0
-        Name ="comm_salesperson_master_stage"
+        Name ="comm_batch_control"
         Name =""
     End
     Begin
-        Left =338
-        Top =6
-        Right =599
-        Bottom =173
+        Left =388
+        Top =109
+        Right =532
+        Bottom =253
         Top =0
-        Name ="comm_batch_control"
+        Name ="comm_salesperson_master"
         Name =""
     End
 End

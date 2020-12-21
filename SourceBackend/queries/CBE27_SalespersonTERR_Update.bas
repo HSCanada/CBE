@@ -34,13 +34,15 @@ End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="60"
 dbByte "RecordsetType" ="0"
-dbBoolean "OrderByOn" ="0"
+dbBoolean "OrderByOn" ="-1"
 dbByte "Orientation" ="0"
 dbByte "DefaultView" ="2"
 dbText "Description" ="Syncronize Commission Plans from FSC to AccPac code"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
+dbMemo "OrderBy" ="[CBE27_SalespersonTERR_Update].[SRC_comm_plan_id], [CBE27_SalespersonTERR_Update"
+    "].[DST_comm_plan_id], [CBE27_SalespersonTERR_Update].[DST_salesperson]"
 Begin
     Begin
         dbText "Name" ="comm_salesperson_code_map.salesperson_cd"
@@ -81,14 +83,14 @@ Begin
 End
 Begin
     State =2
-    Left =-4
-    Top =-23
-    Right =1515
-    Bottom =1008
+    Left =-8
+    Top =-31
+    Right =1548
+    Bottom =943
     Left =-1
     Top =-1
-    Right =1496
-    Bottom =396
+    Right =1408
+    Bottom =328
     Left =0
     Top =0
     ColumnsShown =539

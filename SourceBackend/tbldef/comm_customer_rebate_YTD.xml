@@ -13,20 +13,21 @@
 <xsd:appinfo>
 <od:index index-name="fiscal_yearmo_num" index-key="fiscal_yearmo_num " primary="no" unique="no" clustered="no" order="asc"/>
 <od:index index-name="hsi_shipto_id" index-key="hsi_shipto_id " primary="no" unique="no" clustered="no" order="asc"/>
+<od:index index-name="ID" index-key="ID " primary="no" unique="no" clustered="no" order="asc"/>
 <od:index index-name="PrimaryKey" index-key="fiscal_yearmo_num cust_account " primary="yes" unique="yes" clustered="no" order="asc asc"/>
 <od:index index-name="salesperson_key_id" index-key="salesperson_cd " primary="no" unique="no" clustered="no" order="asc"/>
 </xsd:appinfo>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
-<xsd:element name="fiscal_yearmo_num" minOccurs="0" od:jetType="text" od:sqlSType="nvarchar">
+<xsd:element name="fiscal_yearmo_num" minOccurs="1" od:jetType="text" od:sqlSType="nvarchar" od:nonNullable="yes">
 <xsd:simpleType>
 <xsd:restriction base="xsd:string">
 <xsd:maxLength value="6"/>
 </xsd:restriction>
 </xsd:simpleType>
 </xsd:element>
-<xsd:element name="cust_account" minOccurs="0" od:jetType="text" od:sqlSType="nvarchar">
+<xsd:element name="cust_account" minOccurs="1" od:jetType="text" od:sqlSType="nvarchar" od:nonNullable="yes">
 <xsd:simpleType>
 <xsd:restriction base="xsd:string">
 <xsd:maxLength value="10"/>
@@ -42,6 +43,7 @@
 </xsd:element>
 <xsd:element name="rebate_YTD" minOccurs="0" od:jetType="double" od:sqlSType="float" type="xsd:double"/>
 <xsd:element name="hsi_shipto_id" minOccurs="0" od:jetType="longinteger" od:sqlSType="int" type="xsd:int"/>
+<xsd:element name="ID" minOccurs="1" od:jetType="autonumber" od:sqlSType="int" od:autoUnique="yes" od:nonNullable="yes" type="xsd:int"/>
 </xsd:sequence>
 </xsd:complexType>
 </xsd:element>

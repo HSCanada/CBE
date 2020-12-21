@@ -16,6 +16,9 @@ Begin OutputColumns
     Expression ="comm_salesperson_master.note_txt"
     Expression ="comm_salesperson_master.select_ind"
     Expression ="comm_salesperson_master.creation_dt"
+    Expression ="comm_salesperson_master.salary_draw_amt"
+    Expression ="comm_salesperson_master.deficit_amt"
+    Expression ="comm_salesperson_master.FiscalMonth"
 End
 dbBoolean "ReturnsRecords" ="-1"
 dbInteger "ODBCTimeout" ="60"
@@ -26,11 +29,12 @@ dbByte "DefaultView" ="2"
 dbBoolean "FilterOnLoad" ="0"
 dbBoolean "OrderByOnLoad" ="-1"
 dbBoolean "TotalsRow" ="0"
-dbMemo "OrderBy" ="[CBE28_Salesperson_Review].[comm_plan_id], [CBE28_Salesperson_Review].[salespers"
-    "on_key_id], [CBE28_Salesperson_Review].[master_salesperson_cd], [CBE28_Salespers"
-    "on_Review].[territory_start_dt] DESC, [CBE28_Salesperson_Review].[employee_num],"
-    " [CBE28_Salesperson_Review].[salesperson_nm]"
-dbMemo "Filter" ="([CBE28_Salesperson_Review].[comm_plan_id]=\"FSCGPM    \")"
+dbMemo "OrderBy" ="[CBE28_Salesperson_Review].[territory_start_dt] DESC, [CBE28_Salesperson_Review]"
+    ".[branch_cd], [CBE28_Salesperson_Review].[employee_num], [CBE28_Salesperson_Revi"
+    "ew].[salesperson_nm], [CBE28_Salesperson_Review].[salesperson_key_id], [CBE28_Sa"
+    "lesperson_Review].[master_salesperson_cd], [CBE28_Salesperson_Review].[select_in"
+    "d] DESC, [CBE28_Salesperson_Review].[comm_plan_id]"
+dbMemo "Filter" ="([CBE28_Salesperson_Review].[branch_cd]=\"TORNT \")"
 Begin
     Begin
         dbText "Name" ="comm_salesperson_master.salesperson_nm"
@@ -41,6 +45,8 @@ Begin
     Begin
         dbText "Name" ="comm_salesperson_master.salesperson_key_id"
         dbLong "AggregateType" ="-1"
+        dbInteger "ColumnWidth" ="3075"
+        dbBoolean "ColumnHidden" ="0"
     End
     Begin
         dbText "Name" ="comm_salesperson_master.comm_plan_id"
@@ -80,17 +86,29 @@ Begin
         dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_salesperson_master.deficit_amt"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_salesperson_master.salary_draw_amt"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_salesperson_master.FiscalMonth"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
-    State =0
-    Left =-196
-    Top =123
-    Right =1335
-    Bottom =1074
+    State =2
+    Left =-8
+    Top =-31
+    Right =1548
+    Bottom =943
     Left =-1
     Top =-1
-    Right =1499
-    Bottom =-1
+    Right =1568
+    Bottom =283
     Left =0
     Top =0
     ColumnsShown =539

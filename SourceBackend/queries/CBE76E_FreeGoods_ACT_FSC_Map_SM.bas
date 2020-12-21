@@ -1,32 +1,27 @@
 ﻿Operation =4
 Option =0
-Where ="(((comm_customer_free_goods_YTD.Source)=\"ACT\"))"
+Where ="(((comm_free_goods_redeem.SourceCode)=\"EST\") AND ((comm_free_goods_redeem.CalM"
+    "onth)=[enter fiscal]))"
 Begin InputTables
-    Name ="comm_customer_free_goods_YTD"
     Name ="comm_group"
-    Name ="comm_configure"
     Name ="comm_group"
     Alias ="comm_group_1"
+    Name ="comm_free_goods_redeem"
 End
 Begin OutputColumns
-    Name ="comm_customer_free_goods_YTD.SM_comm_group_cd"
-    Expression ="IIf((([CUST_SPM_StatusCd]='Y') And (([CUST_SPM_EQOptOut]<>'Y') Or (([CUST_SPM_EQ"
-        "OptOut]='Y') And ([GRP_SPM_EQOptOut]<>'Y')))),[comm_group_1]![FRG_comm_group_cd]"
-        ",[comm_group]![FRG_comm_group_cd])"
+    Name ="comm_free_goods_redeem.fsc_comm_group_cd"
+    Expression ="IIf((([special_market_ind]=1) And (([equipment_opt_out_ind]<>1) Or (([equipment_"
+        "opt_out_ind]=1) And ([group_equipment_opt_out_ind]<>1)))),[comm_group_1]![FRG_co"
+        "mm_group_cd],[comm_group]![FRG_comm_group_cd])"
 End
 Begin Joins
-    LeftTable ="comm_customer_free_goods_YTD"
-    RightTable ="comm_group"
-    Expression ="comm_customer_free_goods_YTD.comm_group_cd = comm_group.comm_group_cd"
-    Flag =1
-    LeftTable ="comm_configure"
-    RightTable ="comm_customer_free_goods_YTD"
-    Expression ="comm_configure.current_fiscal_yearmo_num = comm_customer_free_goods_YTD.fiscal_y"
-        "earmo_num"
-    Flag =1
     LeftTable ="comm_group"
     RightTable ="comm_group_1"
     Expression ="comm_group.SPM_comm_group_cd = comm_group_1.comm_group_cd"
+    Flag =1
+    LeftTable ="comm_free_goods_redeem"
+    RightTable ="comm_group"
+    Expression ="comm_free_goods_redeem.comm_group_cd = comm_group.comm_group_cd"
     Flag =1
 End
 dbBoolean "ReturnsRecords" ="-1"
@@ -155,45 +150,67 @@ Begin
         dbText "Name" ="comm_item_master.comm_group_cd"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.SM_comm_group_cd"
+        dbInteger "ColumnWidth" ="2340"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.fiscal_yearmo_num"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.Source"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.CalMonth"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.SourceCode"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.special_market_ind"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.equipment_opt_out_ind"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.group_equipment_opt_out_ind"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_free_goods_redeem.fsc_comm_group_cd"
+        dbInteger "ColumnWidth" ="2340"
+        dbBoolean "ColumnHidden" ="0"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
-    State =2
-    Left =-8
-    Top =-30
-    Right =1586
-    Bottom =999
+    State =0
+    Left =0
+    Top =40
+    Right =1445
+    Bottom =817
     Left =-1
     Top =-1
-    Right =1562
-    Bottom =511
+    Right =1421
+    Bottom =477
     Left =0
     Top =0
     ColumnsShown =579
     Begin
-        Left =234
-        Top =70
-        Right =620
-        Bottom =481
-        Top =0
-        Name ="comm_customer_free_goods_YTD"
-        Name =""
-    End
-    Begin
-        Left =661
-        Top =47
-        Right =972
-        Bottom =374
+        Left =665
+        Top =22
+        Right =976
+        Bottom =349
         Top =0
         Name ="comm_group"
-        Name =""
-    End
-    Begin
-        Left =20
-        Top =143
-        Right =164
-        Bottom =287
-        Top =0
-        Name ="comm_configure"
         Name =""
     End
     Begin
@@ -203,6 +220,15 @@ Begin
         Bottom =338
         Top =0
         Name ="comm_group_1"
+        Name =""
+    End
+    Begin
+        Left =110
+        Top =43
+        Right =420
+        Bottom =289
+        Top =0
+        Name ="comm_free_goods_redeem"
         Name =""
     End
 End

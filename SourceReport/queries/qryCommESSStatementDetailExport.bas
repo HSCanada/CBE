@@ -7,13 +7,13 @@ Begin InputTables
 End
 Begin OutputColumns
     Expression ="comm_ess_statement_detail.fiscal_yearmo_num"
-    Expression ="comm_ess_statement_detail.salesperson_key_id"
     Expression ="comm_ess_statement_detail.salesperson_nm"
     Expression ="comm_ess_statement_detail.salesperson_cd"
     Expression ="comm_ess_statement_detail.hsi_shipto_id"
     Expression ="comm_ess_statement_detail.customer_nm"
     Expression ="comm_ess_statement_detail.transaction_dt"
     Expression ="comm_ess_statement_detail.doc_key_id"
+    Expression ="comm_ess_statement_detail.doc_id"
     Expression ="comm_ess_statement_detail.item_id"
     Expression ="comm_ess_statement_detail.transaction_txt"
     Expression ="comm_ess_statement_detail.item_comm_group_cd"
@@ -27,6 +27,7 @@ Begin OutputColumns
     Expression ="comm_ess_statement_detail.comm_amt"
     Expression ="comm_ess_statement_detail.fsc_salesperson_key_id"
     Expression ="comm_customer_master.SPM_StatusCd"
+    Expression ="comm_ess_statement_detail.source_cd"
 End
 Begin Joins
     LeftTable ="comm_ess_statement_detail"
@@ -63,6 +64,8 @@ Begin
     Begin
         dbText "Name" ="comm_ess_statement_detail.salesperson_cd"
         dbLong "AggregateType" ="-1"
+        dbInteger "ColumnWidth" ="2310"
+        dbBoolean "ColumnHidden" ="0"
     End
     Begin
         dbText "Name" ="comm_ess_statement_detail.transaction_dt"
@@ -136,17 +139,25 @@ Begin
         dbText "Name" ="comm_ess_statement_detail.salesperson_nm"
         dbLong "AggregateType" ="-1"
     End
+    Begin
+        dbText "Name" ="comm_ess_statement_detail.source_cd"
+        dbLong "AggregateType" ="-1"
+    End
+    Begin
+        dbText "Name" ="comm_ess_statement_detail.doc_id"
+        dbLong "AggregateType" ="-1"
+    End
 End
 Begin
     State =0
     Left =0
     Top =0
-    Right =1560
-    Bottom =971
+    Right =1520
+    Bottom =797
     Left =-1
     Top =-1
-    Right =1544
-    Bottom =275
+    Right =1504
+    Bottom =459
     Left =0
     Top =0
     ColumnsShown =539

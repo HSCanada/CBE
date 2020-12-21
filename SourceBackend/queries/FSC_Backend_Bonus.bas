@@ -14,16 +14,14 @@ Begin OutputColumns
     Expression ="\"\""
     Alias ="BON6K_GP_YTD_AMT (MED FSC ONLY)"
     Expression ="\"\""
-    Alias ="OPEN01_1"
-    Expression ="0"
-    Alias ="OPEN01_2"
-    Expression ="0"
-    Expression ="comm_statement_export02.BONSCNMIL_SALES_CM_AMT"
-    Expression ="comm_statement_export02.BONSCNMIL_SALES_YTD_AMT"
+    Alias ="CEREC & Other Cad/Cam, Digital CM GP$"
     Expression ="comm_statement_export02.BONSCNMIL_GP_CM_AMT"
+    Alias ="CEREC & Other Cad/Cam, Digital YTD GP$"
     Expression ="comm_statement_export02.BONSCNMIL_GP_YTD_AMT"
-    Expression ="comm_statement_export02.BONSCNMIL_QTY_CM_AMT"
-    Expression ="comm_statement_export02.BONSCNMIL_QTY_YTD_AMT"
+    Alias ="MEDICAL E-BIZ (See Gary ebiz)"
+    Expression ="\"\""
+    Alias ="PAT#"
+    Expression ="\"\""
 End
 Begin Joins
     LeftTable ="comm_statement_export02"
@@ -65,104 +63,41 @@ Begin
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="OPEN01_1"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="OPEN01_2"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_SALES_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_GP_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_QTY_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
         dbText "Name" ="BON6K_GP_YTD_AMT (MED FSC ONLY)"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_SALES_YTD_AMT"
+        dbText "Name" ="CEREC & Other Cad/Cam, Digital CM GP$"
+        dbInteger "ColumnWidth" ="4110"
+        dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_GP_YTD_AMT"
+        dbText "Name" ="CEREC & Other Cad/Cam, Digital YTD GP$"
+        dbInteger "ColumnWidth" ="2880"
+        dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="comm_statement_export02.BONSCNMIL_QTY_YTD_AMT"
+        dbText "Name" ="MEDICAL E-BIZ (See Gary ebiz)"
+        dbInteger "ColumnWidth" ="3075"
+        dbBoolean "ColumnHidden" ="0"
         dbLong "AggregateType" ="-1"
     End
     Begin
-        dbText "Name" ="BON04K_GP_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_QTY_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_SALES_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr2"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr4"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr6"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_GP_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_GP_YTD_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_QTY_CM_AMT"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr1"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr3"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="Expr5"
-        dbLong "AggregateType" ="-1"
-    End
-    Begin
-        dbText "Name" ="comm_statement_export02.BONCCS_SALES_YTD_AMT"
-        dbLong "AggregateType" ="-1"
+        dbText "Name" ="PAT#"
     End
 End
 Begin
     State =0
-    Left =0
+    Left =-63
     Top =40
-    Right =1561
+    Right =1498
     Bottom =986
     Left =-1
     Top =-1
-    Right =1529
-    Bottom =255
+    Right =1537
+    Bottom =204
     Left =0
     Top =0
     ColumnsShown =539

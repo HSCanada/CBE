@@ -1,0 +1,4 @@
+﻿comm_transaction_F555115_audit
+ODBC;DSN=DEV_BRSales;Description=BRSales;Trusted_Connection=Yes;APP=Microsoft Office 2010;DATABASE=DEV_BRSales;Network=DBMSSOCN
+comm.transaction_F555115_audit
+FiscalMonth;+source_cd;+SalesDivision

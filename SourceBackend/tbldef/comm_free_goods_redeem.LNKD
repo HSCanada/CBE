@@ -1,0 +1,4 @@
+﻿comm_free_goods_redeem
+ODBC;DSN=DEV_COMMBE;Description=COMM_PROD;Trusted_Connection=Yes;APP=Microsoft Office 2013;DATABASE=DEV_CommBE;Network=DBMSSOCN
+dbo.comm_free_goods_redeem
+CalMonth;+SalesOrderNumber;+DocType;+Item;+SourceCode
