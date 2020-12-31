@@ -30,6 +30,7 @@ AS
 **	-----	----------	--------------------------------------------
 **	04 Aug 20	tmc		fix bug where synch failed -- had AND instead of OR.  
 **						missed during testing, month 1
+**	28 Dec 20	tmc		remove non-core plans (EST, CPS, ISR, etc) from sync
 **    
 *******************************************************************************/
 
@@ -39,9 +40,6 @@ Declare @sMessage varchar(255)
 Set @nErrorCode = @@Error
 Set @nTranCount = @@Trancount
 Set @nRowCount	= @@ROWCOUNT
-
-Declare @nCurrentFiscalYearmoNum int
-Declare @nBatchStatus int
 
 SET NOCOUNT ON;
 if (@bDebug <> 0)
@@ -305,6 +303,8 @@ Begin
 	--
 	WHERE
 		(s.salesperson_key_id = [dbo].[comm_salesperson_master].salesperson_key_id) AND
+		LEFT(ISNULL(s.comm_plan_id, ''),3) in ('FSC', 'ESS', 'CCS' ) AND
+
 		-- test
 --		s.salesperson_key_id = 'afolk' AND
 		--
@@ -367,6 +367,8 @@ Begin
 		[BRSales].[comm].[salesperson_master] s
 	WHERE 
 		salesperson_key_id <> '' AND 
+		-- synch core plans only
+		LEFT(ISNULL(s.comm_plan_id, ''),3) in ('FSC', 'ESS', 'CCS' ) AND
 		NOT EXISTS
 		(
 			SELECT * FROM [dbo].[comm_salesperson_master] d
@@ -389,12 +391,13 @@ Begin
 		,[branch_cd]			= s.[Branch]
 		,[salesperson_key_id]	= ISNULL(s.[comm_salesperson_key_id],'')
 		,[comm_plan_id]			= ISNULL(m.comm_plan_id, '')
-
 	FROM
 		[BRSales].[dbo].[BRS_FSC_Rollup] AS s
 		LEFT JOIN [BRSales].[comm].[salesperson_master] m
 		ON m.salesperson_key_id = s.comm_salesperson_key_id
 	WHERE
+		-- synch core plans only
+		LEFT(ISNULL(m.comm_plan_id, ''),3) in ('FSC', 'ESS', 'CCS' ) AND
 		(s.TerritoryCd = [dbo].[comm_salesperson_code_map].[salesperson_cd]) AND
 		(
 			(s.[FSCName] <> [dbo].[comm_salesperson_code_map].[salesperson_nm]) OR
